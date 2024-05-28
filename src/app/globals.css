@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "pretendard";
+  src: url("../../public/font/PretendardVariable.ttf");
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  height: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,8 +29,49 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .neutralBtnStyle-l {
+    @apply p-4 rounded-2xl items-center inline-flex border border-neutral-300
+           text-neutral-700 text-paragraph-l font-bold hover:duration-500
+          fill-neutral-700;
+
+    /* @apply ${isActive ? 'bg-neutral-200' : 'bg-neutral-white hover:bg-neutral-100'}; */
+  }
+
+  .neutralBtnStyle-m {
+    @apply p-2.5 rounded-[10px] items-center inline-flex
+           text-neutral-700 text-paragraph-m fill-neutral-700 hover:duration-500;
+
+    /* @apply ${isActive ? 'bg-neutral-200 font-bold' 
+                      : 'bg-neutral-white font-normal hover:bg-neutral-100 hover:font-bold'}; */
+  }
+
+  .blueBtnStyle-l {
+    @apply p-4 rounded-2xl justify-center items-center inline-flex
+           text-neutral-white text-paragraph-l font-bold fill-neutral-white hover:duration-500
+
+    /* @apply ${isActive ? 'bg-neutral-800' 
+                      : 'bg-blue-500 hover:bg-blue-600'}; */
+  }
+  
+  .blueBtnStyle-m {
+    @apply p-2.5 rounded-[10px] justify-center items-center inline-flex
+          text-neutral-white text-paragraph-m font-normal fill-neutral-white hover:duration-500
+          bg-blue-500 hover:bg-blue-600 hover:font-bold
+
+    /* @apply ${isActive ? 'bg-neutral-800 font-bold' 
+                      : 'bg-blue-500 hover:bg-blue-600 hover:font-bold'}; */
+  }
+
+  .blueBtnStyle-s {
+    @apply p-1 rounded-[10px] justify-center items-center inline-flex
+          text-neutral-white text-caption font-normal fill-neutral-white hover:duration-500
+          bg-blue-500 hover:bg-blue-600 hover:font-bold
   }
 }
