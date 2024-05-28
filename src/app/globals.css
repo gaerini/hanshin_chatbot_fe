@@ -63,7 +63,7 @@ body {
   .blueBtnStyle-m {
     @apply p-2.5 rounded-[10px] justify-center items-center inline-flex
           text-neutral-white text-paragraph-m font-normal fill-neutral-white hover:duration-500
-          bg-blue-500 hover:bg-blue-600 hover:font-bold
+          bg-blue-original hover:bg-blue-600 hover:font-bold
 
     /* @apply ${isActive ? 'bg-neutral-800 font-bold' 
                       : 'bg-blue-500 hover:bg-blue-600 hover:font-bold'}; */
