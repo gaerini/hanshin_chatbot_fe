@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import Icon from '../icon/icon';
 import DropDown from './dropDown';
+import { useActiveItemContext } from './activeItemContext';
+
 
 interface DropDownControllerProps {
     projectName: string;
@@ -10,7 +12,7 @@ interface DropDownControllerProps {
 
 const DropDownController: React.FC<DropDownControllerProps> = ({ projectName }) => {
     const [isOpened, setIsOpened] = useState(false);
-    const [selectedProject, setSelectedProject] = useState<string | null>(null);
+    const { selectedProject, setSelectedProject } = useActiveItemContext();
     const [activeItem, setActiveItem] = useState<string | null>(null);
 
     const handleToggleDropDown = () => {

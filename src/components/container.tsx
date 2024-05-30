@@ -4,11 +4,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import UserBubble from './bubble/userBubble';
 import GptBubble from './bubble/gptBubble';
 import InputNomal from './input/inputNomal';
+import PdfViewerBubble from './bubble/pdfViewerBubble';
 
 const Container: React.FC = () => {
     const [messages, setMessages] = useState<{ type: string, text: string }[]>([
-        { type: 'user', text: '안뇽하세옇ㅎㅎ' },
-        { type: 'gpt', text: `근저당권 설정과 관련된 주요 사항을 요약하면 다음과 같습니다:
+        { type: 'human', text: '안뇽하세옇ㅎㅎ' },
+        { type: 'ai', text: `근저당권 설정과 관련된 주요 사항을 요약하면 다음과 같습니다:
     1. **근저당권 설정 필요성**:
     - 차주는 본건 건물의 준공 후에도 미상환 대출원리금이 존재할 경우, 해당 담보채무를 담보하기 위해 본건 건물에 대한 근저당권을 설정해야 합니다.
     2. **근저당권 설정 절차**:
@@ -22,7 +23,7 @@ const Container: React.FC = () => {
     ]);
 
     const addUserMessage = (message: string) => {
-        setMessages([...messages, { type: 'user', text: message }]);
+        setMessages([...messages, { type: 'human', text: message }]);
     };
 
     //신규 메세지에 포커스 -> 스크롤 아래로 내리기 함수
@@ -39,16 +40,18 @@ const Container: React.FC = () => {
     };
 
     return (
-        <div className="max-w-[768px] mt-[83px] mb-[100px] h-full flex flex-col">
-            <div className='flex-col flex-grow overflow-y-auto justify-start items-start inline-flex'>
-                {messages.map((message, index) => 
-                    message.type === 'user' ? (
-                        <UserBubble key={index} userText={message.text} />
-                    ) : (
-                        <GptBubble key={index} gptText={message.text} />
-                    )
-                )}
-                <div ref={messagesEndRef} />
+        <div className='w-full flex justify-center items-center'>
+            <div className="max-w-[768px] mt-[83px] mb-[100px] h-full flex flex-col">
+                <div className='flex-col flex-grow overflow-y-auto justify-start items-start inline-flex'>
+                    {messages.map((message, index) => 
+                        message.type === 'human' ? (
+                            <UserBubble key={index} userText={message.text} />
+                        ) : (
+                            <GptBubble key={index} gptText={message.text} />
+                        )
+                    )}
+                    <div ref={messagesEndRef} />
+                </div>
             </div>
             <InputNomal addUserMessage={addUserMessage} />
         </div>

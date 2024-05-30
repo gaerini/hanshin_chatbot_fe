@@ -72,6 +72,6 @@ body {
   .blueBtnStyle-s {
     @apply p-1 rounded-[10px] justify-center items-center inline-flex
           text-neutral-white text-caption font-normal fill-neutral-white hover:duration-500
-          bg-blue-500 hover:bg-blue-600 hover:font-bold
+          bg-blue-original hover:bg-blue-600 hover:font-bold
   }
 }
