@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Icon from '../icon/icon';
 import { useActiveItemContext } from '../dropDown/activeItemContext';
 
@@ -17,9 +17,17 @@ const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage, addGptMessage, 
 
     const { selectedProject } = useActiveItemContext();
 
+    // const [memoryId, setMemoryId] = useState<string | null>(null); // state to store memory_id
+
     const updateLoading = (loading: boolean) => {
         setLoading(loading);
     };
+
+    // useEffect(() => {
+    //     if (memoryId === null) return;
+    //     setInputValue('');
+    // }, [memoryId]);
+
 
     //textarea height 조절
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -41,7 +49,7 @@ const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage, addGptMessage, 
             const requestBody = {
                 query: inputValue,
                 project_name: selectedProject,
-                memory_id: "66588298804f8338389841e5"
+                memory_id: "66597b96612d7aa8c4ff5430"
             };
 
             updateLoading(true);
@@ -63,6 +71,7 @@ const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage, addGptMessage, 
 
                 console.log('Success:', result);
                 addGptMessage(result.answer, result.sources, result.project_name);
+                //setMemoryId(result.memory_id);
 
             } catch (error) {
                 console.error('Error:', error);
@@ -96,12 +105,14 @@ const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage, addGptMessage, 
                         flex justify-center items-center fixed bottom-0 z-10">
             <div className="max-w-[768px] w-full p-4 
                             justify-start items-start inline-flex">
+                                
                 <textarea className="grow shrink basis-0 pl-4 pr-3 py-4 bg-neutral-white 
                                     rounded-tl-2xl rounded-bl-2xl border-l border-t border-b border-neutral-300 
                                     justify-start items-center flex resize-none
                                     text-paragraph-l text-neutral-700 focus:outline-none"
                           style={{ height: textareaHeight, maxHeight: `${maxHeight}px`, overflow: inputValue ? 'auto' : 'hidden' }}
-                          placeholder="무엇이든 물어보세요"
+                          placeholder = {selectedProject ? `${selectedProject}에 대해 무엇이든 물어보세요`
+                                                         : "무엇이든 물어보세요"}
                           value={inputValue}
                           onChange={handleChange}
                           onKeyDown={handleKeyDown}
@@ -109,7 +120,7 @@ const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage, addGptMessage, 
                           rows={1}
                         />
 
-                <div className="w-[60px] pl-4 pr-3 py-2.5 bg-neutral-white 
+                <div className="w-[60px] pl-4 pr-3 py-3 bg-neutral-white 
                                 rounded-tr-2xl rounded-br-2xl border-r border-t border-b border-neutral-300 
                                 justify-start items-end flex"
                      style={{ height: textareaRef.current ? textareaRef.current.style.height : 'auto' }}>

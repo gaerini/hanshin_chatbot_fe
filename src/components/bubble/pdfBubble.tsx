@@ -29,7 +29,7 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
                         <PdfData
                             key={index}
                             number={`발췌 ${index + 1}`}
-                            pdfName={fileName} // 추출한 파일 이름 사용
+                            pdfName={`${fileName} 의 ${source.page}p 에서 발췌`} // 추출한 파일 이름 사용
                             pdfPath={filePath} // 추출한 파일 경로 사용
                         />
                     );
