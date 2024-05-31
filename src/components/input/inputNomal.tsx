@@ -5,7 +5,7 @@ import { useActiveItemContext } from '../dropDown/activeItemContext';
 
 interface InputNomalProps {
     addUserMessage: (message: string) => void;
-    addGptMessage: (message: string, sources: any[]) => void;
+    addGptMessage: (message: string, sources: any[], badgeProject?: string | null) => void;
     setLoading: (loading: boolean) => void;
 }
 
@@ -60,8 +60,10 @@ const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage, addGptMessage, 
                 }
 
                 const result = await response.json();
+
                 console.log('Success:', result);
-                addGptMessage(result.answer, result.sources);
+                addGptMessage(result.answer, result.sources, result.project_name);
+
             } catch (error) {
                 console.error('Error:', error);
             } finally {
