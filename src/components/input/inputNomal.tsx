@@ -1,17 +1,27 @@
 'use client'
 import React, { useState, useRef } from 'react';
 import Icon from '../icon/icon';
+import { useActiveItemContext } from '../dropDown/activeItemContext';
 
 interface InputNomalProps {
     addUserMessage: (message: string) => void;
+    addGptMessage: (message: string, sources: any[]) => void;
+    setLoading: (loading: boolean) => void;
 }
 
-const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage }) => {
+const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage, addGptMessage, setLoading }) => {
     const [inputValue, setInputValue] = useState('');
     const [textareaHeight, setTextareaHeight] = useState('auto');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const maxHeight = 250;
 
+    const { selectedProject } = useActiveItemContext();
+
+    const updateLoading = (loading: boolean) => {
+        setLoading(loading);
+    };
+
+    //textarea height 조절
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(e.target.value);
 
@@ -23,13 +33,49 @@ const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage }) => {
     };
 
     //버튼으로 보내기
-    const handleSend = () => {
-        if (inputValue.trim()) {
+    const handleSend = async () => {
+        if (inputValue.trim() && selectedProject) {
             addUserMessage(inputValue);
+
+            // API 요청
+            const requestBody = {
+                query: inputValue,
+                project_name: selectedProject,
+                memory_id: "66588298804f8338389841e5"
+            };
+
+            updateLoading(true);
+
+            try {
+                const response = await fetch('https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const result = await response.json();
+                console.log('Success:', result);
+                addGptMessage(result.answer, result.sources);
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                // 로딩 상태 업데이트
+                updateLoading(false);
+            }
+
             setInputValue('');
             if (textareaRef.current) {
                 textareaRef.current.style.height ='auto';
             }
+
+        } else {
+            alert('프로젝트를 선택해주세요.');
         }
     };
 
@@ -40,6 +86,7 @@ const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage }) => {
             handleSend();
         }
     };
+
 
 
     return (

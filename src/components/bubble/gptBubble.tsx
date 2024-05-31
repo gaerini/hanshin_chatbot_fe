@@ -11,9 +11,10 @@ import ProjectBadge from '../dropDown/projectBadge';
 
 interface GptBubbleProps {
     gptText: string;
+    sources: { source: string, page: number }[];
 }
 
-const GptBubble: React.FC<GptBubbleProps> = ({ gptText }) => {
+const GptBubble: React.FC<GptBubbleProps> = ({ gptText, sources }) => {
     
     // {gptText}의 타이핑효과
     const [displayedText, setDisplayedText] = useState('');
@@ -48,9 +49,9 @@ const GptBubble: React.FC<GptBubbleProps> = ({ gptText }) => {
             </div>
             <div className="w-full pl-10 pr-2.5 py-2.5 bg-white flex-col justify-start items-start gap-4 inline-flex text-paragraph-chatBot">
                 <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
-                    {gptText}
+                    {displayedText}
                 </ReactMarkdown>
-                <PdfBubble/>
+                {displayedText.length === gptText.length && <PdfBubble sources={sources}/>}
             </div>
 
         </div>
