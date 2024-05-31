@@ -98,8 +98,6 @@ const InputNomal: React.FC<InputNomalProps> = ({ addUserMessage, addGptMessage, 
         }
     };
 
-
-
     return (
         <div className="w-full bg-neutral-white-opacity-80 backdrop-blur-[10px] 
                         flex justify-center items-center fixed bottom-0 z-10">
