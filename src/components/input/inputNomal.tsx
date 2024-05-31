@@ -30,7 +30,9 @@ const InputNomal: React.FC<InputNomalProps> = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(e.target.value);
+    let value = e.target.value;
+    value = value.trim();
+    setInputValue(value);
 
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -43,7 +45,14 @@ const InputNomal: React.FC<InputNomalProps> = ({
     if (isSending.current) return;
     isSending.current = true;
 
-    if (!inputValue.trim() || !selectedProject) {
+    setInputValue("");
+
+    if (!inputValue.trim()) {
+      alert("내용을 입력해주세요.");
+      isSending.current = false;
+      return;
+    }
+    if (!selectedProject) {
       alert("프로젝트를 선택해주세요.");
       isSending.current = false;
       return;
@@ -51,16 +60,14 @@ const InputNomal: React.FC<InputNomalProps> = ({
 
     console.log("handleSend called");
     addUserMessage(inputValue);
-
-    const requestBody = {
-      query: inputValue,
-      project_name: selectedProject,
-      memory_id: "66597b96612d7aa8c4ff5430",
-    };
-
     updateLoading(true);
 
     try {
+      const requestBody = {
+        query: inputValue,
+        project_name: selectedProject,
+        memory_id: "66597b96612d7aa8c4ff5430",
+      };
       const response = await fetch(
         "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat",
         {
@@ -86,7 +93,6 @@ const InputNomal: React.FC<InputNomalProps> = ({
       isSending.current = false;
     }
 
-    setInputValue("");
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
     }
