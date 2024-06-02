@@ -31,7 +31,6 @@ const InputNomal: React.FC<InputNomalProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let value = e.target.value;
-    value = value.trim();
     setInputValue(value);
 
     if (textareaRef.current) {
@@ -42,10 +41,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
   };
 
   const handleSend = async () => {
-    if (isSending.current) return;
+    if (isSending.current) {
+      setInputValue("");
+      return;
+    }
     isSending.current = true;
-
-    setInputValue("");
 
     if (!inputValue.trim()) {
       alert("내용을 입력해주세요.");
