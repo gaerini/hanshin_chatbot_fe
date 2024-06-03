@@ -98,6 +98,9 @@ body {
 
 @media only screen and (max-width: 600px) {
   .custom-textarea {
-    border-radius: 0; /* 모바일 기기에서 border-radius를 0으로 설정하여 우측에 rounded 스타일이 적용되지 않도록 함 */
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }
