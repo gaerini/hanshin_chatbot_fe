@@ -37,7 +37,7 @@ body {
   }
 
   .neutralBtnStyle-l {
-    @apply p-4 rounded-2xl items-center inline-flex border border-neutral-300
+    @apply p-4 rounded-2xl items-center inline-flex border border-neutral-200
            text-neutral-700 text-paragraph-l font-bold hover:duration-500
           fill-neutral-700;
 

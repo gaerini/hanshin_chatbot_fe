@@ -17,7 +17,7 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
   };
 
   return (
-    <div className="w-full p-4 bg-neutral-100 rounded-[10px] flex-col justify-start items-end gap-4 inline-flex">
+    <div className="w-full p-4 bg-neutral-white border border-neutral-200 rounded-[10px] flex-col justify-start items-end gap-4 inline-flex">
       <div className="self-stretch justify-start items-center gap-2 inline-flex fill-neutral-500">
         <Icon name="speaker" width={16} height={16} />
         <div className="grow shrink basis-0 text-neutral-500 text-paragraph-m font-semibold">
@@ -33,7 +33,7 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
             <PdfData
               key={index}
               number={`발췌 ${index + 1}`}
-              pdfName={`${fileName} 의 ${source.page}p 에서 발췌`} // 추출한 파일 이름 사용
+              pdfName={`${fileName} 의 ${source.page}p`} // 추출한 파일 이름 사용
               pdfPath={filePath} // 추출한 파일 경로 사용
             />
           );

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Icon from "../icon/icon";
 import { useActiveItemContext } from "../dropDown/activeItemContext";
 
@@ -19,11 +19,13 @@ const InputNomal: React.FC<InputNomalProps> = ({
   setLoading,
 }) => {
   const [inputValue, setInputValue] = useState("");
+  const [memoryId, setMemoryId] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const maxHeight = 250;
   const isSending = useRef(false);
 
   const { selectedProject } = useActiveItemContext();
+
 
   const updateLoading = (loading: boolean) => {
     setLoading(loading);
@@ -58,7 +60,6 @@ const InputNomal: React.FC<InputNomalProps> = ({
       return;
     }
 
-    console.log("handleSend called");
     addUserMessage(inputValue);
     updateLoading(true);
 
@@ -66,8 +67,9 @@ const InputNomal: React.FC<InputNomalProps> = ({
       const requestBody = {
         query: inputValue,
         project_name: selectedProject,
-        memory_id: "66597b96612d7aa8c4ff5430",
+        memory_id: memoryId,
       };
+
       const response = await fetch(
         "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat",
         {
@@ -85,7 +87,17 @@ const InputNomal: React.FC<InputNomalProps> = ({
 
       const result = await response.json();
       console.log("Success:", result);
+
+      if (result.memory_id && result.memory_id.match(/ObjectId\('(.+)'\)/)) {
+        const extractedMemoryId = result.memory_id.match(/ObjectId\('(.+)'\)/)[1];
+        console.log("Extracted memory_id:", extractedMemoryId);
+        setMemoryId(extractedMemoryId);
+      } else {
+        console.log("No memory_id received in response.");
+      }
+
       addGptMessage(result.answer, result.sources, result.project_name);
+
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -109,7 +121,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
     <div className="w-full bg-neutral-white-opacity-80 backdrop-blur-[10px] flex justify-center items-center fixed bottom-0 z-10">
       <div className="max-w-[768px] w-full p-4 justify-start items-start inline-flex">
         <textarea
-          className="grow shrink basis-0 pl-4 pr-3 py-4 bg-neutral-white rounded-tl-2xl rounded-bl-2xl border-l border-t border-b border-neutral-300 justify-start items-center flex resize-none text-paragraph-l text-neutral-700 focus:outline-none"
+          className="grow shrink basis-0 pl-4 pr-3 py-4 bg-neutral-white rounded-tl-2xl rounded-bl-2xl border-l border-t border-b border-neutral-200 justify-start items-center flex resize-none text-paragraph-l text-neutral-700 focus:outline-none"
           style={{
             maxHeight: `${maxHeight}px`,
             overflow: inputValue ? "auto" : "hidden",
@@ -127,7 +139,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
         />
 
         <div
-          className="w-[60px] pl-4 pr-3 py-3 bg-neutral-white rounded-tr-2xl rounded-br-2xl border-r border-t border-b border-neutral-300 justify-start items-end flex"
+          className="w-[60px] pl-4 pr-3 py-3 bg-neutral-white rounded-tr-2xl rounded-br-2xl border-r border-t border-b border-neutral-200 justify-start items-end flex"
           style={{
             height: textareaRef.current
               ? textareaRef.current.style.height

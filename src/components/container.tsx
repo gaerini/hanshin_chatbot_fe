@@ -28,6 +28,7 @@ const Container: React.FC = () => {
             messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
         }
     };
+    
 
 
     return (
@@ -51,7 +52,6 @@ const Container: React.FC = () => {
                             )
                         )}
                         {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
-
                     <div ref={messagesEndRef} />
                 </div>
             </div>

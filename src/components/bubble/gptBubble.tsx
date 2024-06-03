@@ -38,10 +38,22 @@ const GptBubble: React.FC<GptBubbleProps> = ({ gptText, sources, badgeProject })
         return () => clearInterval(intervalId);
     }, [gptText]);
 
+     // badgeProject에 따라 배경 색 클래스를 결정하는 함수
+     const getBackgroundColorClass = (project: string | null) => {
+        switch (project) {
+            case '용산 에피소드':
+                return 'bg-neutral-100';
+            case '양산 평산동':
+                return 'bg-blue-100';
+            default:
+                return '';
+        }
+    };
+
     return (
-        <div className='w-full p-4 flex-col justify-start items-start gap-2 inline-flex'>
+        <div className={`w-full p-4 rounded-2xl flex-col justify-start items-start gap-2 inline-flex ${getBackgroundColorClass(badgeProject)}`}>
             <div className='justify-start items-center gap-2 inline-flex'>
-                <div className="w-[32px] h-[32px] rounded-full shadow-md border border-neutral-300 items-center justify-center inline-flex">
+                <div className="w-[32px] h-[32px] rounded-full shadow-md bg-neutral-white border border-neutral-300 items-center justify-center inline-flex">
                     <Icon name="hanshin"
                         width={24}
                         height={24}/>
