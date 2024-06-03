@@ -48,11 +48,11 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
   return (
     <div className="relative flex-col justify-start items-start gap-2 inline-flex">
       <button
-        className={`w-[216px] neutralBtnStyle-l justify-between
+        className={`w-[216px] neutralBtnStyle-l justify-between dark:neutralBtnStyle-l-dark 
                                 ${
                                   isOpened
-                                    ? "bg-neutral-200 hover:bg-neutral-100"
-                                    : "bg-neutral-white hover:bg-neutral-100"
+                                    ? "bg-neutral-200 hover:bg-neutral-100 dark:bg-neutral-600 dark:hover:bg-neutral-700"
+                                    : "bg-neutral-white hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700"
                                 }`}
         onClick={handleToggleDropDown}
       >
@@ -66,7 +66,8 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
           {selectedProject || projectName || (
             <p
               className={`font-midium ${
-                isOpened ? "text-neutral-700" : "text-neutral-400"
+                isOpened ? "text-neutral-700 dark:text-neutral-300" 
+                         : "text-neutral-400 dark:text-neutral-400"
               }`}
             >
               프로젝트 선택

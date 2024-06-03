@@ -1,22 +1,24 @@
-import React from "react";
+import React from 'react';
 
 interface PdfDataProps {
-  number: string; //발췌 N = 발췌+{referencePdf.id} 형식으로 쓸수도잇고
-  pdfName: string; //
-  pdfPath: string;
+    number: string;
+    pdfName: string;
+    pdfPath: string;
 }
 
 const PdfData: React.FC<PdfDataProps> = ({ number, pdfName, pdfPath }) => {
-  return (
-    <div className="self-stretch pl-7 justify-start items-center gap-2 inline-flex h-8">
-      <p className="text-neutral-500 text-caption">{number}</p>
-      <a href={pdfPath} target="_blank" rel="noopener noreferrer" className="flex items-center">
-        <button className="text-neutral-500 text-caption underline hover:font-bold">
-          {pdfName}
-        </button>
-      </a>
-    </div>
-  );
+    return (
+        <div className="flex w-full pl-7 justify-start items-center gap-3 ">
+            <div className="flex-shrink-0 w-auto p-1 rounded-md text-neutral-400 text-caption bg-neutral-100 dark:text-neutral-300 dark:bg-neutral-500 whitespace-nowrap">
+                {number}
+            </div>
+            <a href={pdfPath} download className="flex-grow justify-start items-center overflow-hidden">
+                <button className="w-full text-neutral-500 dark:text-neutral-300 text-paragraph-s text-left hover:font-bold gap-1 truncate">
+                    {pdfName}
+                </button>
+            </a>
+        </div>
+    );
 };
 
 export default PdfData;

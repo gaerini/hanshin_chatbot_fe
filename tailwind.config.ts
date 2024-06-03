@@ -54,6 +54,7 @@ const config: Config = {
       "paragraph-l" : ["1rem", "150%"],
       "paragraph-chatBot" : ["1rem", "200%"],
       "paragraph-m": ["0.875rem", "120%"],
+      "paragraph-s": ["0.8rem", "120%"],
       "caption": ["0.75rem", "150%"]
     },
 

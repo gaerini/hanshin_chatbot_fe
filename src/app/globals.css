@@ -7,6 +7,16 @@
   src: url("../../public/font/PretendardVariable.ttf");
 }
 
+.custom-textarea::placeholder {
+  font-family: "pretendard"; /* 원하는 폰트 패밀리로 변경 */
+  font-size: 1rem; /* 원하는 폰트 크기로 변경 */
+  line-height: 1.5rem;
+  color: #999; /* 원하는 색상으로 변경 */
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
 :root {
   height: 100%;
 }
@@ -37,7 +47,7 @@ body {
   }
 
   .neutralBtnStyle-l {
-    @apply p-4 rounded-2xl items-center inline-flex border border-neutral-300
+    @apply p-4 rounded-2xl items-center inline-flex border border-neutral-200
            text-neutral-700 text-paragraph-l font-bold hover:duration-500
           fill-neutral-700;
 
@@ -73,5 +83,34 @@ body {
     @apply p-1 rounded-[10px] justify-center items-center inline-flex
           text-neutral-white text-caption font-normal fill-neutral-white hover:duration-500
           bg-blue-original hover:bg-blue-600 hover:font-bold
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @layer utilities {
+    .neutralBtnStyle-l-dark {
+    @apply p-4 rounded-2xl items-center inline-flex border border-neutral-800
+           text-neutral-300 text-paragraph-l font-bold hover:duration-500
+          fill-neutral-300;
+
+    /* @apply ${isActive ? 'bg-neutral-600' : 'bg-neutral-800 hover:bg-neutral-700'}; */
+  }
+
+  .neutralBtnStyle-m-dark {
+    @apply p-2.5 rounded-[10px] items-center inline-flex
+           text-neutral-300 text-paragraph-m fill-neutral-300 hover:duration-500;
+
+    /* @apply ${isActive ? 'bg-neutral-600 font-bold' 
+                      : 'bg-neutral-800 font-normal hover:bg-neutral-700 hover:font-bold'}; */
+  }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .custom-textarea {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }
