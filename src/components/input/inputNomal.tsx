@@ -127,6 +127,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
                     
                     dark:bg-neutral-800 dark:border-neutral-800 
                     dark:text-neutral-300
+                    custom-textarea
                     "
           style={{
             maxHeight: `${maxHeight}px`,
