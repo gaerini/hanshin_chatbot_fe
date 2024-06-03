@@ -28,15 +28,14 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
       </div>
       <div className="w-full flex-col justify-start items-end inline-flex gap-[-2px]">
         {sources.map((source, index) => {
-          // 파일 경로와 파일 이름을 추출
           const { fileName, filePath } = extractFilePathAndName(source.source);
-
+        
           return (
             <PdfData
               key={index}
               number={`발췌 ${index + 1}`}
-              pdfName={`${fileName} 의 ${source.page}p`} // 추출한 파일 이름 사용
-              pdfPath={filePath} // 추출한 파일 경로 사용
+              pdfName={`${fileName} 의 ${source.page}p`}
+              pdfPath={filePath}
             />
           );
         })}
