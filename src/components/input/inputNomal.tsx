@@ -27,7 +27,6 @@ const InputNomal: React.FC<InputNomalProps> = ({
 
   const { selectedProject } = useActiveItemContext();
 
-
   const updateLoading = (loading: boolean) => {
     setLoading(loading);
   };
@@ -68,12 +67,14 @@ const InputNomal: React.FC<InputNomalProps> = ({
       return;
     }
 
+    const modifiedQuery = `<${selectedProject} 프로젝트>\n${inputValue}`;
+
     addUserMessage(inputValue);
     updateLoading(true);
 
     try {
       const requestBody = {
-        query: inputValue,
+        query: modifiedQuery,
         project_name: selectedProject,
         memory_id: memoryId,
       };
@@ -97,15 +98,17 @@ const InputNomal: React.FC<InputNomalProps> = ({
       console.log("Success:", result);
 
       if (result.memory_id && result.memory_id.match(/ObjectId\('(.+)'\)/)) {
-        const extractedMemoryId = result.memory_id.match(/ObjectId\('(.+)'\)/)[1];
+        const extractedMemoryId =
+          result.memory_id.match(/ObjectId\('(.+)'\)/)[1];
         console.log("Extracted memory_id:", extractedMemoryId);
+
         setMemoryId(extractedMemoryId);
       } else {
         console.log("No memory_id received in response.");
+        console.log(memoryId);
       }
 
       addGptMessage(result.answer, result.sources, result.project_name);
-
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -165,7 +168,10 @@ const InputNomal: React.FC<InputNomalProps> = ({
               : "auto",
           }}
         >
-          <button className="w-8 h-8 blueBtnStyle-s my-[0.7rem]" onClick={handleSend}>
+          <button
+            className="w-8 h-8 blueBtnStyle-s my-[0.7rem]"
+            onClick={handleSend}
+          >
             <Icon name="sendMessage" width={20} height={20} />
           </button>
         </div>

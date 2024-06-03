@@ -5,8 +5,10 @@ import UserBubble from './bubble/userBubble';
 import GptBubble from './bubble/gptBubble';
 import InputNomal from './input/inputNomal';
 import TypingIndicator from './bubble/typingIndicator';
+import { useActiveItemContext } from './dropDown/activeItemContext';
 
 const Container: React.FC = () => {
+    const { selectedProject } = useActiveItemContext();
     const [messages, setMessages] = useState<{ type: string, text: string, sources?: any[], badgeProject?: string | null | undefined }[]>([]);
     const [loading, setLoading] = useState(false); 
 
@@ -35,23 +37,25 @@ const Container: React.FC = () => {
         <div className='w-full flex justify-center items-center'>
             <div className="w-full max-w-[768px] mt-[83px] mb-[100px] h-full flex flex-col">
                     <div className='flex-col flex-grow overflow-y-auto justify-start items-start inline-flex'>
-                        {messages.length === 0 ? (
+                        {selectedProject === null ? (
                             <div className="w-full h-full text-center justify-center items-center mt-16">
                                 <div className='text-neutral-400 font-bold text-title'>프로젝트를 선택해 주세요</div>
                             </div>
                         ) : (
-                            messages.map((message, index) => 
-                                message.type === 'human' ? (
-                                    <UserBubble key={index} userText={message.text} />
-                                ) : (
-                                    <GptBubble key={index} 
-                                            gptText={message.text} 
-                                            sources={message.sources || []} 
-                                            badgeProject={message.badgeProject ?? null}/>
-                                )
-                            )
+                            <>
+                                {messages.map((message, index) => 
+                                    message.type === 'human' ? (
+                                        <UserBubble key={index} userText={message.text} />
+                                    ) : (
+                                        <GptBubble key={index} 
+                                                gptText={message.text} 
+                                                sources={message.sources || []} 
+                                                badgeProject={message.badgeProject ?? null}/>
+                                    )
+                                )}
+                                {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
+                            </>
                         )}
-                        {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
                     <div ref={messagesEndRef} />
                 </div>
             </div>
