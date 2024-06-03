@@ -33,7 +33,8 @@ const DropDown: React.FC<DropDownProps> = ({
   return (
     <div
       className="absolute top-full left-0 mt-2 p-2 bg-neutral-white rounded-2xl border border-neutral-200 
-                        flex-col justify-start items-start gap-1 inline-flex shadow-lg"
+                 dark:bg-neutral-800 dark:border-neutral-800 
+                  flex-col justify-start items-start gap-1 inline-flex shadow-lg"
     >
       {projects.map((projectName) => (
         <DropDownItem

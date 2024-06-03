@@ -75,3 +75,23 @@ body {
           bg-blue-original hover:bg-blue-600 hover:font-bold
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  @layer utilities {
+    .neutralBtnStyle-l-dark {
+    @apply p-4 rounded-2xl items-center inline-flex border border-neutral-800
+           text-neutral-300 text-paragraph-l font-bold hover:duration-500
+          fill-neutral-300;
+
+    /* @apply ${isActive ? 'bg-neutral-600' : 'bg-neutral-800 hover:bg-neutral-700'}; */
+  }
+
+  .neutralBtnStyle-m-dark {
+    @apply p-2.5 rounded-[10px] items-center inline-flex
+           text-neutral-300 text-paragraph-m fill-neutral-300 hover:duration-500;
+
+    /* @apply ${isActive ? 'bg-neutral-600 font-bold' 
+                      : 'bg-neutral-800 font-normal hover:bg-neutral-700 hover:font-bold'}; */
+  }
+  }
+}

@@ -121,7 +121,13 @@ const InputNomal: React.FC<InputNomalProps> = ({
     <div className="w-full bg-neutral-white-opacity-80 backdrop-blur-[10px] flex justify-center items-center fixed bottom-0 z-10">
       <div className="max-w-[768px] w-full p-4 justify-start items-start inline-flex">
         <textarea
-          className="grow shrink basis-0 pl-4 pr-3 py-4 bg-neutral-white rounded-tl-2xl rounded-bl-2xl border-l border-t border-b border-neutral-200 justify-start items-center flex resize-none text-paragraph-l text-neutral-700 focus:outline-none"
+          className="grow shrink basis-0 pl-4 pr-3 py-4 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-start items-center flex resize-none 
+                    bg-neutral-white border-neutral-200 
+                    text-paragraph-l text-neutral-700 focus:outline-none
+                    
+                    dark:bg-neutral-800 dark:border-neutral-800 
+                    dark:text-neutral-300
+                    "
           style={{
             maxHeight: `${maxHeight}px`,
             overflow: inputValue ? "auto" : "hidden",
@@ -139,7 +145,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
         />
 
         <div
-          className="w-[60px] pl-4 pr-3 py-3 bg-neutral-white rounded-tr-2xl rounded-br-2xl border-r border-t border-b border-neutral-200 justify-start items-end flex"
+          className="w-[60px] pl-4 pr-3 py-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-start items-end flex
+                   bg-neutral-white border-neutral-200 dark:bg-neutral-800 dark:border-neutral-800"
           style={{
             height: textareaRef.current
               ? textareaRef.current.style.height

@@ -42,16 +42,17 @@ const GptBubble: React.FC<GptBubbleProps> = ({ gptText, sources, badgeProject })
      const getBackgroundColorClass = (project: string | null) => {
         switch (project) {
             case '용산 에피소드':
-                return 'bg-neutral-100';
+                return 'bg-neutral-800';
             case '양산 평산동':
-                return 'bg-blue-100';
+                return 'bg-neutral-700';
             default:
                 return '';
         }
     };
 
     return (
-        <div className={`w-full p-4 rounded-2xl flex-col justify-start items-start gap-2 inline-flex ${getBackgroundColorClass(badgeProject)}`}>
+        <div className='w-full px-4 flex-col justify-start items-start mb-4'>
+        <div className={`w-full p-4 rounded-[10px] flex-col justify-start items-start gap-2 inline-flex ${getBackgroundColorClass(badgeProject)}`}>
             <div className='justify-start items-center gap-2 inline-flex'>
                 <div className="w-[32px] h-[32px] rounded-full shadow-md bg-neutral-white border border-neutral-300 items-center justify-center inline-flex">
                     <Icon name="hanshin"
@@ -68,6 +69,7 @@ const GptBubble: React.FC<GptBubbleProps> = ({ gptText, sources, badgeProject })
                  {displayedText.length === gptText.length && <PdfBubble sources={sources}/>}
             </div>
 
+        </div>
         </div>
     );
 };

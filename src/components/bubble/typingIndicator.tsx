@@ -7,7 +7,7 @@ const TypingIndicator: React.FC = () => {
     return (
         <div className='w-full p-4 flex-col justify-start items-start gap-2 inline-flex'>
             <div className='justify-start items-center gap-2 inline-flex'>
-                <div className="w-[32px] h-[32px] rounded-full shadow-md border border-neutral-300 items-center justify-center inline-flex">
+                <div className="w-[32px] h-[32px] rounded-full shadow-md border border-neutral-300 items-center justify-center inline-flex bg-blue-100">
                     <Icon name="hanshin"
                         width={24}
                         height={24}/>
