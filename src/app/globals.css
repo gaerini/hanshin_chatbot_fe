@@ -7,6 +7,16 @@
   src: url("../../public/font/PretendardVariable.ttf");
 }
 
+.custom-textarea::placeholder {
+  font-family: "pretendard"; /* 원하는 폰트 패밀리로 변경 */
+  font-size: 1rem; /* 원하는 폰트 크기로 변경 */
+  line-height: 1.5rem;
+  color: #999; /* 원하는 색상으로 변경 */
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
 :root {
   height: 100%;
 }

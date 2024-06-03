@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Icon from "../icon/icon";
 import { useActiveItemContext } from "../dropDown/activeItemContext";
 
@@ -22,6 +22,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
   const [memoryId, setMemoryId] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const maxHeight = 250;
+  const minHeight = "3.5rem";
   const isSending = useRef(false);
 
   const { selectedProject } = useActiveItemContext();
@@ -30,6 +31,13 @@ const InputNomal: React.FC<InputNomalProps> = ({
   const updateLoading = (loading: boolean) => {
     setLoading(loading);
   };
+
+  //textarea 영역 높이 조절
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = minHeight;
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let value = e.target.value;
@@ -121,15 +129,16 @@ const InputNomal: React.FC<InputNomalProps> = ({
     <div className="w-full bg-neutral-white-opacity-80 backdrop-blur-[10px] flex justify-center items-center fixed bottom-0 z-10">
       <div className="max-w-[768px] w-full p-4 justify-start items-start inline-flex">
         <textarea
-          className="grow shrink basis-0 pl-4 pr-3 py-4 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-start items-center flex resize-none 
+          className="grow shrink basis-0 pl-4 pr-3 py-3.5 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-center items-center flex resize-none 
                     bg-neutral-white border-neutral-200 
                     text-paragraph-l text-neutral-700 focus:outline-none
                     
                     dark:bg-neutral-800 dark:border-neutral-800 
                     dark:text-neutral-300
-                    custom-textarea
+                    custom-textarea 
                     "
           style={{
+            minHeight: minHeight,
             maxHeight: `${maxHeight}px`,
             overflow: inputValue ? "auto" : "hidden",
           }}
@@ -146,15 +155,17 @@ const InputNomal: React.FC<InputNomalProps> = ({
         />
 
         <div
-          className="w-[60px] pl-4 pr-3 py-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-start items-end flex
+          className="w-[60px] px-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-center items-end flex
                    bg-neutral-white border-neutral-200 dark:bg-neutral-800 dark:border-neutral-800"
           style={{
+            minHeight: minHeight,
+            maxHeight: `${maxHeight}px`,
             height: textareaRef.current
               ? textareaRef.current.style.height
               : "auto",
           }}
         >
-          <button className="w-8 h-8 blueBtnStyle-s" onClick={handleSend}>
+          <button className="w-8 h-8 blueBtnStyle-s my-[0.7rem]" onClick={handleSend}>
             <Icon name="sendMessage" width={20} height={20} />
           </button>
         </div>

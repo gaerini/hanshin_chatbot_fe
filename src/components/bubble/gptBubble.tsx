@@ -42,9 +42,9 @@ const GptBubble: React.FC<GptBubbleProps> = ({ gptText, sources, badgeProject })
      const getBackgroundColorClass = (project: string | null) => {
         switch (project) {
             case '용산 에피소드':
-                return 'bg-neutral-800';
+                return 'bg-neutral-100 dark:bg-neutral-800';
             case '양산 평산동':
-                return 'bg-neutral-700';
+                return 'bg-blue-100 dark:bg-neutral-700';
             default:
                 return '';
         }

@@ -9,11 +9,11 @@ interface PdfDataProps {
 const PdfData: React.FC<PdfDataProps> = ({ number, pdfName, pdfPath }) => {
     return (
             <div className="self-stretch pl-7 justify-start items-center gap-4 inline-flex">
-                <div className="p-1 rounded-md 
-                              text-neutral-400 text-caption bg-neutral-100
-                              dark:text-neutral-300 dark:bg-neutral-500">{number}</div>
+                <div className="w-auto p-1 rounded-md whitespace-nowrap
+                                text-neutral-400 text-caption bg-neutral-100
+                               dark:text-neutral-300 dark:bg-neutral-500">{number}</div>
                 <a href={pdfPath} download>
-                    <button className="text-neutral-500 dark:text-neutral-300 text-paragraph-s hover:font-bold gap-1 inline-flex">{pdfName}</button>
+                    <button className="text-neutral-500 dark:text-neutral-300 text-paragraph-s hover:font-bold gap-1 inline-flex text-left">{pdfName}</button>
                 </a>
             </div>
     );
