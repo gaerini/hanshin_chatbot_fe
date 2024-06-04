@@ -101,13 +101,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
         const extractedMemoryId =
           result.memory_id.match(/ObjectId\('(.+)'\)/)[1];
         console.log("Extracted memory_id:", extractedMemoryId);
-
         setMemoryId(extractedMemoryId);
       } else {
         console.log("No memory_id received in response.");
         console.log(memoryId);
       }
-
       addGptMessage(result.answer, result.sources, result.project_name);
     } catch (error) {
       console.error("Error:", error);
@@ -147,7 +145,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
           }}
           placeholder={
             selectedProject
-              ? `${selectedProject}에 대해 무엇이든 물어보세요`
+              ? `${selectedProject} 현장에 대해 무엇이든 물어보세요`
               : "무엇이든 물어보세요"
           }
           value={inputValue}
