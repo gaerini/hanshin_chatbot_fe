@@ -74,7 +74,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
 
     try {
       const requestBody = {
-        query: modifiedQuery,
+        query: inputValue,
         project_name: selectedProject,
         memory_id: memoryId,
       };
