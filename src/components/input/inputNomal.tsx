@@ -67,14 +67,14 @@ const InputNomal: React.FC<InputNomalProps> = ({
       return;
     }
 
-    const modifiedQuery = `<${selectedProject} 프로젝트>\n${inputValue}`;
+    const modifiedQuery = `${selectedProject} 현장 : ${inputValue}`;
 
     addUserMessage(inputValue);
     updateLoading(true);
 
     try {
       const requestBody = {
-        query: inputValue,
+        query: modifiedQuery,
         project_name: selectedProject,
         memory_id: memoryId,
       };
