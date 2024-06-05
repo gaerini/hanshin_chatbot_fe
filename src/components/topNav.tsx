@@ -1,6 +1,6 @@
 
 import React from 'react';
-import DropDownController from './dropDown/dropDownController';
+import DropDownController from './dropDown/DropDownController';
 // import TypingIndicator from './bubble/typingIndicator';
 
 const TopNav: React.FC = () => {

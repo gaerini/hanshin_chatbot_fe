@@ -1,7 +1,6 @@
 import React from "react";
-import Icon from "../icon/icon";
-import PdfData from "./pdfData";
-import { decode } from "punycode";
+import Icon from "../icon/Icon";
+import PdfData from "./PdfData";
 
 interface PdfBubbleProps {
   sources: { source: string; page: number }[];
