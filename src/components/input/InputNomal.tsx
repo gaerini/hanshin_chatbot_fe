@@ -49,6 +49,31 @@ const InputNomal: React.FC<InputNomalProps> = ({
     }
   };
 
+  const sendRequest = async (query: string) => {
+    const requestBody = {
+      query,
+      project_name: selectedProject,
+      memory_id: memoryId,
+    };
+
+    const response = await fetch(
+      "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    return response.json();
+  };
+
   const handleSend = async () => {
     if (isSending.current) {
       setInputValue("");
@@ -67,46 +92,51 @@ const InputNomal: React.FC<InputNomalProps> = ({
       return;
     }
 
-    const modifiedQuery = `${selectedProject} 현장 : ${inputValue}`;
-
     addUserMessage(inputValue);
     updateLoading(true);
 
     try {
-      const requestBody = {
-        query: modifiedQuery,
-        project_name: selectedProject,
-        memory_id: memoryId,
-      };
+      const initialResult = await sendRequest(inputValue);
 
-      const response = await fetch(
-        "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
+      if (
+        initialResult.answer &&
+        initialResult.answer.includes(
+          "찾으시는 내용을 주어진 서류에서 찾을 수 없었어요."
+        )
+      ) {
+        const modifiedQuery = `${selectedProject} 현장 ${inputValue}`;
+        const modifiedResult = await sendRequest(modifiedQuery);
+
+        addGptMessage(
+          modifiedResult.answer,
+          modifiedResult.sources,
+          modifiedResult.project_name
+        );
+
+        if (
+          modifiedResult.memory_id &&
+          modifiedResult.memory_id.match(/ObjectId\('(.+)'\)/)
+        ) {
+          const extractedMemoryId =
+            modifiedResult.memory_id.match(/ObjectId\('(.+)'\)/)[1];
+          setMemoryId(extractedMemoryId);
         }
-      );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const result = await response.json();
-      console.log("Success:", result);
-
-      if (result.memory_id && result.memory_id.match(/ObjectId\('(.+)'\)/)) {
-        const extractedMemoryId =
-          result.memory_id.match(/ObjectId\('(.+)'\)/)[1];
-        console.log("Extracted memory_id:", extractedMemoryId);
-        setMemoryId(extractedMemoryId);
       } else {
-        console.log("No memory_id received in response.");
-        console.log(memoryId);
+        addGptMessage(
+          initialResult.answer,
+          initialResult.sources,
+          initialResult.project_name
+        );
+
+        if (
+          initialResult.memory_id &&
+          initialResult.memory_id.match(/ObjectId\('(.+)'\)/)
+        ) {
+          const extractedMemoryId =
+            initialResult.memory_id.match(/ObjectId\('(.+)'\)/)[1];
+          setMemoryId(extractedMemoryId);
+        }
       }
-      addGptMessage(result.answer, result.sources, result.project_name);
     } catch (error) {
       console.error("Error:", error);
     } finally {
