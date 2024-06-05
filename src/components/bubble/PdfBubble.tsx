@@ -16,9 +16,11 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
   };
 
   return (
-    <div className="w-full p-4 rounded-[10px] flex-col justify-start items-end gap-4 inline-flex
+    <div
+      className="w-full p-4 rounded-[10px] flex-col justify-start items-end gap-4 inline-flex
                   bg-neutral-white border border-neutral-200
-                  dark:bg-neutral-600 dark:border-neutral-600">
+                  dark:bg-neutral-600 dark:border-neutral-600"
+    >
       <div className="self-stretch justify-start items-center gap-2 inline-flex fill-neutral-500 dark:fill-neutral-300">
         <Icon name="speaker" width={16} height={16} />
         <div className="grow shrink basis-0 text-neutral-500 dark:text-neutral-300 text-paragraph-m font-semibold">
@@ -26,9 +28,9 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
         </div>
       </div>
       <div className="w-full flex-col justify-start items-end inline-flex gap-[-2px]">
-        {sources.map((source, index) => {
+        {sources.slice(0, 3).map((source, index) => {
           const { fileName, filePath } = extractFilePathAndName(source.source);
-        
+
           return (
             <PdfData
               key={index}
