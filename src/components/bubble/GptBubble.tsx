@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import Latex from 'react-latex-next';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 
@@ -41,7 +42,7 @@ const GptBubble: React.FC<GptBubbleProps> = ({ gptText, sources, badgeProject })
      // badgeProject에 따라 배경 색 클래스를 결정하는 함수
      const getBackgroundColorClass = (project: string | null) => {
         switch (project) {
-            case '용산 에피소드':
+            case '용산 한강로3가':
                 return 'bg-neutral-100 dark:bg-neutral-800';
             case '양산 평산동':
                 return 'bg-blue-100 dark:bg-neutral-700';
@@ -49,7 +50,7 @@ const GptBubble: React.FC<GptBubbleProps> = ({ gptText, sources, badgeProject })
                 return '';
         }
     };
-
+    
     return (
         <div className='w-full px-4 flex-col justify-start items-start mb-4'>
         <div className={`w-full p-4 rounded-[10px] flex-col justify-start items-start gap-2 inline-flex ${getBackgroundColorClass(badgeProject)}`}>
