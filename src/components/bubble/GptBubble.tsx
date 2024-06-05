@@ -6,9 +6,9 @@ import Latex from 'react-latex-next';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 
-import PdfBubble from './pdfBubble';
-import Icon from '../icon/icon';
-import ProjectBadge from '../dropDown/projectBadge';
+import PdfBubble from './PdfBubble';
+import Icon from '../icon/Icon';
+import ProjectBadge from '../dropDown/ProjectBadge';
 
 interface GptBubbleProps {
     gptText: string;
@@ -67,7 +67,7 @@ const GptBubble: React.FC<GptBubbleProps> = ({ gptText, sources, badgeProject })
                 <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
                     {displayedText}
                 </ReactMarkdown>
-                 {displayedText.length === gptText.length && <PdfBubble sources={sources}/>}
+                {displayedText.length === gptText.length && gptText !== "주어진 서류에서 답변을 찾을 수 없습니다." && <PdfBubble sources={sources}/>}
             </div>
 
         </div>

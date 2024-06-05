@@ -8,7 +8,7 @@ const nextConfig = {
           issuer: /\.(js|ts)x?$/,
           use: ['@svgr/webpack'],
         });
-    
+      
         return config;
       },
 };

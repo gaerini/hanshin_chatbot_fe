@@ -1,11 +1,11 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-import UserBubble from './bubble/userBubble';
-import GptBubble from './bubble/gptBubble';
-import InputNomal from './input/inputNomal';
-import TypingIndicator from './bubble/typingIndicator';
-import { useActiveItemContext } from './dropDown/activeItemContext';
+import UserBubble from './bubble/UserBubble';
+import GptBubble from './bubble/GptBubble';
+import InputNomal from './input/InputNomal';
+import TypingIndicator from './bubble/TypingIndicator';
+import { useActiveItemContext } from './dropDown/ActiveItemContext';
 
 const Container: React.FC = () => {
     const { selectedProject } = useActiveItemContext();
