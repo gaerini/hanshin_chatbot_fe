@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DropDownItem from "./dropDownItem";
+import DropDownItem from "./DropDownItem";
 
 interface DropDownProps {
   activeItem: string | null;

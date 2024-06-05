@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import Icon from "../icon/icon";
-import { useActiveItemContext } from "../dropDown/activeItemContext";
+import Icon from "../icon/Icon";
+import { useActiveItemContext } from "../dropDown/ActiveItemContext";
 
 interface InputNomalProps {
   addUserMessage: (message: string) => void;

@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Icon from "../icon/icon";
-import DropDown from "./dropDown";
-import { useActiveItemContext } from "./activeItemContext";
+import Icon from "../icon/Icon";
+import DropDown from "./DropDown";
+import { useActiveItemContext } from "./ActiveItemContext";
 
 interface DropDownControllerProps {
   projectName: string;
