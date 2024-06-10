@@ -113,13 +113,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
           modifiedResult.project_name
         );
 
-        if (
-          modifiedResult.memory_id &&
-          modifiedResult.memory_id.match(/ObjectId\('(.+)'\)/)
-        ) {
-          const extractedMemoryId =
-            modifiedResult.memory_id.match(/ObjectId\('(.+)'\)/)[1];
-          setMemoryId(extractedMemoryId);
+        if (modifiedResult.memory_id) {
+          setMemoryId(modifiedResult.memory_id);
         }
       } else {
         addGptMessage(
@@ -128,13 +123,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
           initialResult.project_name
         );
 
-        if (
-          initialResult.memory_id &&
-          initialResult.memory_id.match(/ObjectId\('(.+)'\)/)
-        ) {
-          const extractedMemoryId =
-            initialResult.memory_id.match(/ObjectId\('(.+)'\)/)[1];
-          setMemoryId(extractedMemoryId);
+        if (initialResult.memory_id) {
+          setMemoryId(initialResult.memory_id);
         }
       }
     } catch (error) {
