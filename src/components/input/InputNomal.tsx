@@ -101,7 +101,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
       if (
         initialResult.answer &&
         initialResult.answer.includes(
-          "찾으시는 내용을 주어진 서류에서 찾을 수 없었어요."
+          "찾으시는 내용을 주어진 서류에서 찾지 못했습니다."
         )
       ) {
         const modifiedQuery = `${selectedProject} 현장 ${inputValue}`;
