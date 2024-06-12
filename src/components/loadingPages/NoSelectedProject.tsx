@@ -10,8 +10,8 @@ const NoSelectedProject: React.FC = () => {
       };
 
     return (
-        <div className='w-full h-screen p-4 flex-col justify-center items-center gap-4 inline-flex overflow-hidden'>
-            <div className='w-full h-screen p-8 rounded-2xl flex-col justify-start items-center gap-8 inline-flex'>
+        <div className='w-full h-full p-4 flex-col justify-center items-center gap-4 inline-flex overflow-hidden'>
+            <div className='w-full h-full p-8 rounded-2xl flex-col justify-start items-center gap-8 inline-flex'>
                 <div className='w-full flex-col justify-start items-center gap-4 inline-flex 
                              text-title-l text-neutral-600 fill-neutral-600 dark:text-neutral-300 dark:fill-neutral-300
                              text-center font-bold'>
