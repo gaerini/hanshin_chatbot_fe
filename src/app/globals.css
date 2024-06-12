@@ -17,6 +17,16 @@
   text-overflow: ellipsis;
 }
 
+.custom-textarea:disabled::placeholder {
+  color: #D4D4D4; /* disabled 상태의 색상 */
+}
+
+@media (prefers-color-scheme: dark) {
+  .custom-textarea:disabled::placeholder {
+    color: #737373; /* 다크모드 disabled 상태의 색상 */
+  }
+}
+
 :root {
   height: 100%;
 }
@@ -48,8 +58,8 @@ body {
 
   .neutralBtnStyle-l {
     @apply p-4 rounded-2xl items-center inline-flex border border-neutral-200
-           text-neutral-700 text-paragraph-l font-bold hover:duration-500
-          fill-neutral-700;
+           text-title font-bold hover:duration-500
+           text-neutral-700 fill-neutral-700;
 
     /* @apply ${isActive ? 'bg-neutral-200' : 'bg-neutral-white hover:bg-neutral-100'}; */
   }
@@ -67,22 +77,22 @@ body {
            text-neutral-white text-paragraph-l font-bold fill-neutral-white hover:duration-500
 
     /* @apply ${isActive ? 'bg-neutral-800' 
-                      : 'bg-blue-500 hover:bg-blue-600'}; */
+                      : 'bg-blue-original hover:bg-blue-700'}; */
   }
   
   .blueBtnStyle-m {
     @apply p-2.5 rounded-[10px] justify-center items-center inline-flex
           text-neutral-white text-paragraph-m font-normal fill-neutral-white hover:duration-500
-          bg-blue-original hover:bg-blue-600 hover:font-bold
+          bg-blue-original hover:bg-blue-700 hover:font-bold
 
     /* @apply ${isActive ? 'bg-neutral-800 font-bold' 
                       : 'bg-blue-500 hover:bg-blue-600 hover:font-bold'}; */
   }
 
   .blueBtnStyle-s {
-    @apply p-1 rounded-[10px] justify-center items-center inline-flex
+    @apply p-2 rounded-[10px] justify-center items-center inline-flex
           text-neutral-white text-caption font-normal fill-neutral-white hover:duration-500
-          bg-blue-original hover:bg-blue-600 hover:font-bold
+          bg-blue-original hover:bg-blue-700 hover:font-bold
   }
 }
 
@@ -90,7 +100,7 @@ body {
   @layer utilities {
     .neutralBtnStyle-l-dark {
     @apply p-4 rounded-2xl items-center inline-flex border border-neutral-800
-           text-neutral-300 text-paragraph-l font-bold hover:duration-500
+           text-neutral-300 text-title font-bold hover:duration-500
           fill-neutral-300;
 
     /* @apply ${isActive ? 'bg-neutral-600' : 'bg-neutral-800 hover:bg-neutral-700'}; */
