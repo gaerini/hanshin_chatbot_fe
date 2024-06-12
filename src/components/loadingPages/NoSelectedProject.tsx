@@ -24,7 +24,7 @@ const NoSelectedProject: React.FC = () => {
                     <span className="font-bold"> AI 챗봇</span>
                     <span className="font-medium">입니다.</span>
                 </div>
-                <button className="text-center text-neutral-400 text-paragraph-m font-medium underline hover:text-blue-original"
+                <button className="text-center text-paragraph-m font-normal underline textBtnStyle"
                         onClick={openPaeperLiskLink}>
                     빌드챗이 학습한 서류의 목록이 궁금하시다면?
                 </button>

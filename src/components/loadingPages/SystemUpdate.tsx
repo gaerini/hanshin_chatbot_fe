@@ -27,7 +27,7 @@ const SystemUpdate: React.FC = () => {
             </div>
             <div className='w-full p-8 rounded-2xl flex-col justify-start items-center gap-4 inline-flex'>
                 <div className="text-center text-neutral-400 text-paragraph-m font-medium">업데이트가 끝나면 어떤 대화를 나눌 수 있을지<br/>지금 확인해 보세요!</div>
-                <button className='blueBtnStyle-l bg-blue-original hover:bg-blue-700'
+                <button className='btnStyle-l blueBtnStyle-default hover:blueBtnStyle-hover'
                         onClick={openPaeperLiskLink}> 빌드챗 알아보기 </button>
             </div>
         </div>
