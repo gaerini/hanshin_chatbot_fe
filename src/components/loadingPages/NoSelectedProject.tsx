@@ -4,7 +4,7 @@ import Icon from '../icon/Icon';
 
 const NoSelectedProject: React.FC = () => {
     const paperListLink = "https://immense-taxi-8c1.notion.site/6b41e16de7734650a32c00c0323d889d?pvs=4";
-    const openPaeperLiskLink = (e) => {
+    const openPaeperLiskLink = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         window.open(paperListLink, "_blank");
       };
