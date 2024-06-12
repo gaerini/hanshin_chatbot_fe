@@ -28,18 +28,35 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
         </div>
       </div>
       <div className="w-full flex-col justify-start items-end inline-flex gap-[-2px]">
-        {sources.slice(0, 3).map((source, index) => {
-          const { fileName, filePath } = extractFilePathAndName(source.source);
+        {sources.length === 10
+          ? sources.slice(0, 3).map((source, index) => {
+              const { fileName, filePath } = extractFilePathAndName(
+                source.source
+              );
 
-          return (
-            <PdfData
-              key={index}
-              number={`발췌 ${index + 1}`}
-              pdfName={`${fileName} 의 ${source.page}p`}
-              pdfPath={filePath}
-            />
-          );
-        })}
+              return (
+                <PdfData
+                  key={index}
+                  number={`발췌 ${index + 1}`}
+                  pdfName={`${fileName} 의 ${source.page}p`}
+                  pdfPath={filePath}
+                />
+              );
+            })
+          : sources.map((source, index) => {
+              const { fileName, filePath } = extractFilePathAndName(
+                source.source
+              );
+
+              return (
+                <PdfData
+                  key={index}
+                  number={`발췌 ${index + 1}`}
+                  pdfName={fileName}
+                  pdfPath={filePath}
+                />
+              );
+            })}
       </div>
     </div>
   );
