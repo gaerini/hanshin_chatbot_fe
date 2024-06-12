@@ -45,7 +45,7 @@ const Container: React.FC = () => {
                     <div className='flex-col flex-grow overflow-y-auto justify-start items-start inline-flex'>
                     {getApi ? (
                                 selectedProject === null ? (
-                                    <div className="w-full h-screen text-center justify-center items-center mt-16">
+                                    <div className="w-full h-full text-center justify-center items-center mt-16">
                                         <NoSelectedProject />
                                     </div>
                                     ) : (
