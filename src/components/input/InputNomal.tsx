@@ -156,8 +156,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
                       text-paragraph-l dark:border-neutral-800 border-neutral-200 focus:outline-none
                     
                     custom-textarea
-                    ${!getApi ? "bg-neutral-100 text-neutral-300 dark:bg-neutral-700 dark:text-neutral-500" 
-                              : "bg-neutral-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"}`}
+                    ${!getApi ? "neutralBtnStyle-disabled" 
+                              : "neutralBtnStyle-default"}`}
           style={{
             minHeight: minHeight,
             maxHeight: `${maxHeight}px`,
@@ -190,9 +190,9 @@ const InputNomal: React.FC<InputNomalProps> = ({
           }}
         >
           <button
-            className={`w-8 h-8 my-[0.7rem] justify-center items-center inline-flex
-                        ${!getApi ? "p-2 rounded-[10px] bg-neutral-300 fill-neutral-100 dark:bg-neutral-600 dark:fill-neutral-400" 
-                                  : "blueBtnStyle-s"}`}
+            className={`w-8 h-8 my-[0.7rem] justify-center items-center inline-flex btnStyle-s
+                        ${!getApi ? "blueBtnStyle-disabled" 
+                                  : "blueBtnStyle-default hover:blueBtnStyle-hover"}`}
             onClick={handleSend}
             disabled={!getApi}
           >

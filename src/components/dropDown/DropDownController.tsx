@@ -54,13 +54,13 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
   return (
     <div className="relative flex-col justify-start items-start gap-2 inline-flex">
       <button
-        className={`w-[216px] neutralBtnStyle-l justify-between dark:neutralBtnStyle-l-dark 
+        className={`w-[216px] btnStyle-l justify-between border border-neutral-200 dark:border-neutral-800
                     ${
                       getApi 
                         ? (isOpened
-                          ? "bg-neutral-200 hover:bg-neutral-100 dark:bg-neutral-600 dark:hover:bg-neutral-700"
-                          : "bg-neutral-white hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700")
-                        : "bg-neutral-100 dark:bg-neutral-700"}`}
+                          ? "neutralBtnStyle-active hover:neutralBtnStyle-hover"
+                          : "neutralBtnStyle-default hover:neutralBtnStyle-hover")
+                        : "neutralBtnStyle-disabled"}`}
         onClick={handleToggleDropDown}
         disabled={!getApi}
       >
