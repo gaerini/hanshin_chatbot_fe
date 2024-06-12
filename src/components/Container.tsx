@@ -4,11 +4,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import UserBubble from './bubble/UserBubble';
 import GptBubble from './bubble/GptBubble';
 import InputNomal from './input/InputNomal';
+
 import TypingIndicator from './bubble/TypingIndicator';
+import SystemUpdate from './loadingPages/SystemUpdate'
+import NoSelectedProject from './loadingPages/NoSelectedProject';
+
 import { useActiveItemContext } from './dropDown/ActiveItemContext';
+import { useGetApiContext } from './dropDown/GetApiContext';
 
 const Container: React.FC = () => {
     const { selectedProject } = useActiveItemContext();
+    const { getApi } = useGetApiContext();
     const [messages, setMessages] = useState<{ type: string, text: string, sources?: any[], badgeProject?: string | null | undefined }[]>([]);
     const [loading, setLoading] = useState(false); 
 
@@ -37,25 +43,29 @@ const Container: React.FC = () => {
         <div className='w-full flex justify-center items-center'>
             <div className="w-full max-w-[768px] mt-[83px] mb-[100px] h-full flex flex-col">
                     <div className='flex-col flex-grow overflow-y-auto justify-start items-start inline-flex'>
-                        {selectedProject === null ? (
-                            <div className="w-full h-full text-center justify-center items-center mt-16">
-                                <div className='text-neutral-400 font-bold text-title'>프로젝트를 선택해 주세요</div>
-                            </div>
-                        ) : (
-                            <>
-                                {messages.map((message, index) => 
-                                    message.type === 'human' ? (
-                                        <UserBubble key={index} userText={message.text} />
+                    {getApi ? (
+                                selectedProject === null ? (
+                                    <div className="w-full h-full text-center justify-center items-center mt-16">
+                                        <NoSelectedProject />
+                                    </div>
                                     ) : (
-                                        <GptBubble key={index} 
-                                                gptText={message.text} 
-                                                sources={message.sources || []} 
-                                                badgeProject={message.badgeProject ?? null}/>
-                                    )
-                                )}
-                                {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
-                            </>
-                        )}
+                                    <>
+                                        {messages.map((message, index) => 
+                                            message.type === 'human' ? (
+                                                <UserBubble key={index} userText={message.text} />
+                                            ) : (
+                                                <GptBubble key={index} 
+                                                        gptText={message.text} 
+                                                        sources={message.sources || []} 
+                                                        badgeProject={message.badgeProject ?? null}/>
+                                            )
+                                        )}
+                                        {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
+                                    </>
+                                ) 
+                            ) : (
+                                <SystemUpdate />
+                            )}
                     <div ref={messagesEndRef} />
                 </div>
             </div>
