@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Icon from "../icon/Icon";
 import { useActiveItemContext } from "../dropDown/ActiveItemContext";
+import { useGetApiContext } from "../dropDown/GetApiContext";
 
 interface InputNomalProps {
   addUserMessage: (message: string) => void;
@@ -26,6 +27,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
   const isSending = useRef(false);
 
   const { selectedProject } = useActiveItemContext();
+  const { getApi } = useGetApiContext();
 
   const updateLoading = (loading: boolean) => {
     setLoading(loading);
@@ -150,14 +152,12 @@ const InputNomal: React.FC<InputNomalProps> = ({
     <div className="w-full bg-neutral-white-opacity-80 backdrop-blur-[10px] flex justify-center items-center fixed bottom-0 z-10">
       <div className="max-w-[768px] w-full p-4 justify-start items-start inline-flex">
         <textarea
-          className="grow shrink basis-0 pl-4 pr-3 py-3.5 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-center items-center flex resize-none 
-                    bg-neutral-white border-neutral-200 
-                    text-paragraph-l text-neutral-700 focus:outline-none
+          className={`grow shrink basis-0 pl-4 pr-3 py-3.5 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-center items-center flex resize-none 
+                      text-paragraph-l dark:border-neutral-800 border-neutral-200 focus:outline-none
                     
-                    dark:bg-neutral-800 dark:border-neutral-800 
-                    dark:text-neutral-300
-                    custom-textarea 
-                    "
+                    custom-textarea
+                    ${!getApi ? "bg-neutral-100 text-neutral-300 dark:bg-neutral-700 dark:text-neutral-500" 
+                              : "bg-neutral-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"}`}
           style={{
             minHeight: minHeight,
             maxHeight: `${maxHeight}px`,
@@ -173,11 +173,14 @@ const InputNomal: React.FC<InputNomalProps> = ({
           onKeyDown={handleKeyDown}
           ref={textareaRef}
           rows={1}
+          disabled={!getApi}
         />
 
         <div
-          className="w-[60px] px-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-center items-end flex
-                   bg-neutral-white border-neutral-200 dark:bg-neutral-800 dark:border-neutral-800"
+          className={`w-[60px] px-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-center items-end flex
+                    border-neutral-200 dark:border-neutral-800
+                    ${!getApi ? "bg-neutral-100 dark:bg-neutral-700" 
+                              : "bg-neutral-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"}`}
           style={{
             minHeight: minHeight,
             maxHeight: `${maxHeight}px`,
@@ -187,8 +190,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
           }}
         >
           <button
-            className="w-8 h-8 blueBtnStyle-s my-[0.7rem]"
+            className={`w-8 h-8 my-[0.7rem] justify-center items-center inline-flex
+                        ${!getApi ? "p-2 rounded-[10px] bg-neutral-300 fill-neutral-100 dark:bg-neutral-600 dark:fill-neutral-400" 
+                                  : "blueBtnStyle-s"}`}
             onClick={handleSend}
+            disabled={!getApi}
           >
             <Icon name="sendMessage" width={20} height={20} />
           </button>

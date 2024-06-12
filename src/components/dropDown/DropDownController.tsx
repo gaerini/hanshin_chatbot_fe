@@ -1,9 +1,10 @@
-"use client";
+ "use client";
 
 import React, { useState, useEffect } from "react";
 import Icon from "../icon/Icon";
 import DropDown from "./DropDown";
 import { useActiveItemContext } from "./ActiveItemContext";
+import { useGetApiContext } from "./GetApiContext";
 
 interface DropDownControllerProps {
   projectName: string;
@@ -13,6 +14,7 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
   projectName,
 }) => {
   const [isOpened, setIsOpened] = useState(false);
+  const { getApi, setGetApi } = useGetApiContext();
   const { selectedProject, setSelectedProject } = useActiveItemContext();
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [projects, setProjects] = useState<string[]>([]);
@@ -21,23 +23,27 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
     const fetchProjects = async () => {
       try {
         const response = await fetch(
-          "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/projects"
-        ); // API endpoint를 실제 URL로 변경하세요
+          "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/projects" // projects 로 수정
+        );
         const data = await response.json();
         const projectNames = data.res.map(
           (project: any) => project.project_name
         );
         setProjects(projectNames);
+        
       } catch (error) {
+        setGetApi(false);
         console.error("Error fetching projects:", error);
       }
     };
 
     fetchProjects();
-  }, []);
+  }, [setGetApi]);
 
   const handleToggleDropDown = () => {
-    setIsOpened(!isOpened); // 클릭 시 isActive를 true로 설정
+    if (getApi) {
+      setIsOpened(!isOpened); // 클릭 시 isActive를 true로 설정
+    }
   };
 
   const handleSelectProject = (projectName: string) => {
@@ -49,26 +55,35 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
     <div className="relative flex-col justify-start items-start gap-2 inline-flex">
       <button
         className={`w-[216px] neutralBtnStyle-l justify-between dark:neutralBtnStyle-l-dark 
-                                ${
-                                  isOpened
-                                    ? "bg-neutral-200 hover:bg-neutral-100 dark:bg-neutral-600 dark:hover:bg-neutral-700"
-                                    : "bg-neutral-white hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-                                }`}
+                    ${
+                      getApi 
+                        ? (isOpened
+                          ? "bg-neutral-200 hover:bg-neutral-100 dark:bg-neutral-600 dark:hover:bg-neutral-700"
+                          : "bg-neutral-white hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700")
+                        : "bg-neutral-100 dark:bg-neutral-700"}`}
         onClick={handleToggleDropDown}
+        disabled={!getApi}
       >
         <div className="gap-2 justify-start items-center inline-flex">
           <Icon
             name="building"
             width={20}
             height={20}
-            className="fill-neutral-400"
+            className={` 
+                        ${getApi 
+                          ? "fill-neutral-400"
+                          : "fill-neutral-300 dark:fill-neutral-500"}`}
           />
           {selectedProject || projectName || (
             <p
-              className={`font-midium ${
-                isOpened ? "text-neutral-700 dark:text-neutral-300" 
-                         : "text-neutral-400 dark:text-neutral-400"
-              }`}
+              className={`font-midium 
+                        ${getApi 
+                            ? (isOpened
+                              ? "text-neutral-700 dark:text-neutral-300"
+                              : "text-neutral-400 dark:text-neutral-400")
+                            : " text-neutral-300 dark:text-neutral-500"}
+                        
+                        }`}
             >
               프로젝트 선택
             </p>
@@ -78,8 +93,10 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
           name="arrowUp"
           width={20}
           height={20}
-          className={`fill-neutral-400 
-                                          ${isOpened ? "" : "-rotate-180"}`}
+          className={`
+                      ${getApi 
+                        ? (isOpened ? "fill-neutral-400 " : "fill-neutral-400 -rotate-180")
+                        : "fill-neutral-300 dark:fill-neutral-500 -rotate-180"}`}
         />
       </button>
       {isOpened && (
