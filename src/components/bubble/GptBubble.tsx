@@ -55,8 +55,15 @@ const GptBubble: React.FC<GptBubbleProps> = ({
     }
   };
 
+  const reviewFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSd51XBTcrer7n0CKhPjo5FjsZ4a83IGqJINX3Zxjlr8MoLbEQ/viewform";
+    const openPaeperLiskLink = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        window.open(reviewFormLink, "_blank");
+      };
+
+
   return (
-    <div className="w-full px-4 flex-col justify-start items-start mb-4">
+    <div className="w-full px-4 flex-col justify-start items-center inline-flex mb-4 gap-2.5">
       <div
         className={`w-full p-4 rounded-[10px] flex-col justify-start items-start gap-2 inline-flex ${getBackgroundColorClass(
           badgeProject
@@ -81,6 +88,10 @@ const GptBubble: React.FC<GptBubbleProps> = ({
             )}
         </div>
       </div>
+      <button className="text-center text-caption font-medium textBtnStyle"
+              onClick={openPaeperLiskLink}>
+        🤝 더 똑똑해질 빌드챗을 위해, 소중한 사용 후기를 공유해주세요!
+      </button>
     </div>
   );
 };
