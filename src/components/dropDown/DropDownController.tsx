@@ -47,7 +47,11 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
   };
 
   const handleSelectProject = (projectName: string) => {
-    setSelectedProject(projectName);
+    if (projectName === "") {
+      setSelectedProject(null);  // 프로젝트 선택 해제 시 null로 설정
+    } else {
+        setSelectedProject(projectName);
+    }
     setActiveItem(projectName);
   };
 
