@@ -13,7 +13,7 @@ const TopNav: React.FC = () => {
     const [buttonText, setButtonText] = useState('빌드챗이 학습한 서류의 목록이 궁금하시다면?');
     
     const handleResize = () => {
-        if (window.innerWidth <= 500) {
+        if (window.innerWidth <= 640) {
             setButtonText('서류 목록 확인');
         } else {
             setButtonText('빌드챗이 학습한 서류의 목록이 궁금하시다면?');
