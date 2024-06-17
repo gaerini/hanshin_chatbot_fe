@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import Latex from "react-latex-next";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 
@@ -64,10 +63,10 @@ const GptBubble: React.FC<GptBubbleProps> = ({
       >
         <div className="justify-start items-center gap-2 inline-flex">
           <div className="w-[32px] h-[32px] rounded-full shadow-md bg-neutral-white border border-neutral-300 items-center justify-center inline-flex">
-            <Icon name="hanshin" width={24} height={24} />
+            <Icon name="buildnow" width={24} height={24} />
           </div>
           <div className="text-neutral-400 text-paragraph-l font-bold">
-            한신공영 AI 챗봇
+            빌드나우 AI 챗봇
           </div>
           <ProjectBadge badgeProject={badgeProject} />
         </div>
