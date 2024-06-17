@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Icon from "../icon/Icon";
@@ -30,7 +30,6 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
           (project: any) => project.project_name
         );
         setProjects(projectNames);
-        
       } catch (error) {
         setGetApi(false);
         console.error("Error fetching projects:", error);
@@ -48,9 +47,9 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
 
   const handleSelectProject = (projectName: string) => {
     if (projectName === "") {
-      setSelectedProject(null);  // 프로젝트 선택 해제 시 null로 설정
+      setSelectedProject(null); // 프로젝트 선택 해제 시 null로 설정
     } else {
-        setSelectedProject(projectName);
+      setSelectedProject(projectName);
     }
     setActiveItem(projectName);
   };
@@ -60,11 +59,12 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
       <button
         className={`w-[250px] btnStyle-l justify-between border border-neutral-200 dark:border-neutral-800
                     ${
-                      getApi 
-                        ? (isOpened
+                      getApi
+                        ? isOpened
                           ? "neutralBtnStyle-active hover:neutralBtnStyle-hover"
-                          : "neutralBtnStyle-default hover:neutralBtnStyle-hover")
-                        : "neutralBtnStyle-disabled"}`}
+                          : "neutralBtnStyle-default hover:neutralBtnStyle-hover"
+                        : "neutralBtnStyle-disabled"
+                    }`}
         onClick={handleToggleDropDown}
         disabled={!getApi}
       >
@@ -74,18 +74,24 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
             width={20}
             height={20}
             className={` 
-                        ${getApi 
-                          ? "fill-neutral-400"
-                          : "fill-neutral-300 dark:fill-neutral-500"}`}
+                        ${
+                          getApi
+                            ? "fill-neutral-400"
+                            : "fill-neutral-300 dark:fill-neutral-500"
+                        }`}
           />
-          {selectedProject || projectName || (
+          {selectedProject ? (
+            <p className="w-[170px] text-left truncate">{selectedProject}</p>
+          ) : (
             <p
               className={`font-midium 
-                        ${getApi 
-                            ? (isOpened
+                        ${
+                          getApi
+                            ? isOpened
                               ? "text-neutral-700 dark:text-neutral-300"
-                              : "text-neutral-400 dark:text-neutral-400")
-                            : " text-neutral-300 dark:text-neutral-500"}
+                              : "text-neutral-400 dark:text-neutral-400"
+                            : " text-neutral-300 dark:text-neutral-500"
+                        }
                         
                         }`}
             >
@@ -98,9 +104,13 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
           width={20}
           height={20}
           className={`
-                      ${getApi 
-                        ? (isOpened ? "fill-neutral-400 " : "fill-neutral-400 -rotate-180")
-                        : "fill-neutral-300 dark:fill-neutral-500 -rotate-180"}`}
+                      ${
+                        getApi
+                          ? isOpened
+                            ? "fill-neutral-400 "
+                            : "fill-neutral-400 -rotate-180"
+                          : "fill-neutral-300 dark:fill-neutral-500 -rotate-180"
+                      }`}
         />
       </button>
       {isOpened && (
