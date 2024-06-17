@@ -15,6 +15,17 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
     return { fileName, filePath };
   };
 
+  const uniqueSources = sources.filter((source, index, self) => {
+    const { fileName, filePath } = extractFilePathAndName(source.source);
+    return (
+      self.findIndex(
+        (s) =>
+          extractFilePathAndName(s.source).fileName === fileName &&
+          s.page === source.page
+      ) === index
+    );
+  });
+
   return (
     <div
       className="w-full p-4 rounded-[10px] flex-col justify-start items-end gap-4 inline-flex
@@ -28,8 +39,8 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
         </div>
       </div>
       <div className="w-full flex-col justify-start items-end inline-flex gap-[-2px]">
-        {sources.length === 10
-          ? sources.slice(0, 3).map((source, index) => {
+        {uniqueSources.length === 10
+          ? uniqueSources.slice(0, 3).map((source, index) => {
               const { fileName, filePath } = extractFilePathAndName(
                 source.source
               );
@@ -43,7 +54,7 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
                 />
               );
             })
-          : sources.map((source, index) => {
+          : uniqueSources.map((source, index) => {
               const { fileName, filePath } = extractFilePathAndName(
                 source.source
               );
