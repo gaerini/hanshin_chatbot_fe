@@ -15,16 +15,19 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
     return { fileName, filePath };
   };
 
-  const uniqueSources = sources.filter((source, index, self) => {
-    const { fileName, filePath } = extractFilePathAndName(source.source);
-    return (
-      self.findIndex(
-        (s) =>
-          extractFilePathAndName(s.source).fileName === fileName &&
-          s.page === source.page
-      ) === index
-    );
-  });
+  const removeDuplicates = (sources: { source: string; page: number }[]) => {
+    const seen = new Set();
+    return sources.filter((source) => {
+      const key = `${source.source}-${source.page}`;
+      if (seen.has(key)) {
+        return false;
+      }
+      seen.add(key);
+      return true;
+    });
+  };
+
+  const uniqueSources = removeDuplicates(sources);
 
   return (
     <div
@@ -39,35 +42,24 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
         </div>
       </div>
       <div className="w-full flex-col justify-start items-end inline-flex gap-[-2px]">
-        {uniqueSources.length === 10
-          ? uniqueSources.slice(0, 3).map((source, index) => {
-              const { fileName, filePath } = extractFilePathAndName(
-                source.source
-              );
-
-              return (
-                <PdfData
-                  key={index}
-                  number={`발췌 ${index + 1}`}
-                  pdfName={`${fileName} 의 ${source.page}p`}
-                  pdfPath={filePath}
-                />
-              );
-            })
-          : uniqueSources.map((source, index) => {
-              const { fileName, filePath } = extractFilePathAndName(
-                source.source
-              );
-
-              return (
-                <PdfData
-                  key={index}
-                  number={`발췌 ${index + 1}`}
-                  pdfName={fileName}
-                  pdfPath={filePath}
-                />
-              );
-            })}
+        {uniqueSources.slice(0, 3).map((source, index) => {
+          const { fileName, filePath } = extractFilePathAndName(source.source);
+          return source.page === 0 ? (
+            <PdfData
+              key={index}
+              number={`발췌 ${index + 1}`}
+              pdfName={fileName}
+              pdfPath={filePath}
+            />
+          ) : (
+            <PdfData
+              key={index}
+              number={`발췌 ${index + 1}`}
+              pdfName={`${fileName} 의 ${source.page}p`}
+              pdfPath={filePath}
+            />
+          );
+        })}
       </div>
     </div>
   );
