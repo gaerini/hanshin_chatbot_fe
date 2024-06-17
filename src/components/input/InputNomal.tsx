@@ -93,6 +93,10 @@ const InputNomal: React.FC<InputNomalProps> = ({
     }
 
     addUserMessage(inputValue);
+    setInputValue("");
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
     updateLoading(true);
 
     try {
@@ -132,10 +136,6 @@ const InputNomal: React.FC<InputNomalProps> = ({
     } finally {
       updateLoading(false);
       isSending.current = false;
-    }
-
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
     }
   };
 
