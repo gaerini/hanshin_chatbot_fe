@@ -50,11 +50,12 @@ const config: Config = {
     },
 
     fontSize: {
+      "title-l": ["1.5rem", "120%"],
       "title": ["1.125rem", "120%"], // text-title
       "paragraph-l" : ["1rem", "150%"],
       "paragraph-chatBot" : ["1rem", "200%"],
-      "paragraph-m": ["0.875rem", "120%"],
-      "paragraph-s": ["0.8rem", "120%"],
+      "paragraph-m": ["0.875rem", "140%"],
+      "paragraph-s": ["0.8rem", "140%"],
       "caption": ["0.75rem", "150%"]
     },
 

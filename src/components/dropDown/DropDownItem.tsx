@@ -8,9 +8,9 @@ interface DropDownItemProps {
 
 const DropDownItem: React.FC<DropDownItemProps> = ({ projectName, onClick, isActive }) => {
     return (
-        <button className={`w-[200px] neutralBtnStyle-m dark:neutralBtnStyle-m-dark
-                            ${isActive ? 'bg-neutral-200 font-bold duration-500 dark:bg-neutral-600 dark:font-bold dark:duration-500' 
-                                       : 'bg-neutral-white font-normal hover:bg-neutral-100 hover:font-bold dark:bg-neutral-800 dark:font-normal dark:hover:bg-neutral-700 dark:hover:font-bold'}`}
+        <button className={`w-[234px] btnStyle-m
+                            ${isActive ? 'neutralBtnStyle-active hover:neutralBtnStyle-hover' 
+                                       : 'neutralBtnStyle-default hover:neutralBtnStyle-hover'}`}
                             
                 onClick = {onClick} >
             {projectName}

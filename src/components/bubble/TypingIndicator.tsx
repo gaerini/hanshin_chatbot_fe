@@ -1,6 +1,5 @@
 import React from "react";
 import Icon from "../icon/Icon";
-import ProjectBadge from "../dropDown/ProjectBadge";
 
 const TypingIndicator: React.FC = () => {
   return (
