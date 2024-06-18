@@ -46,14 +46,18 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
   };
 
   const handleSelectProject = (projectName: string) => {
-    setSelectedProject(projectName);
+    if (projectName === "") {
+      setSelectedProject(null);  // 프로젝트 선택 해제 시 null로 설정
+    } else {
+        setSelectedProject(projectName);
+    }
     setActiveItem(projectName);
   };
 
   return (
     <div className="relative flex-col justify-start items-start gap-2 inline-flex">
       <button
-        className={`w-[216px] btnStyle-l justify-between border border-neutral-200 dark:border-neutral-800
+        className={`w-[250px] btnStyle-l justify-between border border-neutral-200 dark:border-neutral-800
                     ${
                       getApi
                         ? isOpened

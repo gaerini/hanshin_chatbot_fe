@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import Latex from "react-latex-next";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 
@@ -55,8 +54,15 @@ const GptBubble: React.FC<GptBubbleProps> = ({
     }
   };
 
+  const reviewFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSd51XBTcrer7n0CKhPjo5FjsZ4a83IGqJINX3Zxjlr8MoLbEQ/viewform";
+    const openPaeperLiskLink = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        window.open(reviewFormLink, "_blank");
+      };
+
+
   return (
-    <div className="w-full px-4 flex-col justify-start items-start mb-4">
+    <div className="w-full px-4 flex-col justify-start items-center inline-flex mb-4 gap-2.5">
       <div
         className={`w-full p-4 rounded-[10px] flex-col justify-start items-start gap-2 inline-flex ${getBackgroundColorClass(
           badgeProject
@@ -64,10 +70,10 @@ const GptBubble: React.FC<GptBubbleProps> = ({
       >
         <div className="justify-start items-center gap-2 inline-flex">
           <div className="w-[32px] h-[32px] rounded-full shadow-md bg-neutral-white border border-neutral-300 items-center justify-center inline-flex">
-            <Icon name="hanshin" width={24} height={24} />
+            <Icon name="buildnow" width={24} height={24} />
           </div>
           <div className="text-neutral-400 text-paragraph-l font-bold">
-            한신공영 AI 챗봇
+            빌드나우 AI 챗봇
           </div>
           <ProjectBadge badgeProject={badgeProject} />
         </div>
@@ -81,6 +87,10 @@ const GptBubble: React.FC<GptBubbleProps> = ({
             )}
         </div>
       </div>
+      <button className="text-center text-caption font-medium textBtnStyle"
+              onClick={openPaeperLiskLink}>
+        🤝 더 똑똑해질 빌드챗을 위해, 소중한 사용 후기를 공유해주세요!
+      </button>
     </div>
   );
 };
