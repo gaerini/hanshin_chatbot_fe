@@ -45,16 +45,17 @@ const InputNomal: React.FC<InputNomalProps> = ({
 
   // recommendedValue 업데이트 시 inputValue 설정 및 handleAutoSend 호출
   useEffect(() => {
-    const updateInputAndSend = async () => {
-      if (recommendedValue) {
-        addUserMessage(recommendedValue);  
-        handleSend();  
-      }
-    };
-  
-    updateInputAndSend();  // Call the async function
+    if (recommendedValue) {
+      setInputValue(recommendedValue);
+    }
   }, [recommendedValue]);
 
+  // inputValue가 변경될 때 handleSend 호출
+  useEffect(() => {
+    if (recommendedValue && inputValue === recommendedValue) {
+      handleSend();
+    }
+  }, [inputValue, recommendedValue]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let value = e.target.value;
@@ -172,8 +173,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
                       text-paragraph-l dark:border-neutral-800 border-neutral-200 focus:outline-none
                     
                     custom-textarea
-                    ${!getApi ? "neutralBtnStyle-disabled" 
-                              : "neutralBtnStyle-default"}`}
+                    ${
+                      !getApi
+                        ? "neutralBtnStyle-disabled"
+                        : "neutralBtnStyle-default"
+                    }`}
           style={{
             minHeight: minHeight,
             maxHeight: `${maxHeight}px`,
@@ -195,8 +199,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
         <div
           className={`w-[60px] px-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-center items-end flex
                     border-neutral-200 dark:border-neutral-800
-                    ${!getApi ? "bg-neutral-100 dark:bg-neutral-700" 
-                              : "bg-neutral-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"}`}
+                    ${
+                      !getApi
+                        ? "bg-neutral-100 dark:bg-neutral-700"
+                        : "bg-neutral-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
+                    }`}
           style={{
             minHeight: minHeight,
             maxHeight: `${maxHeight}px`,
@@ -207,8 +214,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
         >
           <button
             className={`w-8 h-8 my-[0.7rem] justify-center items-center inline-flex btnStyle-s
-                        ${!getApi ? "blueBtnStyle-disabled" 
-                                  : "blueBtnStyle-default hover:blueBtnStyle-hover"}`}
+                        ${
+                          !getApi
+                            ? "blueBtnStyle-disabled"
+                            : "blueBtnStyle-default hover:blueBtnStyle-hover"
+                        }`}
             onClick={handleSend}
             disabled={!getApi}
           >
