@@ -6,6 +6,7 @@ import TopNav from '@/components/TopNav';
 import Container from '@/components/Container';
 import { GetApiProvider } from '@/components/dropDown/GetApiContext';
 import { ActiveItemProvider } from '../components/dropDown/ActiveItemContext';
+import { ChooseRecommendContextProvider } from '@/components/loadingPages/recommend/ChooseRecommendContext';
 
 
 const Home: React.FC = () => {
@@ -14,8 +15,10 @@ const Home: React.FC = () => {
     <div className="w-full flex-col justify-start items-center">
       <GetApiProvider>
         <ActiveItemProvider>
-          <TopNav />
-          <Container />
+          <ChooseRecommendContextProvider>
+            <TopNav />
+            <Container />
+          </ChooseRecommendContextProvider>
         </ActiveItemProvider>
       </GetApiProvider>
     </div>

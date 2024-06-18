@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Icon from "../icon/Icon";
 import { useActiveItemContext } from "../dropDown/ActiveItemContext";
 import { useGetApiContext } from "../dropDown/GetApiContext";
+import { useChooseRecommendContext } from "../loadingPages/recommend/ChooseRecommendContext";
 
 interface InputNomalProps {
   addUserMessage: (message: string) => void;
@@ -28,7 +29,9 @@ const InputNomal: React.FC<InputNomalProps> = ({
 
   const { selectedProject } = useActiveItemContext();
   const { getApi } = useGetApiContext();
+  const { recommendedValue } = useChooseRecommendContext();
 
+  //api loading
   const updateLoading = (loading: boolean) => {
     setLoading(loading);
   };
@@ -40,6 +43,19 @@ const InputNomal: React.FC<InputNomalProps> = ({
     }
   }, []);
 
+  // recommendedValue 업데이트 시 inputValue 설정 및 handleAutoSend 호출
+  useEffect(() => {
+    const updateInputAndSend = async () => {
+      if (recommendedValue) {
+        addUserMessage(recommendedValue);  
+        handleSend();  
+      }
+    };
+  
+    updateInputAndSend();  // Call the async function
+  }, [recommendedValue]);
+
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let value = e.target.value;
     setInputValue(value);
@@ -49,31 +65,6 @@ const InputNomal: React.FC<InputNomalProps> = ({
       const newHeight = Math.min(textareaRef.current.scrollHeight, maxHeight);
       textareaRef.current.style.height = `${newHeight}px`;
     }
-  };
-
-  const sendRequest = async (query: string) => {
-    const requestBody = {
-      query,
-      project_name: selectedProject,
-      memory_id: memoryId,
-    };
-
-    const response = await fetch(
-      "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    return response.json();
   };
 
   const handleSend = async () => {
@@ -146,6 +137,31 @@ const InputNomal: React.FC<InputNomalProps> = ({
       e.preventDefault();
       handleSend();
     }
+  };
+
+  const sendRequest = async (query: string) => {
+    const requestBody = {
+      query,
+      project_name: selectedProject,
+      memory_id: memoryId,
+    };
+
+    const response = await fetch(
+      "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    return response.json();
   };
 
   return (
