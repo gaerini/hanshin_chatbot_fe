@@ -4,16 +4,24 @@ interface PdfDataProps {
   number: string;
   pdfName: string;
   pdfPath: string;
+  pdfPage: number;
 }
 
-const PdfData: React.FC<PdfDataProps> = ({ number, pdfName, pdfPath }) => {
+const PdfData: React.FC<PdfDataProps> = ({
+  number,
+  pdfName,
+  pdfPath,
+  pdfPage,
+}) => {
+  const pdfUrl = `${pdfPath}#page=${pdfPage}`;
+
   return (
     <div className="flex w-full pl-7 justify-start items-center gap-3 ">
       <div className="flex-shrink-0 w-auto p-1 rounded-md text-neutral-400 text-caption bg-neutral-100 dark:text-neutral-300 dark:bg-neutral-500 whitespace-nowrap">
         {number}
       </div>
       <a
-        href={pdfPath}
+        href={pdfUrl}
         target="_blank"
         className="flex-grow justify-start items-center overflow-hidden"
       >

@@ -40,6 +40,7 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
                   number={`발췌 ${index + 1}`}
                   pdfName={`${fileName} 의 ${source.page}p`}
                   pdfPath={filePath}
+                  pdfPage={source.page}
                 />
               );
             })
@@ -54,6 +55,7 @@ const PdfBubble: React.FC<PdfBubbleProps> = ({ sources }) => {
                   number={`발췌 ${index + 1}`}
                   pdfName={fileName}
                   pdfPath={filePath}
+                  pdfPage={source.page}
                 />
               );
             })}
