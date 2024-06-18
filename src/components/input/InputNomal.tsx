@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Icon from "../icon/Icon";
 import { useActiveItemContext } from "../dropDown/ActiveItemContext";
 import { useGetApiContext } from "../dropDown/GetApiContext";
+import { useChooseRecommendContext } from "../loadingPages/recommend/ChooseRecommendContext";
 
 interface InputNomalProps {
   addUserMessage: (message: string) => void;
@@ -28,7 +29,9 @@ const InputNomal: React.FC<InputNomalProps> = ({
 
   const { selectedProject } = useActiveItemContext();
   const { getApi } = useGetApiContext();
+  const { recommendedValue } = useChooseRecommendContext();
 
+  //api loading
   const updateLoading = (loading: boolean) => {
     setLoading(loading);
   };
@@ -40,6 +43,20 @@ const InputNomal: React.FC<InputNomalProps> = ({
     }
   }, []);
 
+  // recommendedValue 업데이트 시 inputValue 설정 및 handleAutoSend 호출
+  useEffect(() => {
+    if (recommendedValue) {
+      setInputValue(recommendedValue);
+    }
+  }, [recommendedValue]);
+
+  // inputValue가 변경될 때 handleSend 호출
+  useEffect(() => {
+    if (recommendedValue && inputValue === recommendedValue) {
+      handleSend();
+    }
+  }, [inputValue, recommendedValue]);
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     let value = e.target.value;
     setInputValue(value);
@@ -49,31 +66,6 @@ const InputNomal: React.FC<InputNomalProps> = ({
       const newHeight = Math.min(textareaRef.current.scrollHeight, maxHeight);
       textareaRef.current.style.height = `${newHeight}px`;
     }
-  };
-
-  const sendRequest = async (query: string) => {
-    const requestBody = {
-      query,
-      project_name: selectedProject,
-      memory_id: memoryId,
-    };
-
-    const response = await fetch(
-      "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    return response.json();
   };
 
   const handleSend = async () => {
@@ -148,6 +140,31 @@ const InputNomal: React.FC<InputNomalProps> = ({
     }
   };
 
+  const sendRequest = async (query: string) => {
+    const requestBody = {
+      query,
+      project_name: selectedProject,
+      memory_id: memoryId,
+    };
+
+    const response = await fetch(
+      "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    return response.json();
+  };
+
   return (
     <div className="w-full bg-neutral-white-opacity-80 backdrop-blur-[10px] flex justify-center items-center fixed bottom-0 z-10">
       <div className="max-w-[768px] w-full p-4 justify-start items-start inline-flex">
@@ -156,8 +173,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
                       text-paragraph-l dark:border-neutral-800 border-neutral-200 focus:outline-none
                     
                     custom-textarea
-                    ${!getApi ? "neutralBtnStyle-disabled" 
-                              : "neutralBtnStyle-default"}`}
+                    ${
+                      !getApi
+                        ? "neutralBtnStyle-disabled"
+                        : "neutralBtnStyle-default"
+                    }`}
           style={{
             minHeight: minHeight,
             maxHeight: `${maxHeight}px`,
@@ -179,8 +199,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
         <div
           className={`w-[60px] px-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-center items-end flex
                     border-neutral-200 dark:border-neutral-800
-                    ${!getApi ? "bg-neutral-100 dark:bg-neutral-700" 
-                              : "bg-neutral-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"}`}
+                    ${
+                      !getApi
+                        ? "bg-neutral-100 dark:bg-neutral-700"
+                        : "bg-neutral-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
+                    }`}
           style={{
             minHeight: minHeight,
             maxHeight: `${maxHeight}px`,
@@ -191,8 +214,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
         >
           <button
             className={`w-8 h-8 my-[0.7rem] justify-center items-center inline-flex btnStyle-s
-                        ${!getApi ? "blueBtnStyle-disabled" 
-                                  : "blueBtnStyle-default hover:blueBtnStyle-hover"}`}
+                        ${
+                          !getApi
+                            ? "blueBtnStyle-disabled"
+                            : "blueBtnStyle-default hover:blueBtnStyle-hover"
+                        }`}
             onClick={handleSend}
             disabled={!getApi}
           >

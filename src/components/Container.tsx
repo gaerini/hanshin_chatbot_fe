@@ -8,6 +8,7 @@ import InputNomal from './input/InputNomal';
 import TypingIndicator from './bubble/TypingIndicator';
 import SystemUpdate from './loadingPages/SystemUpdate'
 import NoSelectedProject from './loadingPages/NoSelectedProject';
+import RecommendedValue from './loadingPages/recommend/RecommendedValue';
 
 import { useActiveItemContext } from './dropDown/ActiveItemContext';
 import { useGetApiContext } from './dropDown/GetApiContext';
@@ -45,24 +46,30 @@ const Container: React.FC = () => {
                     <div className='flex-col flex-grow overflow-y-auto justify-start items-start inline-flex'>
                     {getApi ? (
                                 selectedProject === null ? (
-                                    <div className="w-full h-full text-center justify-center items-center mt-16">
+                                    <div className="w-full h-full text-center justify-center items-center mt-[100px]">
                                         <NoSelectedProject />
                                     </div>
                                     ) : (
-                                    <>
-                                        {messages.map((message, index) => 
-                                            message.type === 'human' ? (
-                                                <UserBubble key={index} userText={message.text} />
+                                        <>
+                                            {messages.length === 0 ? (
+                                                <RecommendedValue />
                                             ) : (
-                                                <GptBubble key={index} 
-                                                        gptText={message.text} 
-                                                        sources={message.sources || []} 
-                                                        badgeProject={message.badgeProject ?? null}/>
-                                            )
-                                        )}
-                                        {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
-                                    </>
-                                ) 
+                                                <>
+                                                    {messages.map((message, index) => 
+                                                        message.type === 'human' ? (
+                                                            <UserBubble key={index} userText={message.text} />
+                                                        ) : (
+                                                            <GptBubble key={index} 
+                                                                gptText={message.text} 
+                                                                sources={message.sources || []} 
+                                                                badgeProject={message.badgeProject ?? null} />
+                                                        )
+                                                    )}
+                                                    {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
+                                                </>
+                                            )}
+                                        </>
+                                    )
                             ) : (
                                 <SystemUpdate />
                             )}
