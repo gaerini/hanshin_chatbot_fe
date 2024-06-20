@@ -18,6 +18,7 @@ const Container: React.FC = () => {
     const { getApi } = useGetApiContext();
     const [messages, setMessages] = useState<{ type: string, text: string, sources?: any[], badgeProject?: string | null | undefined }[]>([]);
     const [loading, setLoading] = useState(false); 
+    const [typingComplete, setTypingComplete] = useState(true);
 
     const addUserMessage = (message: string) => {
         setMessages((prevMessages) => [...prevMessages, { type: 'human', text: message }]);
@@ -39,7 +40,6 @@ const Container: React.FC = () => {
     };
     
 
-
     return (
         <div className='w-full flex justify-center items-center'>
             <div className="w-full max-w-[768px] mt-[83px] mb-[100px] h-full flex flex-col">
@@ -59,10 +59,12 @@ const Container: React.FC = () => {
                                                         message.type === 'human' ? (
                                                             <UserBubble key={index} userText={message.text} />
                                                         ) : (
-                                                            <GptBubble key={index} 
+                                                            <GptBubble 
+                                                                key={index} 
                                                                 gptText={message.text} 
                                                                 sources={message.sources || []} 
-                                                                badgeProject={message.badgeProject ?? null} />
+                                                                badgeProject={message.badgeProject ?? null} 
+                                                                setTypingComplete={setTypingComplete}/>
                                                         )
                                                     )}
                                                     {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
@@ -73,12 +75,14 @@ const Container: React.FC = () => {
                             ) : (
                                 <SystemUpdate />
                             )}
-                    <div ref={messagesEndRef} />
+                            <div ref={messagesEndRef} />
                 </div>
             </div>
             <InputNomal addUserMessage={addUserMessage} 
                         addGptMessage={(message, sources, badgeProject) => addGptMessage(message, sources, badgeProject)} 
-                        setLoading={setLoading} />
+                        setLoading={setLoading} 
+                        loading={loading}
+                        typingComplete={typingComplete}/>
         </div>
     );
 };

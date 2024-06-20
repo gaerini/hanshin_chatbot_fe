@@ -12,35 +12,38 @@ import ProjectBadge from "../dropDown/ProjectBadge";
 interface GptBubbleProps {
   gptText: string;
   sources: { source: string; page: number }[];
-  badgeProject: string | null;
+  badgeProject: string | null ;
+  setTypingComplete: (value: boolean) => void;
 }
 
 const GptBubble: React.FC<GptBubbleProps> = ({
   gptText,
   sources,
   badgeProject,
+  setTypingComplete,
 }) => {
-  //console.log('GptBubble received badgeProject:', badgeProject);
 
   // {gptText}의 타이핑효과
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
     let currentText = "";
-    let index = 0;
+    let caseIndex = 0;
 
     const intervalId = setInterval(() => {
-      if (index < gptText.length) {
-        currentText += gptText[index];
+      if (caseIndex < gptText.length) {
+        setTypingComplete(false)
+        currentText += gptText[caseIndex];
         setDisplayedText(currentText);
-        index++;
+        caseIndex++;
       } else {
         clearInterval(intervalId);
+        setTypingComplete(true);
       }
     }, 6); // Adjust typing speed here
 
     return () => clearInterval(intervalId);
-  }, [gptText]);
+  }, [gptText, setTypingComplete]);
 
   // badgeProject에 따라 배경 색 클래스를 결정하는 함수
   const getBackgroundColorClass = (project: string | null) => {
