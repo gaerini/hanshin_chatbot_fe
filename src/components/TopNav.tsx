@@ -31,7 +31,7 @@ const TopNav: React.FC = () => {
 
     return (
         <div className="w-full h-[83px] fixed top-0 left-0 z-10
-                        p-4 bg-neutral-white-opacity-80 backdrop-blur-[10px] justify-between items-center inline-flex">
+                        p-4 bg-neutral-white justify-between items-center inline-flex">
             <div>
                 <DropDownController projectName=""/>
             </div>

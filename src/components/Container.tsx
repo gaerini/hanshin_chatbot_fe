@@ -16,7 +16,7 @@ import { useGetApiContext } from './dropDown/GetApiContext';
 const Container: React.FC = () => {
     const { selectedProject } = useActiveItemContext();
     const { getApi } = useGetApiContext();
-    const [messages, setMessages] = useState<{ type: string, text: string, sources?: any[], badgeProject?: string | null | undefined }[]>([]);
+    const [messages, setMessages] = useState<{ type: string, text: string, sources?: any[]}[]>([]);
     const [loading, setLoading] = useState(false); 
     const [typingComplete, setTypingComplete] = useState(true);
 
@@ -24,8 +24,8 @@ const Container: React.FC = () => {
         setMessages((prevMessages) => [...prevMessages, { type: 'human', text: message }]);
     };
 
-    const addGptMessage = (message: string, sources: any[], badgeProject: string | null | undefined) => {
-        setMessages((prevMessages) => [...prevMessages, { type: 'ai', text: message, sources, badgeProject }]);
+    const addGptMessage = (message: string, sources: any[]) => {
+        setMessages((prevMessages) => [...prevMessages, { type: 'ai', text: message, sources}]);
     };
 
     //신규 메세지에 포커스 -> 스크롤 아래로 내리기 함수
@@ -63,7 +63,6 @@ const Container: React.FC = () => {
                                                                 key={index} 
                                                                 gptText={message.text} 
                                                                 sources={message.sources || []} 
-                                                                badgeProject={message.badgeProject ?? null} 
                                                                 setTypingComplete={setTypingComplete}/>
                                                         )
                                                     )}
@@ -79,7 +78,7 @@ const Container: React.FC = () => {
                 </div>
             </div>
             <InputNomal addUserMessage={addUserMessage} 
-                        addGptMessage={(message, sources, badgeProject) => addGptMessage(message, sources, badgeProject)} 
+                        addGptMessage={(message, sources, badgeProject) => addGptMessage(message, sources)} 
                         setLoading={setLoading} 
                         loading={loading}
                         typingComplete={typingComplete}/>
