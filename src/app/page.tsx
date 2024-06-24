@@ -1,6 +1,4 @@
-//
 
-//import './globals.css';
 import React from 'react';
 import TopNav from '@/components/TopNav';
 import Container from '@/components/Container';

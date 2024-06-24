@@ -8,3 +8,6 @@ export { default as hanshin } from "./hanshin.svg";
 export { default as dotsClick } from "./dotsClick.svg";
 export { default as embarrassed } from "./embarrassed.svg";
 export { default as pencil } from "./pencil.svg";
+export { default as logo_kor_vert } from "./logo_kor_vert.svg";
+export { default as user_dark } from "./user_dark.svg";
+export { default as lock_dark } from "./lock_dark.svg";

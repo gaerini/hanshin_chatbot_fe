@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 
-import PdfBubble from "./PdfBubble";
+import PdfBubble from "./pdfBubbles/PdfBubble";
 import Icon from "../icon/Icon";
 
 interface GptBubbleProps {
