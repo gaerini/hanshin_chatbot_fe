@@ -11,3 +11,6 @@ export { default as pencil } from "./pencil.svg";
 export { default as logo_kor_vert } from "./logo_kor_vert.svg";
 export { default as user_dark } from "./user_dark.svg";
 export { default as lock_dark } from "./lock_dark.svg";
+export { default as VIP } from "./VIP.svg";
+export { default as list } from "./list.svg";
+export { default as dots_horiz } from "./dots_horiz.svg";

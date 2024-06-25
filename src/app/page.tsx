@@ -14,7 +14,7 @@ const Home: React.FC = () => {
       <GetApiProvider>
         <ActiveItemProvider>
           <ChooseRecommendContextProvider>
-            <TopNav />
+            <TopNav userLevel='nomal'/>
             <Container />
           </ChooseRecommendContextProvider>
         </ActiveItemProvider>

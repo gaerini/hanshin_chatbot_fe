@@ -48,68 +48,83 @@ body {
 }
 
 @layer base {
-  /* component color */
-  .neutralBtnStyle-default {
-    @apply bg-neutral-white text-neutral-700 fill-neutral-400
-           dark:bg-neutral-800 dark:text-neutral-300 dark:fill-neutral-400
+  /* btn */
+    /* component color */
+    .neutralBtnStyle-default {
+      @apply bg-neutral-white text-neutral-700 fill-neutral-400
+            dark:bg-neutral-800 dark:text-neutral-300 dark:fill-neutral-400
+    }
+
+    .neutralBtnStyle-hover {
+      @apply bg-neutral-100 text-neutral-700 fill-neutral-400
+            dark:bg-neutral-700 dark:text-neutral-300 dark:fill-neutral-400
+    }
+
+    .neutralBtnStyle-active {
+      @apply bg-neutral-200 text-neutral-700 fill-neutral-400
+            dark:bg-neutral-600 dark:text-neutral-300 dark:fill-neutral-400
+    }
+
+    .neutralBtnStyle-disabled {
+      @apply bg-neutral-100 text-neutral-300 fill-neutral-300
+            dark:bg-neutral-700 dark:text-neutral-500 dark:fill-neutral-500
+    }
+
+    .blueBtnStyle-default {
+      @apply bg-blue-original text-neutral-white fill-neutral-white
+    }
+
+    .blueBtnStyle-hover {
+      @apply bg-blue-700 text-neutral-white fill-neutral-white
+    }
+
+    .blueBtnStyle-active {
+      @apply bg-blue-800 text-neutral-white fill-neutral-white
+    }
+
+    .blueBtnStyle-disabled {
+      @apply bg-neutral-300 text-neutral-white fill-neutral-white
+    }
+
+    .textBtnStyle {
+      @apply text-neutral-400 fill-neutral-400 hover:text-blue-original hover:fill-blue-original
+    }
+
+    /* component frame */
+    .btnStyle-l {
+      @apply p-4 rounded-2xl items-center inline-flex 
+            text-title font-bold hover:duration-500;
+    }
+
+    .btnStyle-m {
+      @apply p-2.5 rounded-[10px] items-center inline-flex
+            text-paragraph-m hover:duration-500;
+    }
+
+    .btnStyle-s {
+      @apply p-2 rounded-[10px] justify-center items-center inline-flex
+          text-caption font-normal hover:duration-500 hover:font-bold
+    }
+
+  /* badge */
+    /* component color */
+    .neutralBadgeStyle {
+      @apply bg-neutral-100 text-neutral-500 fill-neutral-500
+            dark:bg-neutral-800 dark:text-neutral-400 dark:fill-neutral-400
+    }
+
+    .superAdminBadgeStyle {
+      @apply bg-purple-100 text-purple-500 fill-purple-500
+            dark:bg-purple-500 dark:text-purple-100 dark:fill-purple-100
+    }
   }
 
-  .neutralBtnStyle-hover {
-    @apply bg-neutral-100 text-neutral-700 fill-neutral-400
-           dark:bg-neutral-700 dark:text-neutral-300 dark:fill-neutral-400
-  }
+  
 
-  .neutralBtnStyle-active {
-    @apply bg-neutral-200 text-neutral-700 fill-neutral-400
-           dark:bg-neutral-600 dark:text-neutral-300 dark:fill-neutral-400
-  }
-
-  .neutralBtnStyle-disabled {
-    @apply bg-neutral-100 text-neutral-300 fill-neutral-300
-           dark:bg-neutral-700 dark:text-neutral-500 dark:fill-neutral-500
-  }
-
-  .blueBtnStyle-default {
-    @apply bg-blue-original text-neutral-white fill-neutral-white
-  }
-
-  .blueBtnStyle-hover {
-    @apply bg-blue-700 text-neutral-white fill-neutral-white
-  }
-
-  .blueBtnStyle-active {
-    @apply bg-blue-800 text-neutral-white fill-neutral-white
-  }
-
-  .blueBtnStyle-disabled {
-    @apply bg-neutral-300 text-neutral-white fill-neutral-white
-  }
-
-  .textBtnStyle {
-    @apply text-neutral-400 fill-neutral-400 hover:text-blue-original hover:fill-blue-original
-  }
-
-  /* component frame */
-  .btnStyle-l {
-    @apply p-4 rounded-2xl items-center inline-flex 
-           text-title font-bold hover:duration-500;
-  }
-
-  .btnStyle-m {
-    @apply p-2.5 rounded-[10px] items-center inline-flex
-           text-paragraph-m hover:duration-500;
-  }
-
-  .btnStyle-s {
-    @apply p-2 rounded-[10px] justify-center items-center inline-flex
-         text-caption font-normal hover:duration-500 hover:font-bold
-  }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  @layer utilities {
+    .text-balance {
+      text-wrap: balance;
+    }
 
   
 }

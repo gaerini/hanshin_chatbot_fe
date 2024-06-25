@@ -169,7 +169,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
   };
 
   return (
-    <div className="w-full bg-neutral-white flex justify-center items-center fixed bottom-0 z-10">
+    <div className="w-full bg-neutral-white dark:bg-neutral-black flex justify-center items-center fixed bottom-0 z-10">
       <div className="max-w-[768px] w-full p-4 justify-start items-start inline-flex">
         <textarea
           className={`grow shrink basis-0 pl-4 pr-3 py-3.5 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-center items-center flex resize-none 
