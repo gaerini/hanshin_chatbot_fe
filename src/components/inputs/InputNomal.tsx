@@ -169,10 +169,10 @@ const InputNomal: React.FC<InputNomalProps> = ({
   };
 
   return (
-    <div className="w-full bg-neutral-white dark:bg-neutral-black flex justify-center items-center fixed bottom-0 z-10">
-      <div className="max-w-[768px] w-full p-4 justify-start items-start inline-flex">
+    <div className="w-full flex justify-start items-center bg-neutral-white dark:bg-neutral-black pl-[336px]">
+      <div className="w-full p-4 justify-start items-start flex">
         <textarea
-          className={`grow shrink basis-0 pl-4 pr-3 py-3.5 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-center items-center flex resize-none 
+          className={`flex-grow pl-4 pr-3 py-3.5 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-center items-center resize-none 
                       text-paragraph-l dark:border-neutral-800 border-neutral-200 focus:outline-none
                     
                     custom-textarea
@@ -200,8 +200,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
         />
 
         <div
-          className={`w-[60px] px-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-center items-end flex
-                    border-neutral-200 dark:border-neutral-800
+          className={`flex w-[60px] px-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-center items-end
+                    border-neutral-200 dark:border-neutral-800 grow-0
                     ${
                       !getApi 
                         ? "bg-neutral-100 dark:bg-neutral-700"
@@ -213,8 +213,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
             height: textareaRef.current
               ? textareaRef.current.style.height
               : "auto",
-          }}
-        >
+          }}>
           <button
             className={`w-8 h-8 my-[0.7rem] justify-center items-center inline-flex btnStyle-s
                         ${

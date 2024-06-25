@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from '@/components/icon/Icon';
-import InputIcon from '@/components/input/InputIcon';
+import InputIcon from '@/components/inputs/InputIcon';
 
 const LoginPage: React.FC = () => {
 

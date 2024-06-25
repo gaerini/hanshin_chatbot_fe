@@ -1,11 +1,11 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-import UserBubble from './bubble/UserBubble';
-import GptBubble from './bubble/GptBubble';
-import InputNomal from './input/InputNomal';
+import UserBubble from './bubbles/UserBubble';
+import GptBubble from './bubbles/GptBubble';
+import InputNomal from './inputs/InputNomal';
 
-import TypingIndicator from './bubble/TypingIndicator';
+import TypingIndicator from './bubbles/TypingIndicator';
 import SystemUpdate from './loadingPages/SystemUpdate'
 import NoSelectedProject from './loadingPages/NoSelectedProject';
 import RecommendedValue from './loadingPages/recommend/RecommendedValue';
@@ -41,12 +41,11 @@ const Container: React.FC = () => {
     
 
     return (
-        <div className='w-full flex justify-center items-center'>
-            <div className="w-full max-w-[768px] mt-[83px] mb-[100px] h-full flex flex-col">
-                    <div className='flex-col flex-grow overflow-y-auto justify-start items-start inline-flex'>
+        <div className='flex-grow flex flex-col ml-[336px] mt-[83px]'>
+                <div className="flex-grow flex-col overflow-y-auto">
                     {getApi ? (
                                 selectedProject === null ? (
-                                    <div className="w-full h-full text-center justify-center items-center mt-[100px]">
+                                    <div className="w-full h-full flex justify-center items-center">
                                         <NoSelectedProject />
                                     </div>
                                     ) : (
@@ -75,13 +74,14 @@ const Container: React.FC = () => {
                                 <SystemUpdate />
                             )}
                             <div ref={messagesEndRef} />
-                </div>
             </div>
-            <InputNomal addUserMessage={addUserMessage} 
-                        addGptMessage={(message, sources, badgeProject) => addGptMessage(message, sources)} 
-                        setLoading={setLoading} 
-                        loading={loading}
-                        typingComplete={typingComplete}/>
+            <div className='w-full fixed bottom-0 right-0'>
+                <InputNomal addUserMessage={addUserMessage} 
+                            addGptMessage={(message, sources) => addGptMessage(message, sources)} 
+                            setLoading={setLoading} 
+                            loading={loading}
+                            typingComplete={typingComplete}/>
+            </div>
         </div>
     );
 };

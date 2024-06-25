@@ -2,6 +2,7 @@
 import React from 'react';
 import TopNav from '@/components/TopNav';
 import Container from '@/components/Container';
+import SideBar from '@/components/sideBar/SideBar';
 import { GetApiProvider } from '@/components/dropDown/GetApiContext';
 import { ActiveItemProvider } from '../components/dropDown/ActiveItemContext';
 import { ChooseRecommendContextProvider } from '@/components/loadingPages/recommend/ChooseRecommendContext';
@@ -14,8 +15,14 @@ const Home: React.FC = () => {
       <GetApiProvider>
         <ActiveItemProvider>
           <ChooseRecommendContextProvider>
+
             <TopNav userLevel='nomal'/>
-            <Container />
+
+            <div className='flex flex-grow'>
+              <SideBar isSuperAdmin={true} />
+              <Container />
+            </div>
+
           </ChooseRecommendContextProvider>
         </ActiveItemProvider>
       </GetApiProvider>

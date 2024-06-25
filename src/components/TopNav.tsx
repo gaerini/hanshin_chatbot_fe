@@ -44,7 +44,7 @@ const TopNav: React.FC<TopNavProps> = ({userLevel}) => {
 
       
     return (
-        <div className="w-full h-[83px] fixed top-0 left-0 z-10
+        <div className="w-full h-[83px] fixed top-0 left-0 right-0 z-10
                         bg-neutral-white dark:bg-neutral-black justify-start items-center inline-flex">
             <div className='w-[336px] p-4 justify-start items-center gap-2.5 inline-flex'>
                 <button className="w-11 h-11 btnStyle-m justify-start items-center inline-flex
@@ -54,7 +54,7 @@ const TopNav: React.FC<TopNavProps> = ({userLevel}) => {
                 <DropDownController projectName=""/>
             </div>
 
-            <div className="w-full p-4 justify-between items-center gap-4 inline-flex">
+            <div className="w-full h-[51px] p-4 justify-between items-center gap-4 inline-flex">
                 {userLevel !== 'nomal' && ( // 조건부 렌더링
                     <Toggler iconNameOn="pencil"
                             iconNameOff="dots_horiz"
