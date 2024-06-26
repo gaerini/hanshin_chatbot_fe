@@ -1,5 +1,6 @@
+'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import TopNav from '@/components/TopNav';
 import Container from '@/components/Container';
 import SideBar from '@/components/sideBar/SideBar';
@@ -9,19 +10,26 @@ import { ChooseRecommendContextProvider } from '@/components/loadingPages/recomm
 
 
 const Home: React.FC = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const handleSideBarToggle = () => {
+        setIsSidebarOpen(prevState => !prevState);
+        console.log('SideBarToggle state:', !isSidebarOpen);
+    };
+
 
   return (
-    <div className="w-full flex-col justify-start items-center">
+    <div className="w-full flex-col items-center justify-center">
       <GetApiProvider>
         <ActiveItemProvider>
           <ChooseRecommendContextProvider>
 
-            <TopNav userLevel='nomal'/>
+            <TopNav userLevel='nomal' onToggleSidebar={handleSideBarToggle}/>
 
             <div className='flex flex-grow'>
-              <SideBar isSuperAdmin={true} />
-              <Container />
-            </div>
+              {isSidebarOpen && <SideBar isSuperAdmin={true} />}
+              <Container isSidebarOpen={isSidebarOpen}/>
+            </div> 
 
           </ChooseRecommendContextProvider>
         </ActiveItemProvider>

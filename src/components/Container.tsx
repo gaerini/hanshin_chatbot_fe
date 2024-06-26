@@ -13,7 +13,11 @@ import RecommendedValue from './loadingPages/recommend/RecommendedValue';
 import { useActiveItemContext } from './dropDown/ActiveItemContext';
 import { useGetApiContext } from './dropDown/GetApiContext';
 
-const Container: React.FC = () => {
+interface ContainerProps {
+    isSidebarOpen: boolean;
+}
+
+const Container: React.FC<ContainerProps> = ({ isSidebarOpen }) => {
     const { selectedProject } = useActiveItemContext();
     const { getApi } = useGetApiContext();
     const [messages, setMessages] = useState<{ type: string, text: string, sources?: any[]}[]>([]);
@@ -41,8 +45,11 @@ const Container: React.FC = () => {
     
 
     return (
-        <div className='flex-grow flex flex-col ml-[336px] mt-[83px]'>
-                <div className="flex-grow flex-col overflow-y-auto">
+        <div className={`flex-grow flex flex-col mt-[83px] h-full items-center
+                        ${isSidebarOpen 
+                            ? 'pl-[336px] w-full' 
+                            : 'max-w-[768px] w-full mx-auto'}`}>
+            <div className="w-full flex-grow flex-col overflow-y-auto h-full">
                     {getApi ? (
                                 selectedProject === null ? (
                                     <div className="w-full h-full flex justify-center items-center">
@@ -75,7 +82,10 @@ const Container: React.FC = () => {
                             )}
                             <div ref={messagesEndRef} />
             </div>
-            <div className='w-full fixed bottom-0 right-0'>
+            <div className={`fixed bottom-0
+                                ${isSidebarOpen 
+                                    ? 'pl-[336px] w-full right-0' 
+                                    : 'max-w-[768px] w-full'}`}>
                 <InputNomal addUserMessage={addUserMessage} 
                             addGptMessage={(message, sources) => addGptMessage(message, sources)} 
                             setLoading={setLoading} 

@@ -12,6 +12,25 @@ const SideBar: React.FC<SideBarProps> = ({ isSuperAdmin }) => {
     return (
         <div className='w-[336px] h-screen mt-[83px] flex flex-col gap-2
                         fixed left-0 top-0 bottom-0 z-10 overflow-y-auto'>
+            {isSuperAdmin && (
+                <div className='w-full flex-col justify-start bg-neutral-100'> 
+                {/* rounded-tr-2xl rounded-br-2xl'> */}
+                    <NomalHeader leftIconName = "setting_dark"
+                            rightIconName = "plus" 
+                            label = "챗봇 관리하기" 
+                            style = "" 
+                            rightBtn ={false} />
+                    <div className='w-full px-4 pt-2.5 pb-4 flex-col justify-start items-start gap-2 inline-flex'>
+                        <AdminMenu iconName="dots" 
+                                   label="프로젝트 관리" 
+                                   link=""/>
+                        <AdminMenu iconName="chart_dark" 
+                                   label="사용현황 조회" 
+                                   link=""/>
+                    </div>
+                </div>
+                
+            )}
             <div className='flex-col justify-start'>
                 <NomalHeader leftIconName = "storage_dark"
                             rightIconName = "plus" 

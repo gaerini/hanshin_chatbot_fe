@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React , { useState } from 'react';
 import DropDownController from './dropDown/DropDownController';
 import Icon from './icon/Icon';
 
@@ -8,16 +8,10 @@ import Toggler from './Toggler';
 
 interface TopNavProps {
     userLevel : string;
+    onToggleSidebar: () => void;
 }
 
-const TopNav: React.FC<TopNavProps> = ({userLevel}) => {
-        //서류 목록 사이드바로 뺄 때 이 코드 가져가기
-    // const paperListLink = "https://immense-taxi-8c1.notion.site/6b41e16de7734650a32c00c0323d889d?pvs=4";
-    // const openPaeperLiskLink = (e: React.MouseEvent<HTMLButtonElement>) => {
-    //     e.preventDefault();
-    //     window.open(paperListLink, "_blank");
-    //   };
-
+const TopNav: React.FC<TopNavProps> = ({userLevel, onToggleSidebar}) => {
       // 나중에 반응형 할때 참고!
     // const [buttonText, setButtonText] = useState('빌드챗이 학습한 서류의 목록이 궁금하시다면?');
     
@@ -38,30 +32,31 @@ const TopNav: React.FC<TopNavProps> = ({userLevel}) => {
     //     };
     // }, []);
 
-    const handleToggle = (state: boolean) => {
-        console.log('Toggle state:', state);
+    const handleAdminToggle = (state: boolean) => {
+        console.log('AdminToggle state:', state);
       };
 
       
     return (
-        <div className="w-full h-[83px] fixed top-0 left-0 right-0 z-10
+        <div className="w-full h-[83px] fixed top-0 left-0 right-0 z-20
                         bg-neutral-white dark:bg-neutral-black justify-start items-center inline-flex">
             <div className='w-[336px] p-4 justify-start items-center gap-2.5 inline-flex'>
                 <button className="w-11 h-11 btnStyle-m justify-start items-center inline-flex
-                                   neutralBtnStyle-default hover:neutralBtnStyle-hover active:neutralBtnStyle-active">
+                                   neutralBtnStyle-default hover:neutralBtnStyle-hover active:neutralBtnStyle-active"
+                        onClick={onToggleSidebar} >
                     <Icon name="list" width={24} height={24} />
                 </button>
                 <DropDownController projectName=""/>
             </div>
 
             <div className="w-full h-[51px] p-4 justify-between items-center gap-4 inline-flex">
-                {userLevel !== 'nomal' && ( // 조건부 렌더링
+                {userLevel !== 'nomal' && (
                     <Toggler iconNameOn="pencil"
                             iconNameOff="dots_horiz"
                             labelOn="학습 중 ..."
                             labelOff="학습시키기"
                             initialState={false}
-                            onToggle={handleToggle} />
+                            onToggle={handleAdminToggle} />
                 )}
                 <div className='w-full justify-end items-center gap-4 flex'>
                     <UserProfile userName='김사원' userLevel={userLevel}/>
