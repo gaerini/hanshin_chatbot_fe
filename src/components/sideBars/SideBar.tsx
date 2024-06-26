@@ -1,20 +1,28 @@
 import React from 'react';
 import DailyLogSelector from './logs/DailyLogSelectors';
-import AdminMenu from './AdminMenu';
+import AdminMenu from './admins/AdminMenu';
 import NomalHeader from '../headers/\bNomalHeader';
+import UserProfileGroup from '../profiles/UserProfileGroup';
 
 interface SideBarProps {
     isSuperAdmin : boolean;
+    userName: string;
+    userLevel: string;
+    handleLogout: () => void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ isSuperAdmin }) => {
+const SideBar: React.FC<SideBarProps> = ({ isSuperAdmin, userName, userLevel, handleLogout }) => {
 
     return (
-        <div className='w-[336px] h-screen mt-[83px] flex flex-col gap-2
+        <div className='w-[336px] h-screen mt-[83px] flex flex-col gap-2 
                         fixed left-0 top-0 bottom-0 z-10 overflow-y-auto'>
+            <div className='block md:hidden w-full p-4 justify-start'>
+                <div className=''>
+                    <UserProfileGroup userName={userName} userLevel={userLevel} handleLogout={handleLogout} alignment='start' />
+                </div>
+            </div>
             {isSuperAdmin && (
-                <div className='w-full flex-col justify-start bg-neutral-100'> 
-                {/* rounded-tr-2xl rounded-br-2xl'> */}
+                <div className='w-full flex-col justify-start'> 
                     <NomalHeader leftIconName = "setting_dark"
                             rightIconName = "plus" 
                             label = "챗봇 관리하기" 

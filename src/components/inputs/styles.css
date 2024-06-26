@@ -1,0 +1,58 @@
+
+
+/* color */
+.inputStyle-default {
+    @apply bg-neutral-white text-neutral-700 fill-neutral-400
+           dark:bg-neutral-800 dark:text-neutral-300 dark:fill-neutral-400
+           border-neutral-200 dark:border-neutral-800
+           focus:outline-none
+}
+    /* placeholder */
+    .inputStyle-default::placeholder {
+        font-family: "pretendard"; /* 원하는 폰트 패밀리로 변경 */
+        font-size: 1rem; /* 원하는 폰트 크기로 변경 */
+        line-height: 1.5rem;
+        color: #A3A3A3; /* 원하는 색상으로 변경 */
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+    }
+    
+
+.inputStyle-disabled {
+    @apply bg-neutral-100 text-neutral-300 fill-neutral-300
+           dark:bg-neutral-700 dark:text-neutral-500 dark:fill-neutral-500
+           border-neutral-200 dark:border-neutral-800
+           focus:outline-none
+}
+
+    .inputStyle-disabled::placeholder {
+        font-family: "pretendard"; /* 원하는 폰트 패밀리로 변경 */
+        font-size: 1rem; /* 원하는 폰트 크기로 변경 */
+        line-height: 1.5rem;
+        color: #D4D4D4; /* disabled 상태의 색상 */
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+    }
+    @media (prefers-color-scheme: dark) {
+        .inputStyle-disabled::placeholder {
+          color: #737373; /* 다크모드 disabled 상태의 색상 */
+        }
+      }
+
+.inputStyle-prompting {
+    @apply bg-blue-100 
+           border-blue-300
+           focus:outline-none
+}
+
+    .inputStyle-prompting::placeholder {
+        font-family: "pretendard"; /* 원하는 폰트 패밀리로 변경 */
+        font-size: 1rem; /* 원하는 폰트 크기로 변경 */
+        line-height: 1.5rem;
+        color: #93AEFF; /* 원하는 색상으로 변경 */
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+    }

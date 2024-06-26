@@ -14,6 +14,8 @@ const UserProfile: React.FC<UserProfileProps> = ({userName, userLevel}) => {
         badgeStyle = "neutralBadgeStyle";
     } else if (userLevel === "최고관리자") {
         badgeStyle = "superAdminBadgeStyle";
+    } else if (userLevel === "일반 사용자") {
+        badgeStyle = "normalBadgeStyle"; 
     }
 
     return (
@@ -25,7 +27,7 @@ const UserProfile: React.FC<UserProfileProps> = ({userName, userLevel}) => {
                 </div>
                 <div className="text-neutral-700 dark:text-neutral-300 text-title font-semibold whitespace-nowrap">{userName}</div>
             </div>
-            {userLevel !== 'nomal' && (
+            {userLevel !== '일반 사용자' && (
                 <Badge iconName="VIP" badgeLabel={userLevel} badgeStyle={badgeStyle} />
             )}
         </div>

@@ -7,20 +7,6 @@
   src: url("../../public/font/PretendardVariable.ttf");
 }
 
-.custom-textarea::placeholder {
-  font-family: "pretendard"; /* 원하는 폰트 패밀리로 변경 */
-  font-size: 1rem; /* 원하는 폰트 크기로 변경 */
-  line-height: 1.5rem;
-  color: #999; /* 원하는 색상으로 변경 */
-  white-space: nowrap; 
-  overflow: hidden; 
-  text-overflow: ellipsis;
-}
-
-.custom-textarea:disabled::placeholder {
-  color: #D4D4D4; /* disabled 상태의 색상 */
-}
-
 :root {
   height: 100%;
 }
@@ -117,9 +103,17 @@ body {
       @apply bg-purple-100 text-purple-500 fill-purple-500
             dark:bg-purple-500 dark:text-purple-100 dark:fill-purple-100
     }
-  }
 
-  
+    /* alert */
+    .alert-s{
+      @apply w-full p-2 rounded-lg justify-start items-center gap-1 inline-flex
+             text-paragraph-m font-normal
+    }
+    .alert-l{
+      @apply w-full p-4 rounded-lg justify-start items-center gap-2 inline-flex
+             text-title font-semibold
+    }
+  }
 
   @layer utilities {
     .text-balance {

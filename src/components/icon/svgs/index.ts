@@ -17,6 +17,7 @@ export { default as list } from "./list.svg";
 export { default as dots_horiz } from "./dots_horiz.svg";
 export { default as dots } from "./dots.svg";
 export { default as plus } from "./plus.svg";
+export { default as warning } from "./warning.svg";
 
 //dark
 export { default as chart_dark } from "./chart_dark.svg";

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import Icon from "../icon/Icon";
+import "./styles.css";
 import { useActiveItemContext } from "../dropDown/ActiveItemContext";
 import { useGetApiContext } from "../dropDown/GetApiContext";
 import { useChooseRecommendContext } from "../loadingPages/recommend/ChooseRecommendContext";
@@ -173,13 +174,11 @@ const InputNomal: React.FC<InputNomalProps> = ({
       <div className="w-full p-4 justify-start items-start flex">
         <textarea
           className={`flex-grow pl-4 pr-3 py-3.5 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-center items-center resize-none 
-                      text-paragraph-l dark:border-neutral-800 border-neutral-200 focus:outline-none
-                    
-                    custom-textarea
+                      text-paragraph-l
                     ${
                       !getApi
-                        ? "neutralBtnStyle-disabled"
-                        : "neutralBtnStyle-default"
+                        ? "inputStyle-disabled"
+                        : "inputStyle-prompting"
                     }`}
           style={{
             minHeight: minHeight,

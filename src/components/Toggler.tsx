@@ -25,12 +25,12 @@ const Toggler: React.FC<TogglerProps> = ({ iconNameOn, iconNameOff, labelOn, lab
     return (
         <button onClick={handleToggle}
                 className={`w-[121px] h-11 p-1.5 rounded-2xl justify-start items-center inline-flex text-paragraph-m font-semibold
-                         ${isOn ? 'bg-blue-100 text-blue-original'   //on
-                                : 'bg-neutral-100 text-neutral-400'}`}> 
+                         ${isOn ? 'bg-blue-100 text-blue-original dark:bg-blue-original dark:text-neutral-white'   //on
+                                : 'bg-neutral-100 text-neutral-400 dark:bg-neutral-500 dark:text-neutral-300'}`}> 
             {isOn ? <div className='w-full justify-start items-center inline-flex'>
                         <p className='w-[77px]'>{labelOn}</p>
-                        <div className='w-8 h-8 p-1.5 bg-blue-original rounded-[10px] justify-start items-center gap-2.5 inline-flex'>
-                            <Icon name={iconNameOn} width={20} height={20} className='fill-neutral-white' />
+                        <div className='w-8 h-8 p-1.5 bg-blue-original dark:bg-blue-100 rounded-[10px] justify-start items-center gap-2.5 inline-flex'>
+                            <Icon name={iconNameOn} width={20} height={20} className='fill-neutral-white dark:fill-blue-original' />
                         </div>
                     </div>
                   : <div className='w-full justify-start items-center inline-flex'>

@@ -11,7 +11,7 @@ const Badge: React.FC<BadgeProps> = ({ iconName, badgeLabel, badgeStyle}) => {
 
     return (
         <div className={`px-1.5 py-0.5 rounded-lg justify-start items-center gap-0.5 inline-flex
-                        text-caption font-medium ${badgeStyle}`}>
+                        text-caption font-medium ${badgeStyle} whitespace-nowrap`}>
             <Icon name = {iconName} width={12} height={12} />
             {badgeLabel}
         </div>

@@ -1,17 +1,18 @@
 'use client'
-import React , { useState } from 'react';
-import DropDownController from './dropDown/DropDownController';
-import Icon from './icon/Icon';
+import React from 'react';
+import DropDownController from '../dropDown/DropDownController';
+import Icon from '../icon/Icon';
 
-import UserProfile from './profiles/UserProfile';
-import Toggler from './Toggler';
+import UserProfileGroup from '../profiles/UserProfileGroup';
+import Toggler from '../Toggler';
 
 interface TopNavProps {
     userLevel : string;
+    userName : string;
     onToggleSidebar: () => void;
 }
 
-const TopNav: React.FC<TopNavProps> = ({userLevel, onToggleSidebar}) => {
+const TopNav: React.FC<TopNavProps> = ({userLevel, userName, onToggleSidebar}) => {
       // 나중에 반응형 할때 참고!
     // const [buttonText, setButtonText] = useState('빌드챗이 학습한 서류의 목록이 궁금하시다면?');
     
@@ -34,7 +35,15 @@ const TopNav: React.FC<TopNavProps> = ({userLevel, onToggleSidebar}) => {
 
     const handleAdminToggle = (state: boolean) => {
         console.log('AdminToggle state:', state);
-      };
+    };
+
+    const handleLogout = () => {
+        // 토큰을 로컬 스토리지에서 제거
+        localStorage.removeItem('access_token');
+        console.log('로그아웃: 토큰 제거됨');
+        // 로그인 페이지로 리디렉션
+        window.location.href = '/login';
+    };
 
       
     return (
@@ -58,14 +67,10 @@ const TopNav: React.FC<TopNavProps> = ({userLevel, onToggleSidebar}) => {
                             initialState={false}
                             onToggle={handleAdminToggle} />
                 )}
-                <div className='w-full justify-end items-center gap-4 flex'>
-                    <UserProfile userName='김사원' userLevel={userLevel}/>
-                    <div className='justify-end items-center gap-1 inline-flex'>
-                        <p className='text-neutral-400 text-caption'>|</p>
-                        <button className='text-caption font-medium textBtnStyle whitespace-nowrap'>로그아웃</button>
-                    </div>
+                <div className="hidden md:flex flex-1 items-center gap-4">
+                    <UserProfileGroup userName={userName} userLevel={userLevel} handleLogout={handleLogout} alignment='end' />
                 </div>
-                </div>
+            </div>
         </div>
     );
 };

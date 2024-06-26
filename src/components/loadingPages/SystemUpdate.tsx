@@ -9,7 +9,7 @@ const SystemUpdate: React.FC = () => {
         window.open(paperListLink, "_blank");
       };
     return (
-        <div className='w-full h-full p-4 flex-col justify-center items-center gap-4 inline-flex overflow-hidden'>
+        <div className='w-full h-full p-4 flex-col justify-center items-center gap-4 inline-flex overflow-hidden mt-[100px]'>
             <div className='w-full p-8 rounded-2xl flex-col justify-start items-center gap-8 inline-flex
                             '>
                 <div className='w-full flex-col justify-start items-center gap-4 inline-flex 
