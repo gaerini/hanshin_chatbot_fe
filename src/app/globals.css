@@ -17,10 +17,6 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-
-  .custom-textarea:disabled::placeholder {
-    color: #737373; /* 다크모드 disabled 상태의 색상 */
-  }
 }
 
 body {

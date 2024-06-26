@@ -1,17 +1,17 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-import UserBubble from './bubbles/UserBubble';
-import GptBubble from './bubbles/GptBubble';
-import InputNomal from './inputs/InputNomal';
+import UserBubble from '../bubbles/UserBubble';
+import GptBubble from '../bubbles/GptBubble';
+import InputNomal from '../inputs/InputNomal';
 
-import TypingIndicator from './bubbles/TypingIndicator';
-import SystemUpdate from './loadingPages/SystemUpdate'
-import NoSelectedProject from './loadingPages/NoSelectedProject';
-import RecommendedValue from './loadingPages/recommend/RecommendedValue';
+import TypingIndicator from '../bubbles/TypingIndicator';
+import SystemUpdate from '../loadingPages/SystemUpdate'
+import NoSelectedProject from '../loadingPages/NoSelectedProject';
+import RecommendedValue from '../loadingPages/recommend/RecommendedValue';
 
-import { useActiveItemContext } from './dropDown/ActiveItemContext';
-import { useGetApiContext } from './dropDown/GetApiContext';
+import { useActiveItemContext } from '../dropDown/ActiveItemContext';
+import { useGetApiContext } from '../dropDown/GetApiContext';
 
 interface ContainerProps {
     isSidebarOpen: boolean;
@@ -45,10 +45,7 @@ const Container: React.FC<ContainerProps> = ({ isSidebarOpen }) => {
     
 
     return (
-        <div className={`flex-grow flex flex-col mt-[83px] h-full items-center
-                        ${isSidebarOpen 
-                            ? 'pl-[336px] w-full' 
-                            : 'max-w-[768px] w-full mx-auto'}`}>
+        <div className='flex-grow flex flex-col mt-[83px] h-full items-center'>
             <div className="w-full flex-grow flex-col overflow-y-auto h-full">
                     {getApi ? (
                                 selectedProject === null ? (

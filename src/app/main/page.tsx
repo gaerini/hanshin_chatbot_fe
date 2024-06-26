@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import TopNav from '@/components/topNavs/TopNav';
-import Container from '@/components/Container';
+import Container from '@/components/containers/Container';
+import Contents from '@/components/containers/Contents';
 import SideBar from '@/components/sideBars/SideBar';
 import { GetApiProvider } from '@/components/dropDown/GetApiContext';
 import { ActiveItemProvider } from '../../components/dropDown/ActiveItemContext';
@@ -67,7 +68,7 @@ const Home: React.FC = () => {
                                          userName={userName} 
                                          userLevel={userLevel} 
                                          handleLogout={handleLogout}/>}
-              <Container isSidebarOpen={isSidebarOpen}/>
+              <Contents isSidebarOpen={isSidebarOpen}/>
             </div> 
 
           </ChooseRecommendContextProvider>

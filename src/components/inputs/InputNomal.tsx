@@ -178,7 +178,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
                     ${
                       !getApi
                         ? "inputStyle-disabled"
-                        : "inputStyle-prompting"
+                        : "inputStyle-default"
                     }`}
           style={{
             minHeight: minHeight,
