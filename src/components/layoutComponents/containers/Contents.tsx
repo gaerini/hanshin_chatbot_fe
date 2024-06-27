@@ -22,11 +22,11 @@ const Contents: React.FC<ContentsProps> = ({isSidebarOpen, activePage, selectedP
                             : 'max-w-[768px] w-full mx-auto'}`}>
         {activePage === 'Container' && <Container isSidebarOpen={isSidebarOpen}/>}
         {activePage === 'ProjectManagement' && 
-          <ProjectManagement 
-            setActivePage={setActivePage}
-            isSidebarOpen={isSidebarOpen} 
-            selectedProject={selectedProject} 
-            onProjectSelect={onProjectSelect}/>}
+                        <ProjectManagement 
+                          setActivePage={setActivePage}
+                          isSidebarOpen={isSidebarOpen} 
+                          selectedProject={selectedProject} 
+                          onProjectSelect={onProjectSelect}/>}
         {activePage === 'AddPapers' && <AddPapers selectedProject=""/>}
         {activePage === 'AddProject' && <AddProject />}
     </div>

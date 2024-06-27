@@ -1,5 +1,5 @@
 import React from 'react';
-import DailyLogSelector from './logs/DailyLogSelectors';
+import DailyLogSelector from './DailyLogSelectors';
 import AdminMenu from './admins/AdminMenu';
 import NomalHeader from '../../headers/\bNomalHeader';
 import UserProfileGroup from '../../profiles/UserProfileGroup';

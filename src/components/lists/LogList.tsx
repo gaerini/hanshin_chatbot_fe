@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface LogSelectorProps {
+interface LogListProps {
     firstQuery : string;
 }
 
-const LogSelector: React.FC<LogSelectorProps> = ({ firstQuery }) => {
+const LogList: React.FC<LogListProps> = ({ firstQuery }) => {
 
     return (
         <button className="w-[304px] btnStyle-m justify-start items-center gap-2 inline-flex
@@ -14,4 +14,4 @@ const LogSelector: React.FC<LogSelectorProps> = ({ firstQuery }) => {
     );
 };
 
-export default LogSelector;
+export default LogList;

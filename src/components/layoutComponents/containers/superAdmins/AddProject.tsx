@@ -26,7 +26,7 @@ const AddProject: React.FC = () => {
           <button className="btnStyle-l blueBtnStyle-default hover:blueBtnStyle-hover active:blueBtnStyle-active
                           border border-neutral-200 gap-2">
             <Icon name="plus" width={20} height={20} />
-            프로젝트 생성
+            프로젝트 생성 완료
           </button>
       </div>
     </div>

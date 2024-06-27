@@ -1,5 +1,5 @@
 import React from 'react';
-import LogSelector from './LogSelector';
+import LogSelector from '../../lists/LogList';
 
 interface DailyLogSelectorProps {
     date : string;
