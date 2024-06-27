@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
         console.log('로그인 성공:', data);
         // 예시로 로컬 스토리지에 토큰을 저장합니다.
         localStorage.setItem('access_token', data.access_token);
-        window.location.href = '/main';
+        window.location.href = '/main?page=Container';
       } else {
         console.error('로그인 실패');
         setError('아이디 혹은 비밀번호가 정확하지 않습니다.');

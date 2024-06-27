@@ -1,10 +1,9 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import Icon from "../icon/Icon";
-import "./styles.css";
 import { useActiveItemContext } from "../dropDown/ActiveItemContext";
 import { useGetApiContext } from "../dropDown/GetApiContext";
-import { useChooseRecommendContext } from "../loadingPages/recommend/ChooseRecommendContext";
+import { useChooseRecommendContext } from "../layoutComponents/loadingPages/recommend/ChooseRecommendContext";
 
 interface InputNomalProps {
   addUserMessage: (message: string) => void;

@@ -18,6 +18,8 @@ export { default as dots_horiz } from "./dots_horiz.svg";
 export { default as dots } from "./dots.svg";
 export { default as plus } from "./plus.svg";
 export { default as warning } from "./warning.svg";
+export { default as dotsPlus } from "./dotsPlus.svg";
+export { default as upload } from "./upload.svg";
 
 //dark
 export { default as chart_dark } from "./chart_dark.svg";
@@ -25,3 +27,4 @@ export { default as setting_dark } from "./setting_dark.svg";
 export { default as storage_dark} from "./storage_dark.svg";
 export { default as user_dark } from "./user_dark.svg";
 export { default as lock_dark } from "./lock_dark.svg";
+export { default as file_dark } from "./file_dark.svg";

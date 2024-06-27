@@ -1,10 +1,10 @@
 'use client'
 import React from 'react';
-import DropDownController from '../dropDown/DropDownController';
-import Icon from '../icon/Icon';
+import DropDownController from '../../dropDown/DropDownController';
+import Icon from '../../icon/Icon';
 
-import UserProfileGroup from '../profiles/UserProfileGroup';
-import Toggler from '../Toggler';
+import UserProfileGroup from '../../profiles/UserProfileGroup';
+import Toggler from '../../Toggler';
 
 interface TopNavProps {
     userLevel : string;

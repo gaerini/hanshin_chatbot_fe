@@ -1,6 +1,5 @@
 import React from "react";
 import Icon, {IconName} from "../icon/Icon";
-import "./styles.css";
 
 interface InputIconProps {
   iconName: IconName;

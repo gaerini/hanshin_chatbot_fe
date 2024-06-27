@@ -6,7 +6,7 @@ import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 
 import PdfBubble from "./pdfBubbles/PdfBubble";
-import Icon from "../icon/Icon";
+import Icon from "../../icon/Icon";
 
 interface GptBubbleProps {
   gptText: string;

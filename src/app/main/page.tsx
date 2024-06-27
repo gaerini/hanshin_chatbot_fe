@@ -1,29 +1,37 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import TopNav from '@/components/topNavs/TopNav';
-import Container from '@/components/containers/Container';
-import Contents from '@/components/containers/Contents';
-import SideBar from '@/components/sideBars/SideBar';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import TopNav from '@/components/layoutComponents/topNavs/TopNav';
+import Contents from '@/components/layoutComponents/containers/Contents';
+import SideBar from '@/components/layoutComponents/sideBars/SideBar';
 import { GetApiProvider } from '@/components/dropDown/GetApiContext';
 import { ActiveItemProvider } from '../../components/dropDown/ActiveItemContext';
-import { ChooseRecommendContextProvider } from '@/components/loadingPages/recommend/ChooseRecommendContext';
+import { ChooseRecommendContextProvider } from '@/components/layoutComponents/loadingPages/recommend/ChooseRecommendContext';
 
 
 const Home: React.FC = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userName, setUserName] = useState('');
   const [userLevel, setUserLevel] = useState('');
+  const [activePage, setActivePage] = useState('Container');
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
   //sideBar toggle
   const handleSideBarToggle = () => {
       setIsSidebarOpen(prevState => !prevState);
   };
 
+  //logout
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     window.location.href = '/login';
-};
+  };
 
   //token 보유 유무 확인 후 리디렉션(차후 개선 필요)
   useEffect(() => {
@@ -55,6 +63,69 @@ const Home: React.FC = () => {
     }
   }, []);
 
+  //브라우저 히스토리 업데이트
+  const updateQuery = (page: string, project: string | null = null) => {
+    const params = new URLSearchParams(searchParams);
+    const currentPage = searchParams.get('page');
+    const currentProject = searchParams.get('project');
+
+    if (currentPage === page && currentProject === project) return;
+
+    params.set('page', page);
+    if (project !== null) {
+      params.set('project', project);
+      params.set('view', 'ProjectDetail');
+    } else {
+      params.set('view', 'ProjectListPage');
+      params.delete('project');
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handlePageChange = (page: string) => {
+    setActivePage(page);
+    updateQuery(page, selectedProject);
+  };
+
+  const handleProjectSelect = (projectName: string | null) => {
+    setSelectedProject(projectName);
+    if (activePage === 'ProjectManagement') {
+      updateQuery('ProjectManagement', projectName);
+    }
+  };
+
+  useEffect(() => {
+    const page = searchParams.get('page');
+    const project = searchParams.get('project');
+
+    if (page && page !== activePage) {
+      setActivePage(page);
+    }
+
+    if (project && project !== selectedProject) {
+      setSelectedProject(project === 'null' ? null : project);
+    }
+  }, [searchParams]);
+
+  //뒤로가기 했을 떄 selectedProject 리셋
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const project = params.get('project');
+
+      if (!project) {
+        setSelectedProject(null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   return (
     <div className="w-full flex-col items-center justify-center">
       <GetApiProvider>
@@ -67,8 +138,14 @@ const Home: React.FC = () => {
               {isSidebarOpen && <SideBar isSuperAdmin={userLevel === '최고관리자'} 
                                          userName={userName} 
                                          userLevel={userLevel} 
-                                         handleLogout={handleLogout}/>}
-              <Contents isSidebarOpen={isSidebarOpen}/>
+                                         handleLogout={handleLogout}
+                                         setActivePage={handlePageChange}/>}
+                <Contents 
+                  isSidebarOpen={isSidebarOpen} 
+                  activePage={activePage}
+                  selectedProject={selectedProject} 
+                  onProjectSelect={handleProjectSelect}
+                  setActivePage={handlePageChange} />
             </div> 
 
           </ChooseRecommendContextProvider>

@@ -3,9 +3,10 @@ import Icon, {IconName} from '../icon/Icon';
 
 interface ProjectListProps {
     projectName : string;
+    onProjectSelect: (projectName: string) => void;
 }
 
-const ProjectList: React.FC<ProjectListProps> = ({ projectName }) => {
+const ProjectList: React.FC<ProjectListProps> = ({ projectName, onProjectSelect }) => {
 
     return (
         <div className ="w-full p-2.5 bg-neutral-white rounded-[10px] 
@@ -16,7 +17,8 @@ const ProjectList: React.FC<ProjectListProps> = ({ projectName }) => {
                 </div>
                 <p className='text-neutral-700 text-paragraph-m'>{projectName}</p>
             </div>
-            <button className='textBtnStyle text-caption'>
+            <button className='textBtnStyle text-caption'
+                    onClick={() => onProjectSelect(projectName)}>
                 자세히보기
             </button>
         </div>

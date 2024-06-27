@@ -1,17 +1,18 @@
 import React from 'react';
 import DailyLogSelector from './logs/DailyLogSelectors';
 import AdminMenu from './admins/AdminMenu';
-import NomalHeader from '../headers/\bNomalHeader';
-import UserProfileGroup from '../profiles/UserProfileGroup';
+import NomalHeader from '../../headers/\bNomalHeader';
+import UserProfileGroup from '../../profiles/UserProfileGroup';
 
 interface SideBarProps {
     isSuperAdmin : boolean;
     userName: string;
     userLevel: string;
     handleLogout: () => void;
+    setActivePage: (page: string) => void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ isSuperAdmin, userName, userLevel, handleLogout }) => {
+const SideBar: React.FC<SideBarProps> = ({ isSuperAdmin, userName, userLevel, handleLogout, setActivePage }) => {
 
     return (
         <div className='w-[336px] h-screen mt-[83px] flex flex-col gap-2 
@@ -31,10 +32,10 @@ const SideBar: React.FC<SideBarProps> = ({ isSuperAdmin, userName, userLevel, ha
                     <div className='w-full px-4 pt-2.5 pb-4 flex-col justify-start items-start gap-2 inline-flex'>
                         <AdminMenu iconName="dots" 
                                    label="프로젝트 관리" 
-                                   link=""/>
+                                   onClick={() => setActivePage('ProjectManagement')}/>
                         <AdminMenu iconName="chart_dark" 
                                    label="사용현황 조회" 
-                                   link=""/>
+                                   onClick={() => setActivePage('')}/>
                     </div>
                 </div>
                 
