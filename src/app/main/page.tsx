@@ -24,7 +24,6 @@ const Home: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userName, setUserName] = useState('');
   const [userLevel, setUserLevel] = useState('');
-
   const [activePage, setActivePage] = useState('Container');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
@@ -93,6 +92,8 @@ const Home: React.FC = () => {
   //브라우저 히스토리 업데이트
   const updateQuery = (page: string, project: string | null = null) => {
     const params = new URLSearchParams(searchParams);
+    console.log("search",searchParams)
+    console.log("params", params)
     const currentPage = searchParams.get('page');
     const currentProject = searchParams.get('project');
 
@@ -154,6 +155,7 @@ const Home: React.FC = () => {
               onToggleSidebar={handleSideBarToggle}/>
 
             <div className='flex flex-grow'>
+            <Suspense fallback={<div>Loading...</div>}>
               {isSidebarOpen && <SideBar isSuperAdmin={userLevel === '최고관리자'} 
                                          userName={userName} 
                                          userLevel={userLevel} 
@@ -161,6 +163,7 @@ const Home: React.FC = () => {
                                          setActivePage={handlePageChange}
                                          memoryIdList={memoryIdList}
                                          onSelectMemory={handleSelectMemory}/>}
+                                         </Suspense>
               <Suspense fallback={<div>Loading...</div>}>
                 <Container
                   isSidebarOpen={isSidebarOpen} 

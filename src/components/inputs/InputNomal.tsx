@@ -31,7 +31,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
   const minHeight = "3.5rem";
   const isSending = useRef(false);
 
-  const { selectedProject } = useActiveItemContext();
+  const { selectedProjectForChat } = useActiveItemContext();
   const { getApi } = useGetApiContext();
   const { recommendedValue } = useChooseRecommendContext();
 
@@ -82,7 +82,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
       isSending.current = false;
       return;
     }
-    if (!selectedProject) {
+    if (!selectedProjectForChat) {
       alert("프로젝트를 선택해주세요.");
       isSending.current = false;
       return;
@@ -104,7 +104,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
           "찾으시는 내용을 주어진 서류에서 찾지 못했습니다."
         )
       ) {
-        const modifiedQuery = `${selectedProject} 현장 ${inputValue}`;
+        const modifiedQuery = `${selectedProjectForChat} 현장 ${inputValue}`;
         const modifiedResult = await sendRequest(modifiedQuery);
 
         addGptMessage(
@@ -144,9 +144,16 @@ const InputNomal: React.FC<InputNomalProps> = ({
 
   //Api-post
   const sendRequest = async (query: string) => {
+    const token = localStorage.getItem("access_token");
+    
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${token}`);
+    console.log(token);
+
     const requestBody = {
       query,
-      project_name: selectedProject,
+      project_name: selectedProjectForChat,
       memory_id: memoryId,
     };
 
@@ -154,12 +161,12 @@ const InputNomal: React.FC<InputNomalProps> = ({
       "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         body: JSON.stringify(requestBody),
       }
     );
+
+    console.log(response);
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -185,8 +192,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
             overflow: inputValue ? "auto" : "hidden",
           }}
           placeholder={
-            selectedProject
-              ? `${selectedProject} 현장에 대해 무엇이든 물어보세요`
+            selectedProjectForChat
+              ? `${selectedProjectForChat} 현장에 대해 무엇이든 물어보세요`
               : "무엇이든 물어보세요"
           }
           value={inputValue}

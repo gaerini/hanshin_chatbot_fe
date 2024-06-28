@@ -13,7 +13,7 @@ interface TopNavProps {
 }
 
 const TopNav: React.FC<TopNavProps> = ({userLevel, userName, onToggleSidebar}) => {
-    const { setSelectedProject } = useActiveItemContext();
+    const { setSelectedProjectForChat } = useActiveItemContext();
 
     const handleAdminToggle = (state: boolean) => {
         console.log('AdminToggle state:', state);

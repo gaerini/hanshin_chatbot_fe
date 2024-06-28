@@ -24,16 +24,16 @@ const SideBar: React.FC<SideBarProps> = ({
     memoryIdList,
     onSelectMemory  
 }) => {
-    const { selectedProject,setSelectedProject } = useActiveItemContext(); 
+    const { selectedProjectForChat , setSelectedProjectForChat } = useActiveItemContext(); 
     
-    const filteredMemoryIdList = selectedProject 
-        ? memoryIdList.filter(memory => memory.project_name === selectedProject) 
+    const filteredMemoryIdList = selectedProjectForChat 
+        ? memoryIdList.filter(memory => memory.project_name === selectedProjectForChat) 
         : memoryIdList;
 
     const handleSelectMemory = (memoryId: string, projectName: string) => {
         console.log('SideBar handleSelectMemory', memoryId, projectName);
         onSelectMemory(memoryId);
-        setSelectedProject(projectName);
+        setSelectedProjectForChat(projectName);
     };
 
     return (
@@ -51,7 +51,7 @@ const SideBar: React.FC<SideBarProps> = ({
                             label = "챗봇 관리하기" 
                             style = "" 
                             rightBtn ={false}
-                            selectedProject={selectedProject} />
+                            selectedProject={selectedProjectForChat} />
                     <div className='w-full px-4 pt-2.5 pb-4 flex-col justify-start items-start gap-2 inline-flex'>
                         <AdminMenu iconName="dots" 
                                    label="프로젝트 관리" 
@@ -69,7 +69,7 @@ const SideBar: React.FC<SideBarProps> = ({
                             label = "나의 대화내역" 
                             style = "" 
                             rightBtn ={true}
-                            selectedProject={selectedProject}/>
+                            selectedProject={selectedProjectForChat}/>
                 {filteredMemoryIdList.map((memory) => {
                     const date = memory.last_chat_time.split('T')[0];
                     return (

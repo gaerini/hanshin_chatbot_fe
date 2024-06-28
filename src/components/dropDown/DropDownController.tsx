@@ -15,7 +15,7 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
 }) => {
   const [isOpened, setIsOpened] = useState(false);
   const { getApi, setGetApi } = useGetApiContext();
-  const { selectedProject, setSelectedProject } = useActiveItemContext();
+  const { selectedProjectForChat, setSelectedProjectForChat } = useActiveItemContext();
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [projects, setProjects] = useState<string[]>([]);
 
@@ -47,16 +47,16 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
 
   const handleSelectProject = (projectName: string) => {
     if (projectName === "") {
-      setSelectedProject(null);  // 프로젝트 선택 해제 시 null로 설정
+      setSelectedProjectForChat(null);  // 프로젝트 선택 해제 시 null로 설정
     } else {
-      setSelectedProject(projectName);
+      setSelectedProjectForChat(projectName);
     }
     setActiveItem(projectName);
   };
 
-  useEffect(() => {
-    console.log('DropdownController selectedProject:', selectedProject);
-  }, [selectedProject]);
+  // useEffect(() => {
+  //   console.log('DropdownController selectedProject:', selectedProject);
+  // }, [selectedProject]);
 
   return (
     <div className="relative flex-col justify-start items-start gap-2 inline-flex">
@@ -84,7 +84,7 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
                             : "fill-neutral-300 dark:fill-neutral-500"
                         }`}
           />
-          {selectedProject || projectName || (
+          {selectedProjectForChat || projectName || (
             <p
               className={`font-midium 
                         ${

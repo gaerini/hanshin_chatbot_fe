@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import UserBubble from '../../chatbotComponents/bubbles/UserBubble';
 import GptBubble from '../../chatbotComponents/bubbles/GptBubble';
 import InputNomal from '../../inputs/InputNomal';
@@ -25,12 +26,17 @@ interface Message {
 }
 
 const ChatBot: React.FC<ChatBotProps> = ({ isSidebarOpen, selectedMemoryId }) => {
-    const { selectedProject } = useActiveItemContext();
+    const { selectedProjectForChat } = useActiveItemContext();
     const { getApi } = useGetApiContext();
     const [ messages, setMessages ] = useState<Message[]>([]);
     const [loading, setLoading] = useState(false); 
     const [typingComplete, setTypingComplete] = useState(true);
     const [messagesFetched, setMessagesFetched] = useState(false);
+
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+
 
     const addUserMessage = (message: string) => {
         setMessages((prevMessages) => [...prevMessages, { type: 'human', text: message }]);
@@ -39,9 +45,9 @@ const ChatBot: React.FC<ChatBotProps> = ({ isSidebarOpen, selectedMemoryId }) =>
         setMessages((prevMessages) => [...prevMessages, { type: 'ai', text: message, sources}]);
     };
 
+    //sideBar에서 선택한 memoryId log 불러와서 bubble로 렌더링
     const fetchMessagesForMemoryId = async (memoryId: string) => {
         console.log('Fetching messages for memoryId:', memoryId);
-        setLoading(true);
         setMessagesFetched(false);
         try {
             // API 호출하여 해당 memoryId의 대화 내용 불러오기
@@ -63,7 +69,6 @@ const ChatBot: React.FC<ChatBotProps> = ({ isSidebarOpen, selectedMemoryId }) =>
             setMessages([]); // 에러 발생 시 빈 배열로 초기화
             setMessagesFetched(false);
         }
-        setLoading(false);
     };
 
     useEffect(() => {
@@ -84,44 +89,68 @@ const ChatBot: React.FC<ChatBotProps> = ({ isSidebarOpen, selectedMemoryId }) =>
             messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
         }
     };
+
+    // URL 쿼리 업데이트 함수
+    const updateQuery = (project: string | null, memoryId: string | null) => {
+        const params = new URLSearchParams(searchParams);
+        const currentProject = searchParams.get('project');
+        const currentMemoryId = searchParams.get('memoryId');
+
+        if (currentProject === project && currentMemoryId === memoryId) return;
+
+        if (project !== null) {
+            params.set('project', project);
+        } else {
+            params.delete('project');
+        }
+
+        if (memoryId !== null) {
+            params.set('memoryId', memoryId);
+        } else {
+            params.delete('memoryId');
+        }
+
+        router.push(`${pathname}?${params.toString()}`);
+    };
+
+    // selectedProjectForChat 또는 selectedMemoryId가 변경될 때마다 URL 업데이트
+    useEffect(() => {
+        updateQuery(selectedProjectForChat, selectedMemoryId);
+    }, [selectedProjectForChat, selectedMemoryId]);
     
 
     return (
         <div className='flex-grow flex flex-col h-full items-center mb-[80px]'>
             <div className="w-full flex-grow flex-col overflow-y-auto h-full">
-                {messagesFetched ? (  // messagesFetched 상태에 따라 렌더링 결정
-                    <>
-                        {messages.length === 0 ? (
-                            <div className="w-full h-full flex justify-center items-center">
-                                <RecommendedValue />
-                            </div>
-                        ) : (
-                            <>
-                                {messages.map((message, index) => 
-                                    message.type === 'human' ? (
-                                        <UserBubble key={index} userText={message.text} />
-                                    ) : (
-                                        <GptBubble 
-                                            key={index} 
-                                            gptText={message.text} 
-                                            sources={message.sources || []} 
-                                            setTypingComplete={setTypingComplete}
-                                            messagesFetched={messagesFetched}/>
-                                    )
-                                )}
-                                {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
-                            </>
-                        )}
-                    </>
+            {getApi === false ? (
+                    <SystemUpdate />
+                ) : selectedProjectForChat === null ? (
+                    <div className="w-full h-full flex justify-center items-center">
+                        <NoSelectedProject />
+                    </div>
+                ) : messages.length === 0 ? (
+                    <div className="w-full h-full flex justify-center items-center">
+                        <RecommendedValue />
+                    </div>
                 ) : (
-                    selectedProject === null ? (
-                        <div className="w-full h-full flex justify-center items-center">
-                            <NoSelectedProject />
-                        </div>
-                    ) : (
-                        <SystemUpdate />
-                    )
-                )}
+                    <>
+                        {messages.map((message, index) =>
+                            message.type === 'human' ? (
+                                <UserBubble key={index} userText={message.text} />
+                            ) : (
+                                <GptBubble
+                                    key={index}
+                                    gptText={message.text}
+                                    sources={message.sources || []}
+                                    setTypingComplete={setTypingComplete}
+                                    messagesFetched={messagesFetched}
+                                />
+                            )
+                        )}
+                        {loading && <TypingIndicator />} {/* 로딩 중이면 typingIndicator 렌더링 */}
+                    </>
+                )
+                }
                 <div ref={messagesEndRef} />
             </div>
             <div className={`fixed bottom-0

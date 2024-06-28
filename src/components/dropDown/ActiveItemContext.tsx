@@ -3,8 +3,8 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface ActiveItemContextProps {
-    selectedProject: string | null;
-    setSelectedProject: (projectName: string | null) => void;
+    selectedProjectForChat: string | null;
+    setSelectedProjectForChat: (projectName: string | null) => void;
 }
 
 const ActiveItemContext = createContext<ActiveItemContextProps | undefined>(undefined);
@@ -22,10 +22,10 @@ interface ActiveItemProviderProps {
 }
 
 export const ActiveItemProvider: React.FC<ActiveItemProviderProps> = ({ children }) => {
-    const [selectedProject, setSelectedProject] = useState<string | null>(null);
+    const [selectedProjectForChat, setSelectedProjectForChat] = useState<string | null>(null);
 
     return (
-        <ActiveItemContext.Provider value={{ selectedProject, setSelectedProject }}>
+        <ActiveItemContext.Provider value={{ selectedProjectForChat, setSelectedProjectForChat }}>
             {children}
         </ActiveItemContext.Provider>
     );
