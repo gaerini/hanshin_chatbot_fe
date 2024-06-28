@@ -17,6 +17,7 @@ import { useGetApiContext } from "../../dropDown/GetApiContext";
 interface ChatBotProps {
   isSidebarOpen: boolean;
   selectedMemoryId: string | null;
+  searchParams: { [key: string]: string | undefined };
 }
 
 interface Message {
@@ -28,6 +29,7 @@ interface Message {
 const ChatBot: React.FC<ChatBotProps> = ({
   isSidebarOpen,
   selectedMemoryId,
+  searchParams,
 }) => {
   const { selectedProjectForChat } = useActiveItemContext();
   const { getApi } = useGetApiContext();
@@ -37,7 +39,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
   const [messagesFetched, setMessagesFetched] = useState(false);
 
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const pathname = usePathname();
 
   const addUserMessage = (message: string) => {
@@ -102,11 +104,9 @@ const ChatBot: React.FC<ChatBotProps> = ({
 
   // URL 쿼리 업데이트 함수
   const updateQuery = (project: string | null, memoryId: string | null) => {
-    const params = new URLSearchParams(searchParams);
-    console.log("search", searchParams);
-    console.log("params", params);
-    const currentProject = searchParams.get("project");
-    const currentMemoryId = searchParams.get("memoryId");
+    const params = new URLSearchParams(searchParams as Record<string, string>);
+    const currentProject = searchParams?.project || null;
+    const currentMemoryId = searchParams?.memoryId || null;
 
     if (currentProject === project && currentMemoryId === memoryId) return;
 

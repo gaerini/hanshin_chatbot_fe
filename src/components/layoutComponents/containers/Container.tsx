@@ -5,6 +5,7 @@ import AddPapers from './superAdmins/AddPapers';
 import AddProject from './superAdmins/AddProject';
 
 interface ContainerProps {
+    searchParams: { [key: string]: string | undefined };
     isSidebarOpen: boolean;
     activePage: string;
     selectedProject: string | null;
@@ -14,6 +15,7 @@ interface ContainerProps {
 }
 
 const Container: React.FC<ContainerProps> = ({
+    searchParams,
     isSidebarOpen, 
     activePage, 
     selectedProject, 
@@ -26,13 +28,14 @@ const Container: React.FC<ContainerProps> = ({
                         ${isSidebarOpen 
                             ? 'pl-[336px]' 
                             : 'max-w-[768px] mx-auto'}`}>
-        {activePage === 'ChatBot' && <ChatBot isSidebarOpen={isSidebarOpen} selectedMemoryId={selectedMemoryId}/>}
+        {activePage === 'ChatBot' && <ChatBot isSidebarOpen={isSidebarOpen} selectedMemoryId={selectedMemoryId} searchParams={searchParams}/>}
         {activePage === 'ProjectManagement' && 
                         <ProjectManagement 
                           setActivePage={setActivePage}
                           isSidebarOpen={isSidebarOpen} 
                           selectedProject={selectedProject} 
-                          onProjectSelect={onProjectSelect}/>}
+                          onProjectSelect={onProjectSelect}
+                          searchParams={searchParams}/>}
         {activePage === 'AddPapers' && <AddPapers selectedProject=""/>}
         {activePage === 'AddProject' && <AddProject />}
     </div>

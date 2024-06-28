@@ -12,15 +12,16 @@ interface ProjectManagementProps {
     selectedProject: string | null;
     onProjectSelect: (projectName: string | null) => void;
     setActivePage: (page: string) => void;
+    searchParams: { [key: string]: string | undefined };
 }
 
-const ProjectManagement: React.FC<ProjectManagementProps> = ({isSidebarOpen, selectedProject, onProjectSelect, setActivePage}) => {
+const ProjectManagement: React.FC<ProjectManagementProps> = ({isSidebarOpen, selectedProject, onProjectSelect, setActivePage, searchParams}) => {
     const router = useRouter();
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
 
     useEffect(() => {
-        const project = searchParams.get('project');
-        const view = searchParams.get('view');
+        const project = searchParams.project;
+        const view = searchParams.view;
 
         if (project && project !== selectedProject) {
             onProjectSelect(project === 'null' ? null : project);
@@ -38,7 +39,7 @@ const ProjectManagement: React.FC<ProjectManagementProps> = ({isSidebarOpen, sel
         }
     };
 
-    const view = searchParams.get('view');
+    const view = searchParams.view;
 
     return (
         <div className='w-full flex-grow flex-col overflow-y-auto h-full'>

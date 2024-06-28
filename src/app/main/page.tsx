@@ -19,10 +19,15 @@ const Container = dynamic(
   }
 );
 
-const Home: React.FC = () => {
+interface HomeProps {
+  searchParams: { [key: string]: string | undefined };
+}
+
+const Home: React.FC<HomeProps> = ({ searchParams }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  console.log("서치 파람스", searchParams);
+  // const searchParams = useSearchParams();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userName, setUserName] = useState("");
@@ -95,11 +100,11 @@ const Home: React.FC = () => {
 
   //브라우저 히스토리 업데이트
   const updateQuery = (page: string, project: string | null = null) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams as Record<string, string>);
     console.log("search", searchParams);
     console.log("params", params);
-    const currentPage = searchParams.get("page");
-    const currentProject = searchParams.get("project");
+    const currentPage = searchParams?.page || null;
+    const currentProject = searchParams?.project || null;
 
     if (currentPage === page && currentProject === project) return;
 
@@ -116,8 +121,8 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    const page = searchParams.get("page");
-    const project = searchParams.get("project");
+    const page = searchParams.page;
+    const project = searchParams.project;
 
     if (page && page !== activePage) {
       setActivePage(page);
@@ -173,6 +178,7 @@ const Home: React.FC = () => {
               </Suspense>
               <Suspense fallback={<div>Loading...</div>}>
                 <Container
+                  searchParams={searchParams}
                   isSidebarOpen={isSidebarOpen}
                   activePage={activePage}
                   selectedProject={selectedProject}
