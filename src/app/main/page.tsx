@@ -19,15 +19,10 @@ const Container = dynamic(
   }
 );
 
-interface HomeProps {
-  searchParams: { [key: string]: string | undefined };
-}
-
-const Home: React.FC<HomeProps> = ({ searchParams }) => {
+const Home: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
-  console.log("서치 파람스", searchParams);
-  // const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userName, setUserName] = useState("");
@@ -100,11 +95,11 @@ const Home: React.FC<HomeProps> = ({ searchParams }) => {
 
   //브라우저 히스토리 업데이트
   const updateQuery = (page: string, project: string | null = null) => {
-    const params = new URLSearchParams(searchParams as Record<string, string>);
+    const params = new URLSearchParams(searchParams);
     console.log("search", searchParams);
     console.log("params", params);
-    const currentPage = searchParams?.page || null;
-    const currentProject = searchParams?.project || null;
+    const currentPage = searchParams.get("page");
+    const currentProject = searchParams.get("project");
 
     if (currentPage === page && currentProject === project) return;
 
@@ -121,8 +116,8 @@ const Home: React.FC<HomeProps> = ({ searchParams }) => {
   };
 
   useEffect(() => {
-    const page = searchParams.page;
-    const project = searchParams.project;
+    const page = searchParams.get("page");
+    const project = searchParams.get("project");
 
     if (page && page !== activePage) {
       setActivePage(page);
