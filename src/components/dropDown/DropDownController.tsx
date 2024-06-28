@@ -54,6 +54,10 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
     setActiveItem(projectName);
   };
 
+  useEffect(() => {
+    console.log('DropdownController selectedProject:', selectedProject);
+  }, [selectedProject]);
+
   return (
     <div className="relative flex-col justify-start items-start gap-2 inline-flex">
       <button

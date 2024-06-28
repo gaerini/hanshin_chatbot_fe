@@ -4,11 +4,12 @@ import LogSelector from '../../lists/LogList';
 interface DailyLogSelectorProps {
     memoryId: string;
     date : string;
-    firstQueries : string
-    onSelectMemory : (memoryId: string) => void;
+    firstQueries : string;
+    projectName: string;
+    onSelectMemory: (memoryId: string, projectName: string) => void;
 }
 
-const DailyLogSelector: React.FC<DailyLogSelectorProps> = ({ memoryId, date, firstQueries, onSelectMemory }) => {
+const DailyLogSelector: React.FC<DailyLogSelectorProps> = ({ memoryId, date, firstQueries, projectName, onSelectMemory }) => {
 
     return (
         <div className="min-w-[336px] px-4 py-2 flex-col justify-start items-start gap-2 inline-flex">
@@ -17,7 +18,11 @@ const DailyLogSelector: React.FC<DailyLogSelectorProps> = ({ memoryId, date, fir
             </div>
             <LogSelector 
                 firstQuery={firstQueries} 
-                onClick={() => onSelectMemory(memoryId)}/>
+                projectName={projectName}
+                onClick={() => {
+                    console.log('DailyLogSelector onSelectMemory', memoryId);
+                    onSelectMemory(memoryId, projectName);
+                }} />
         </div>
     );
 };

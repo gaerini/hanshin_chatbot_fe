@@ -12,19 +12,26 @@ interface GptBubbleProps {
   gptText: string;
   sources: { source: string; page: number }[];
   setTypingComplete: (value: boolean) => void;
+  messagesFetched: boolean;
 }
 
 const GptBubble: React.FC<GptBubbleProps> = ({
   gptText,
   sources,
-
   setTypingComplete,
+  messagesFetched,
 }) => {
 
   // {gptText}의 타이핑효과
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
+    if (messagesFetched) {
+      setDisplayedText(gptText);
+      setTypingComplete(true);
+      return;
+    }
+    
     let currentText = "";
     let caseIndex = 0;
 

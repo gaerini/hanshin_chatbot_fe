@@ -30,6 +30,7 @@ const LoginPage: React.FC = () => {
         console.log('로그인 성공:', data);
         // 예시로 로컬 스토리지에 토큰을 저장합니다.
         localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('memory_id_list', JSON.stringify(data.memory_id_list));
         window.location.href = '/main?page=ChatBot';
       } else {
         console.error('로그인 실패');

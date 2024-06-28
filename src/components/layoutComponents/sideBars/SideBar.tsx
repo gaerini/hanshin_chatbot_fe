@@ -24,11 +24,17 @@ const SideBar: React.FC<SideBarProps> = ({
     memoryIdList,
     onSelectMemory  
 }) => {
-    const { selectedProject } = useActiveItemContext(); 
+    const { selectedProject,setSelectedProject } = useActiveItemContext(); 
     
     const filteredMemoryIdList = selectedProject 
         ? memoryIdList.filter(memory => memory.project_name === selectedProject) 
         : memoryIdList;
+
+    const handleSelectMemory = (memoryId: string, projectName: string) => {
+        console.log('SideBar handleSelectMemory', memoryId, projectName);
+        onSelectMemory(memoryId);
+        setSelectedProject(projectName);
+    };
 
     return (
         <div className='w-[336px] h-screen mt-[83px] flex flex-col gap-2 
@@ -62,7 +68,7 @@ const SideBar: React.FC<SideBarProps> = ({
                             rightIconName = "plus" 
                             label = "나의 대화내역" 
                             style = "" 
-                            rightBtn ={true} 
+                            rightBtn ={true}
                             selectedProject={selectedProject}/>
                 {filteredMemoryIdList.map((memory) => {
                     const date = memory.last_chat_time.split('T')[0];
@@ -72,7 +78,8 @@ const SideBar: React.FC<SideBarProps> = ({
                             memoryId={memory.memory_id}
                             date={date}
                             firstQueries={memory.project_name}
-                            onSelectMemory={onSelectMemory}
+                            projectName={memory.project_name}
+                            onSelectMemory={handleSelectMemory}
                         />
                     );
                 })}

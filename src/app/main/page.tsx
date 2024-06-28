@@ -28,6 +28,7 @@ const Home: React.FC = () => {
   const [activePage, setActivePage] = useState('Container');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
+  const [memoryIdList, setMemoryIdList] = useState<Array<{ memory_id: string, last_chat_time: string, project_name: string }>>([]);
 
   //sideBar toggle
   const handleSideBarToggle = () => {
@@ -37,38 +38,57 @@ const Home: React.FC = () => {
   //logout
   const handleLogout = () => {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('memory_id_list');
     window.location.href = '/login';
   };
 
-  //token 보유 유무 확인 후 리디렉션(차후 개선 필요)
+  //token 보유 유무 확인 후 리디렉션(차후 개선 필요)+토큰/memory-id-list 로컬스토리지에
   useEffect(() => {
-    // 클라이언트 측에서만 실행되도록 함
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('access_token');
-      if (!token) {
-        window.location.href = '/login'; // 토큰이 없으면 로그인 페이지로 리디렉션
-        return;
-      }
-
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      setUserName(payload.username);
-
-      // 역할에 따른 사용자 레벨 설정
-      switch (payload.role) {
-        case 'super_admin':
-          setUserLevel('최고관리자');
-          break;
-        case 'admin':
-          setUserLevel('관리자');
-          break;
-        case 'nomal':
-          setUserLevel('일반 사용자');
-          break;
-        default:
-          setUserLevel('알 수 없음');
-      }
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      window.location.href = '/login'; 
+      return;
     }
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    setUserName(payload.username);
+
+    switch (payload.role) {
+      case 'super_admin':
+        setUserLevel('최고관리자');
+        break;
+      case 'admin':
+        setUserLevel('관리자');
+        break;
+      case 'nomal':
+        setUserLevel('일반 사용자');
+        break;
+      default:
+        setUserLevel('알 수 없음');
+    }
+
+    // 로컬 스토리지에서 memoryIdList 가져오기
+    const storedMemoryIdList = localStorage.getItem('memory_id_list');
+    if (storedMemoryIdList) {
+      setMemoryIdList(JSON.parse(storedMemoryIdList));
+    }
+
   }, []);
+
+  const handlePageChange = (page: string) => {
+    setActivePage(page);
+    updateQuery(page, selectedProject);
+  };
+  const handleProjectSelect = (projectName: string | null) => {
+    setSelectedProject(projectName);
+    if (activePage === 'ProjectManagement') {
+      updateQuery('ProjectManagement', projectName);
+    }
+  };
+  const handleSelectMemory = (memoryId: string) => {
+    console.log('Home handleSelectMemory', memoryId);
+    setSelectedMemoryId(memoryId);
+  };
 
   //브라우저 히스토리 업데이트
   const updateQuery = (page: string, project: string | null = null) => {
@@ -88,16 +108,6 @@ const Home: React.FC = () => {
     }
 
     router.push(`${pathname}?${params.toString()}`);
-  };
-  const handlePageChange = (page: string) => {
-    setActivePage(page);
-    updateQuery(page, selectedProject);
-  };
-  const handleProjectSelect = (projectName: string | null) => {
-    setSelectedProject(projectName);
-    if (activePage === 'ProjectManagement') {
-      updateQuery('ProjectManagement', projectName);
-    }
   };
   useEffect(() => {
     const page = searchParams.get('page');
@@ -130,18 +140,6 @@ const Home: React.FC = () => {
     };
   }, []);
 
-  // 메모리 ID 리스트 예시 데이터
-  const memoryIdList = [
-    {
-      memory_id: "667c423d5647e5f7a1d53389",
-      last_chat_time: "2024-06-27T01:30:53.497000",
-      project_name: "양산 평산동"
-    }
-  ];
-
-  const handleSelectMemory = (memoryId: string) => {
-    setSelectedMemoryId(memoryId);
-  };
 
 
   return (
@@ -150,7 +148,10 @@ const Home: React.FC = () => {
         <ActiveItemProvider>
           <ChooseRecommendContextProvider>
 
-            <TopNav userLevel={userLevel} userName={userName} onToggleSidebar={handleSideBarToggle}/>
+            <TopNav 
+              userLevel={userLevel} 
+              userName={userName} 
+              onToggleSidebar={handleSideBarToggle}/>
 
             <div className='flex flex-grow'>
               {isSidebarOpen && <SideBar isSuperAdmin={userLevel === '최고관리자'} 
