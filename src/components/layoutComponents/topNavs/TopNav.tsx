@@ -1,10 +1,10 @@
-'use client'
 import React from 'react';
 import DropDownController from '../../dropDown/DropDownController';
 import Icon from '../../icon/Icon';
 
 import UserProfileGroup from '../../profiles/UserProfileGroup';
 import Toggler from '../../Toggler';
+import { useActiveItemContext } from '@/components/dropDown/ActiveItemContext';
 
 interface TopNavProps {
     userLevel : string;
@@ -13,25 +13,7 @@ interface TopNavProps {
 }
 
 const TopNav: React.FC<TopNavProps> = ({userLevel, userName, onToggleSidebar}) => {
-      // 나중에 반응형 할때 참고!
-    // const [buttonText, setButtonText] = useState('빌드챗이 학습한 서류의 목록이 궁금하시다면?');
-    
-    // const handleResize = () => {
-    //     if (window.innerWidth <= 640) {
-    //         setButtonText('서류 목록 확인');
-    //     } else {
-    //         setButtonText('빌드챗이 학습한 서류의 목록이 궁금하시다면?');
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     window.addEventListener('resize', handleResize);
-    //     handleResize(); // 컴포넌트가 마운트될 때 초기 크기 설정
-
-    //     return () => {
-    //         window.removeEventListener('resize', handleResize);
-    //     };
-    // }, []);
+    const { setSelectedProject } = useActiveItemContext();
 
     const handleAdminToggle = (state: boolean) => {
         console.log('AdminToggle state:', state);

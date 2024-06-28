@@ -16,8 +16,8 @@ const LargeHeader: React.FC<LargeHeaderProps> = ({ leftIconName, label, siteMap 
             <div className="justify-start items-center gap-1 flex">
                 <Icon name= {leftIconName} width={20} height={20} />
                 <div className='inline-flex items-center gap-4'>
-                    <div className="text-title font-semibold">{label}</div>
-                    <div className='text-paragraph-l font-light'>{siteMap}</div>
+                    <div className="text-title font-semibold whitespace-nowrap">{label}</div>
+                    <div className='text-paragraph-l font-light whitespace-nowrap'>{siteMap}</div>
                 </div>
             </div>
         </div>

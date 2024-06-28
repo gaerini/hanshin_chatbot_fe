@@ -3,6 +3,7 @@ import DailyLogSelector from './DailyLogSelectors';
 import AdminMenu from './admins/AdminMenu';
 import NomalHeader from '../../headers/\bNomalHeader';
 import UserProfileGroup from '../../profiles/UserProfileGroup';
+import { useActiveItemContext } from '@/components/dropDown/ActiveItemContext';
 
 interface SideBarProps {
     isSuperAdmin : boolean;
@@ -10,9 +11,24 @@ interface SideBarProps {
     userLevel: string;
     handleLogout: () => void;
     setActivePage: (page: string) => void;
+    memoryIdList: Array<{ memory_id: string, last_chat_time: string, project_name: string }>;
+    onSelectMemory: (memoryId: string) => void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ isSuperAdmin, userName, userLevel, handleLogout, setActivePage }) => {
+const SideBar: React.FC<SideBarProps> = ({ 
+    isSuperAdmin, 
+    userName, 
+    userLevel, 
+    handleLogout, 
+    setActivePage,
+    memoryIdList,
+    onSelectMemory  
+}) => {
+    const { selectedProject } = useActiveItemContext(); 
+    
+    const filteredMemoryIdList = selectedProject 
+        ? memoryIdList.filter(memory => memory.project_name === selectedProject) 
+        : memoryIdList;
 
     return (
         <div className='w-[336px] h-screen mt-[83px] flex flex-col gap-2 
@@ -28,7 +44,8 @@ const SideBar: React.FC<SideBarProps> = ({ isSuperAdmin, userName, userLevel, ha
                             rightIconName = "plus" 
                             label = "챗봇 관리하기" 
                             style = "" 
-                            rightBtn ={false} />
+                            rightBtn ={false}
+                            selectedProject={selectedProject} />
                     <div className='w-full px-4 pt-2.5 pb-4 flex-col justify-start items-start gap-2 inline-flex'>
                         <AdminMenu iconName="dots" 
                                    label="프로젝트 관리" 
@@ -45,8 +62,20 @@ const SideBar: React.FC<SideBarProps> = ({ isSuperAdmin, userName, userLevel, ha
                             rightIconName = "plus" 
                             label = "나의 대화내역" 
                             style = "" 
-                            rightBtn ={true} />
-                <DailyLogSelector date="6월 32일 (일)" firstQueries="아무거나 일단 틀어 아무거나 신나는 걸로 고양이는 야옹 울어"/>
+                            rightBtn ={true} 
+                            selectedProject={selectedProject}/>
+                {filteredMemoryIdList.map((memory) => {
+                    const date = memory.last_chat_time.split('T')[0];
+                    return (
+                        <DailyLogSelector 
+                            key={memory.memory_id}
+                            memoryId={memory.memory_id}
+                            date={date}
+                            firstQueries={memory.project_name}
+                            onSelectMemory={onSelectMemory}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

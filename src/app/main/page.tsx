@@ -1,9 +1,8 @@
-// 'use client';
-
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
 import TopNav from '@/components/layoutComponents/topNavs/TopNav';
 import dynamic from 'next/dynamic';
 import SideBar from '@/components/layoutComponents/sideBars/SideBar';
@@ -11,8 +10,8 @@ import { GetApiProvider } from '@/components/dropDown/GetApiContext';
 import { ActiveItemProvider } from '../../components/dropDown/ActiveItemContext';
 import { ChooseRecommendContextProvider } from '@/components/layoutComponents/loadingPages/recommend/ChooseRecommendContext';
 
-// Contents 컴포넌트를 동적으로 가져오기
-const Contents = dynamic(() => import('@/components/layoutComponents/containers/Contents'), {
+// Container 컴포넌트를 동적으로 가져오기
+const Container = dynamic(() => import('@/components/layoutComponents/containers/Container'), {
   ssr: false, // 서버 사이드 렌더링 비활성화
   suspense: true
 });
@@ -25,8 +24,10 @@ const Home: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userName, setUserName] = useState('');
   const [userLevel, setUserLevel] = useState('');
+
   const [activePage, setActivePage] = useState('Container');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
 
   //sideBar toggle
   const handleSideBarToggle = () => {
@@ -88,19 +89,16 @@ const Home: React.FC = () => {
 
     router.push(`${pathname}?${params.toString()}`);
   };
-
   const handlePageChange = (page: string) => {
     setActivePage(page);
     updateQuery(page, selectedProject);
   };
-
   const handleProjectSelect = (projectName: string | null) => {
     setSelectedProject(projectName);
     if (activePage === 'ProjectManagement') {
       updateQuery('ProjectManagement', projectName);
     }
   };
-
   useEffect(() => {
     const page = searchParams.get('page');
     const project = searchParams.get('project');
@@ -132,6 +130,20 @@ const Home: React.FC = () => {
     };
   }, []);
 
+  // 메모리 ID 리스트 예시 데이터
+  const memoryIdList = [
+    {
+      memory_id: "667c423d5647e5f7a1d53389",
+      last_chat_time: "2024-06-27T01:30:53.497000",
+      project_name: "양산 평산동"
+    }
+  ];
+
+  const handleSelectMemory = (memoryId: string) => {
+    setSelectedMemoryId(memoryId);
+  };
+
+
   return (
     <div className="w-full flex-col items-center justify-center">
       <GetApiProvider>
@@ -145,15 +157,17 @@ const Home: React.FC = () => {
                                          userName={userName} 
                                          userLevel={userLevel} 
                                          handleLogout={handleLogout}
-                                         setActivePage={handlePageChange}/>}
+                                         setActivePage={handlePageChange}
+                                         memoryIdList={memoryIdList}
+                                         onSelectMemory={handleSelectMemory}/>}
               <Suspense fallback={<div>Loading...</div>}>
-                <Contents 
+                <Container
                   isSidebarOpen={isSidebarOpen} 
                   activePage={activePage}
                   selectedProject={selectedProject} 
                   onProjectSelect={handleProjectSelect}
-                  setActivePage={handlePageChange}  // 추가된 부분
-                />
+                  setActivePage={handlePageChange}
+                  selectedMemoryId={selectedMemoryId}/>
               </Suspense>
             </div> 
 

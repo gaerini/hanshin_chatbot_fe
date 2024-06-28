@@ -70,7 +70,7 @@ const InputFile: React.FC<InputFileProps> = ({
                     style={{ display: "none" }}/>
                 <div className="w-full h-[134px] px-2.5 py-4 bg-white rounded-[10px] border border-neutral-200 dark:border-neutral-800
                                 flex-col justify-center items-center gap-4 inline-flex
-                                text-neutral-400 text-paragraph-m">
+                                text-neutral-400 text-paragraph-m text-center">
                     <span>첨부할 파일을 여기에 끌어다놓거나 파일을 직접 선택해주세요.</span>
                     <button className="neutralBtnStyle-default hover:neutralBtnStyle-hover active:neutralBtnStyle-active
                                        border border-neutral-200 dark:border-neutral-800
