@@ -32,6 +32,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     try {
       const url = await s3.getSignedUrlPromise("putObject", s3Params);
+      console.log("url :", url);
       return NextResponse.json({ url: url, key: Key });
     } catch (err) {
       return NextResponse.json({ error: "Error creating pre-signed URL" });

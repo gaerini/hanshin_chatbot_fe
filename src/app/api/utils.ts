@@ -19,7 +19,7 @@ export const fetchPresignedUrl = async (
 
   try {
     const { data } = await axios.get(
-      `/api/pdf?fileType=${type}&fileName=${name}&docType=${doc}`
+      `/api?fileType=${type}&fileName=${name}&docType=${doc}`
     );
     console.log("Received data for URL", data);
     const { url, Key } = data;
