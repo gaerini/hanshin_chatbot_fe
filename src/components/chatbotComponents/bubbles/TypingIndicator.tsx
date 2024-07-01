@@ -6,10 +6,10 @@ const TypingIndicator: React.FC = () => {
     <div className="w-full p-4 flex-col justify-start items-start gap-2 inline-flex">
       <div className="justify-start items-center gap-2 inline-flex">
         <div className="w-[32px] h-[32px] rounded-full shadow-md border border-neutral-300 items-center justify-center inline-flex bg-neutral-white">
-          <Icon name="buildnow" width={24} height={24} />
+          <Icon name="hanshin" width={24} height={24} />
         </div>
         <div className="text-neutral-400 text-paragraph-l font-bold">
-          빌드나우 AI 챗봇
+          한신공영 AI 챗봇
         </div>
       </div>
 

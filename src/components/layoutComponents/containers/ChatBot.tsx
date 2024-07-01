@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import UserBubble from "../../chatbotComponents/bubbles/UserBubble";
 import GptBubble from "../../chatbotComponents/bubbles/GptBubble";
 import InputNomal from "../../inputs/InputNomal";
@@ -85,7 +85,6 @@ const ChatBot: React.FC<ChatBotProps> = ({
   };
 
   useEffect(() => {
-    console.log("SelectedMemoryId changed:", selectedMemoryId);
     if (selectedMemoryId) {
       fetchMessagesForMemoryId(selectedMemoryId);
     }

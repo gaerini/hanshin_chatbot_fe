@@ -21,7 +21,7 @@ const Container: React.FC<ContainerProps> = ({
     selectedProject, 
     onProjectSelect, 
     setActivePage, 
-    selectedMemoryId
+    selectedMemoryId,
 }) => {
   return (
     <div className={`w-full mt-[83px] h-full items-center 

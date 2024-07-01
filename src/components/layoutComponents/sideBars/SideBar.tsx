@@ -26,15 +26,27 @@ const SideBar: React.FC<SideBarProps> = ({
 }) => {
     const { selectedProjectForChat , setSelectedProjectForChat } = useActiveItemContext(); 
     
+    //드롭다운에서 프로젝트 선택시 해당 프로젝트값을 가진 MemoryId만 보이게
     const filteredMemoryIdList = selectedProjectForChat 
         ? memoryIdList.filter(memory => memory.project_name === selectedProjectForChat) 
         : memoryIdList;
 
+    //memoryId 선택 시 chatBot 컴포넌트에 대화 내용 렌더링 되도록, props 값 전달
     const handleSelectMemory = (memoryId: string, projectName: string) => {
-        console.log('SideBar handleSelectMemory', memoryId, projectName);
+        //console.log('SideBar handleSelectMemory', memoryId, projectName);
         onSelectMemory(memoryId);
         setSelectedProjectForChat(projectName);
     };
+
+    // 날짜별로 memoryIdList 그룹화
+    const groupedMemoryIdList = filteredMemoryIdList.reduce((groups, memory) => {
+        const date = memory.last_chat_time.split('T')[0];
+        if (!groups[date]) {
+            groups[date] = [];
+        }
+        groups[date].push(memory);
+        return groups;
+    }, {} as { [date: string]: Array<{ memory_id: string, last_chat_time: string, project_name: string }> });
 
     return (
         <div className='w-[336px] h-screen mt-[83px] flex flex-col gap-2 
@@ -70,19 +82,14 @@ const SideBar: React.FC<SideBarProps> = ({
                             style = "" 
                             rightBtn ={true}
                             selectedProject={selectedProjectForChat}/>
-                {filteredMemoryIdList.map((memory) => {
-                    const date = memory.last_chat_time.split('T')[0];
-                    return (
-                        <DailyLogSelector 
-                            key={memory.memory_id}
-                            memoryId={memory.memory_id}
-                            date={date}
-                            firstQueries={memory.project_name}
-                            projectName={memory.project_name}
-                            onSelectMemory={handleSelectMemory}
-                        />
-                    );
-                })}
+                 {Object.keys(groupedMemoryIdList).map((date) => (
+                    <DailyLogSelector 
+                        key={date}
+                        date={date}
+                        memoryIds={groupedMemoryIdList[date]}
+                        onSelectMemory={handleSelectMemory}
+                    />
+                ))}
             </div>
         </div>
     );
