@@ -161,7 +161,6 @@ const Home: React.FC<HomeProps> = ({ searchParams }) => {
               userName={userName}
               onToggleSidebar={handleSideBarToggle}
             />
-
             <div className="flex flex-grow">
               <Suspense fallback={<div>Loading...</div>}>
                 {isSidebarOpen && (
