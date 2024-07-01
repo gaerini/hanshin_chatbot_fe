@@ -5,6 +5,8 @@ import { useRouter, usePathname } from "next/navigation";
 import UserBubble from "../../chatbotComponents/bubbles/UserBubble";
 import GptBubble from "../../chatbotComponents/bubbles/GptBubble";
 import InputNomal from "../../inputs/InputNomal";
+import Alert from "@/components/Alert";
+import Icon from "@/components/icon/Icon";
 
 import TypingIndicator from "../../chatbotComponents/bubbles/TypingIndicator";
 import SystemUpdate from "../loadingPages/SystemUpdate";
@@ -43,7 +45,6 @@ const ChatBot: React.FC<ChatBotProps> = ({
   const [lastUserMessageIndex, setLastUserMessageIndex] = useState<
     number | null
   >(null); // 추가된 부분
-  const [feedbackIndex, setFeedbackIndex] = useState<number | null>(null); // 피드백 인덱스 추가
 
   const router = useRouter();
   // const searchParams = useSearchParams();
@@ -54,9 +55,6 @@ const ChatBot: React.FC<ChatBotProps> = ({
       ...prevMessages,
       { type: "human", text: message },
     ]);
-    if (isLearning) {
-      setFeedbackIndex(messages.length); // 새로운 피드백 메시지 인덱스 설정
-    }
   };
   const addGptMessage = (message: string, sources: any[]) => {
     setMessages((prevMessages) => [
@@ -186,26 +184,63 @@ const ChatBot: React.FC<ChatBotProps> = ({
           </div>
         ) : (
           <>
-            {messages.map((message, index) =>
-              message.type === "human" ? (
-                <UserBubble
-                  key={index}
-                  userText={message.text}
-                  isLastHuman={
-                    (isLearning && index === lastUserMessageIndex) ||
-                    (isLearning && index === feedbackIndex)
-                  } // 추가된 부분
-                />
-              ) : (
-                <GptBubble
-                  key={index}
-                  gptText={message.text}
-                  sources={message.sources || []}
-                  setTypingComplete={setTypingComplete}
-                  messagesFetched={messagesFetched}
-                />
-              )
-            )}
+            {messages.map((message, index) => (
+              <React.Fragment key={index}>
+                {isLearning && index === lastUserMessageIndex && (
+                  <div className="w-full p-4">
+    
+                    <Alert
+                      iconName="pencil"
+                      iconSize={16}
+                      alertLabel="아래 대화의 내용을 어떻게 개선하면 좋을지 알려주세요"
+                      alertStyle="alert-l blueBadgeStyle text-paragraph-l text-blue-original"
+                    />
+                  </div>
+                )}
+                {message.type === "human" ? (
+                  <UserBubble
+                    userText={message.text}
+                    isLastHuman={
+                      isLearning &&
+                      index >= lastUserMessageIndex! &&
+                      (index - lastUserMessageIndex!) % 2 === 0
+                    }
+                  />
+                ) : (
+                  <GptBubble
+                    gptText={message.text}
+                    sources={message.sources || []}
+                    setTypingComplete={setTypingComplete}
+                    messagesFetched={messagesFetched}
+                    isLastAI={
+                      isLearning &&
+                      index >= lastUserMessageIndex! &&
+                      (index - lastUserMessageIndex!) % 2 !== 0
+                    }
+                  />
+                )}
+              </React.Fragment>
+            ))}
+            {isLearning &&
+              messages.length > lastUserMessageIndex! + 2 &&
+              (messages.length - lastUserMessageIndex!) % 2 === 0 && (
+                <div className="w-full p-4">
+                  <Alert
+                      iconName="pencil"
+                      iconSize={16}
+                      showIcon={false}
+                      alertLabel={
+                        <div className="flex justify-center w-full">
+                          <div className="flex gap-x-1 justify-between items-center">
+                            <Icon name="check" width={16} height={16} />
+                            말씀해주신 내용을 성공적으로 학습했습니다.
+                          </div>
+                        </div>
+                      }
+                      alertStyle="alert-l blueBadgeStyle text-paragraph-l text-blue-original"
+                    />
+                </div>
+              )}
             {loading && <TypingIndicator />}{" "}
             {/* 로딩 중이면 typingIndicator 렌더링 */}
           </>

@@ -149,6 +149,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  
   @media (prefers-color-scheme: dark) {
     .inputStyle-disabled::placeholder {
       color: #737373; /* 다크모드 disabled 상태의 색상 */

@@ -31,7 +31,6 @@ const AddProject: React.FC = () => {
       </div>
     </div>
   );
-
 }
 
 export default AddProject;

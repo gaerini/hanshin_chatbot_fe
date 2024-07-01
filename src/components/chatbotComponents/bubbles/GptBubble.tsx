@@ -1,4 +1,4 @@
-" use client ";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
@@ -7,12 +7,14 @@ import remarkGfm from "remark-gfm";
 
 import PdfBubble from "./pdfBubbles/PdfBubble";
 import Icon from "../../icon/Icon";
+import Badge from "@/components/Badge";
 
 interface GptBubbleProps {
   gptText: string;
   sources: { source: string; page: number }[];
   setTypingComplete: (value: boolean) => void;
   messagesFetched: boolean;
+  isLastAI: boolean; // 추가된 부분
 }
 
 const GptBubble: React.FC<GptBubbleProps> = ({
@@ -20,9 +22,8 @@ const GptBubble: React.FC<GptBubbleProps> = ({
   sources,
   setTypingComplete,
   messagesFetched,
+  isLastAI, // 추가된 부분
 }) => {
-
-  // {gptText}의 타이핑효과
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
@@ -31,13 +32,13 @@ const GptBubble: React.FC<GptBubbleProps> = ({
       setTypingComplete(true);
       return;
     }
-    
+
     let currentText = "";
     let caseIndex = 0;
 
     const intervalId = setInterval(() => {
       if (caseIndex < gptText.length) {
-        setTypingComplete(false)
+        setTypingComplete(false);
         currentText += gptText[caseIndex];
         setDisplayedText(currentText);
         caseIndex++;
@@ -49,8 +50,6 @@ const GptBubble: React.FC<GptBubbleProps> = ({
 
     return () => clearInterval(intervalId);
   }, [gptText, setTypingComplete]);
-
-
 
   return (
     <div className="w-full px-4 flex-col justify-start items-center inline-flex mb-4 gap-2.5">
@@ -64,6 +63,14 @@ const GptBubble: React.FC<GptBubbleProps> = ({
           <div className="text-neutral-400 text-paragraph-l font-bold">
             한신공영 AI 챗봇
           </div>
+          {isLastAI && (
+            <Badge
+              iconName="pencil"
+              badgeLabel="학습 중"
+              badgeStyle="blueBadgeStyle"
+              showIcon={false}
+            />
+          )}
         </div>
         <div className="w-full pl-10 pr-2.5 py-2.5 bg-white flex-col justify-start items-start gap-4 inline-flex text-paragraph-chatBot">
           <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>

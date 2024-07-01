@@ -37,7 +37,12 @@ const Home: React.FC<HomeProps> = ({ searchParams }) => {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
   const [memoryIdList, setMemoryIdList] = useState<
-    Array<{ memory_id: string; last_chat_time: string; project_name: string }>
+    Array<{
+      first_query: string;
+      memory_id: string;
+      last_chat_time: string;
+      project_name: string;
+    }>
   >([]);
   const [isLearning, setIsLearning] = useState(false); // 추가된 부분
 

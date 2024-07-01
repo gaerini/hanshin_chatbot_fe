@@ -37,6 +37,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
   const { getApi } = useGetApiContext();
   const { recommendedValue } = useChooseRecommendContext();
 
+  const isDisabled = !getApi || loading || !typingComplete; // 추가된 부분
+
   //api loading
   const updateLoading = (loading: boolean) => {
     setLoading(loading);
@@ -192,8 +194,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
           className={`flex-grow pl-4 pr-3 py-3.5 rounded-tl-2xl rounded-bl-2xl border-l border-t border-b justify-center items-center resize-none 
                       text-paragraph-l
                     ${
-                      !getApi
-                        ? "inputStyle-disabled"
+                      isDisabled
+                        ? "border-neutral-200 bg-neutral-100 focus:outline-none"
                         : isLearning // 추가된 부분
                         ? "border-blue-300 bg-blue-100 focus:outline-none placeholder:text-blue-400" // 추가된 부분
                         : "inputStyle-default"
@@ -215,18 +217,17 @@ const InputNomal: React.FC<InputNomalProps> = ({
           onKeyDown={handleKeyDown}
           ref={textareaRef}
           rows={1}
-          disabled={!getApi}
+          disabled={isDisabled} // 추가된 부분
         />
 
         <div
           className={`flex w-[60px] px-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-center items-end
-                    border-neutral-200 dark:border-neutral-800 grow-0
                     ${
-                      !getApi
-                        ? "bg-neutral-100 dark:bg-neutral-700"
+                      isDisabled
+                        ? "border-neutral-200 bg-neutral-100 focus:outline-none"
                         : isLearning
                         ? "bg-blue-100 border-blue-300"
-                        : "bg-neutral-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
+                        : "inputStyle-default"
                     }`}
           style={{
             minHeight: minHeight,
@@ -239,12 +240,12 @@ const InputNomal: React.FC<InputNomalProps> = ({
           <button
             className={`w-8 h-8 my-[0.7rem] justify-center items-center inline-flex btnStyle-s
                         ${
-                          !getApi || loading || !typingComplete
+                          isDisabled
                             ? "blueBtnStyle-disabled"
                             : "blueBtnStyle-default hover:blueBtnStyle-hover"
                         }`}
             onClick={handleSend}
-            disabled={!getApi || loading || !typingComplete}
+            disabled={isDisabled}
           >
             <Icon name="sendMessage" width={20} height={20} />
           </button>

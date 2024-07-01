@@ -3,7 +3,6 @@ export { default as buildnow } from "./buildnow.svg";
 export { default as hanshin } from "./hanshin.svg";
 export { default as logo_kor_vert } from "./logo_kor_vert.svg";
 
-
 export { default as arrowUp } from "./arrowUp.svg";
 export { default as building } from "./building.svg";
 export { default as infomation } from "./infomation.svg";
@@ -20,11 +19,12 @@ export { default as plus } from "./plus.svg";
 export { default as warning } from "./warning.svg";
 export { default as dotsPlus } from "./dotsPlus.svg";
 export { default as upload } from "./upload.svg";
+export { default as check } from "./check.svg";
 
 //dark
 export { default as chart_dark } from "./chart_dark.svg";
 export { default as setting_dark } from "./setting_dark.svg";
-export { default as storage_dark} from "./storage_dark.svg";
+export { default as storage_dark } from "./storage_dark.svg";
 export { default as user_dark } from "./user_dark.svg";
 export { default as lock_dark } from "./lock_dark.svg";
 export { default as file_dark } from "./file_dark.svg";
