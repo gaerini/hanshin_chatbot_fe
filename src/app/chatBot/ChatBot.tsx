@@ -2,17 +2,17 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import UserBubble from "../components/utilityComponents/chatbotComponents/bubbles/UserBubble";
-import GptBubble from "../components/utilityComponents/chatbotComponents/bubbles/GptBubble";
-import InputNomal from "../components/utilityComponents/InputNomal";
+import UserBubble from "@/components/utilityComponents/chatbotComponents/bubbles/UserBubble";
+import GptBubble from "@/components/utilityComponents/chatbotComponents/bubbles/GptBubble";
+import InputNomal from "@/components/utilityComponents/InputNomal";
 
-import TypingIndicator from "../components/utilityComponents/chatbotComponents/bubbles/TypingIndicator";
-import SystemUpdate from "../components/utilityComponents/loadingPages/SystemUpdate";
-import NoSelectedProject from "../components/utilityComponents/loadingPages/NoSelectedProject";
-import RecommendedValue from "../components/utilityComponents/loadingPages/recommend/RecommendedValue";
+import TypingIndicator from "@/components/utilityComponents/chatbotComponents/bubbles/TypingIndicator";
+import SystemUpdate from "@/components/utilityComponents/loadingPages/SystemUpdate";
+import NoSelectedProject from "@/components/utilityComponents/loadingPages/NoSelectedProject";
+import RecommendedValue from "@/components/utilityComponents/loadingPages/recommend/RecommendedValue";
 
-import { useActiveItemContext } from "../components/utilityComponents/dropDown/ActiveItemContext";
-import { useGetApiContext } from "../components/utilityComponents/dropDown/GetApiContext";
+import { useActiveItemContext } from "@/components/utilityComponents/dropDown/ActiveItemContext";
+import { useGetApiContext } from "@/components/utilityComponents/dropDown/GetApiContext";
 
 interface ChatBotProps {
   isSidebarOpen: boolean;

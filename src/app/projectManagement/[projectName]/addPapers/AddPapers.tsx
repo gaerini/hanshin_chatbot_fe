@@ -1,7 +1,7 @@
 import React from "react";
-import Icon from "@/app/components/basicComponents/icon/Icon";
-import InputFile from "@/app/components/basicComponents/inputs/InputFile";
-import LargeHeader from "@/app/components/basicComponents/headers/LargeHeader";
+import Icon from "@/components/basicComponents/icon/Icon";
+import InputFile from "@/components/basicComponents/inputs/InputFile";
+import LargeHeader from "@/components/basicComponents/headers/LargeHeader";
 
 interface AddPapersProps {
   selectedProject: string;

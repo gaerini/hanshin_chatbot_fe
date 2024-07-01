@@ -2,9 +2,9 @@
 
 import React from 'react';
 // import { useRouter, useSearchParams } from 'next/navigation';
-import LargeHeader from '@/app/components/basicComponents/headers/LargeHeader';
-import ProjectList from '../components/basicComponents/lists/ProjectList';
-import Icon from '../components/basicComponents/icon/Icon';
+import LargeHeader from '@/components/basicComponents/headers/LargeHeader';
+import ProjectList from '@/components/basicComponents/lists/ProjectList';
+import Icon from '@/components/basicComponents/icon/Icon';
 
 interface ProjectManagementProps {
     isSidebarOpen: boolean;

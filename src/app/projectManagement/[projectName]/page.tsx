@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Layout from '../../components/utilityComponents/layouts/Layout';
+import Layout from '@/components/utilityComponents/layouts/Layout';
 import ProjectDetail from './ProjectDetail';
 
 

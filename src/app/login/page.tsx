@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Icon from '@/app/components/basicComponents/icon/Icon';
-import InputIcon from '@/app/components/basicComponents/inputs/InputIcon';
-import Alert from '@/app/components/basicComponents/Alert';
+import Icon from '@/components/basicComponents/icon/Icon';
+import InputIcon from '@/components/basicComponents/inputs/InputIcon';
+import Alert from '@/components/basicComponents/Alert';
 import './styles.css';
 
 const LoginPage: React.FC = () => {

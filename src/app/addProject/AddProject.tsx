@@ -1,8 +1,8 @@
 import React from 'react';
-import Icon from '../components/basicComponents/icon/Icon';
-import InputFile from "@/app/components/basicComponents/inputs/InputFile";
-import LargeHeader from "@/app/components/basicComponents/headers/LargeHeader";
-import InputForm from '@/app/components/basicComponents/inputs/InputForm';
+import Icon from '@/components/basicComponents/icon/Icon';
+import InputFile from "@/components/basicComponents/inputs/InputFile";
+import LargeHeader from "@/components/basicComponents/headers/LargeHeader";
+import InputForm from '@/components/basicComponents/inputs/InputForm';
 
 // interface AddProjectProps {
 // }

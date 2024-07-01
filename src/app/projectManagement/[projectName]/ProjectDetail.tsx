@@ -1,13 +1,12 @@
 import React from 'react';
-import Icon from '../../components/basicComponents/icon/Icon';
-import FileList from '../../lists/FileList';
+import Icon from '@/components/basicComponents/icon/Icon';
+import FileList from '@/components/basicComponents/lists/FileList';
 
 interface ProjectDetailProps {
     projectName: string;
-    setActivePage: (page: string) => void;
 }
 
-const ProjectDetail: React.FC<ProjectDetailProps> = ({projectName, setActivePage}) => {
+const ProjectDetail: React.FC<ProjectDetailProps> = ({projectName}) => {
   return (
     <div className ="w-full p-4 bg-neutral-white flex-col justify-center items-start gap-2 inline-flex">
         <div className="pl-2 flex-col justify-start items-start flex">
@@ -21,7 +20,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({projectName, setActivePage
         <div className="w-full py-4 justify-end items-center gap-1 inline-flex">
           <button className="btnStyle-l neutralBtnStyle-default hover:neutralBtnStyle-hover active:neutralBtnStyle-active
                           border border-neutral-200 gap-2"
-                          onClick={() => setActivePage('AddPapers')}>
+                          onClick={() => ""}>
             <Icon name="plus" width={20} height={20} />
             서류 추가하기
           </button>
