@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from '@/components/icon/Icon';
 import InputIcon from '@/components/inputs/InputIcon';
 import Alert from '@/components/Alert';
@@ -11,6 +11,14 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const setCookie = (name: string, value: string, days: number) => {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; ${expires}; path=/; SameSite=Strict`; //Secure;
+  };
 
   //log in API fetch
   const handleLogin = async () => {
@@ -28,10 +36,10 @@ const LoginPage: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('로그인 성공:', data);
-        // 예시로 로컬 스토리지에 토큰을 저장합니다.
-        localStorage.setItem('access_token', data.access_token);
-        localStorage.setItem('memory_id_list', JSON.stringify(data.memory_id_list));
-        window.location.href = '/main?page=ChatBot';
+        // 쿠키에 토큰 저장
+        setCookie('access_token', data.access_token, 3);
+        setCookie('memory_id_list', JSON.stringify(data.memory_id_list), 3);
+        setIsLoggedIn(true);
       } else {
         console.error('로그인 실패');
         setError('아이디 혹은 비밀번호가 정확하지 않습니다.');
@@ -43,6 +51,12 @@ const LoginPage: React.FC = () => {
       setLoading(false); // API 호출 완료 후 로딩 상태 해제
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      window.location.href = '/main?page=ChatBot';
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className='w-full h-full justify-center items-center inline-flex'>

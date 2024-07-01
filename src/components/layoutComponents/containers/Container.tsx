@@ -15,39 +15,33 @@ interface ContainerProps {
 }
 
 const Container: React.FC<ContainerProps> = ({
-  searchParams,
-  isSidebarOpen,
-  activePage,
-  selectedProject,
-  onProjectSelect,
-  setActivePage,
-  selectedMemoryId,
+    searchParams,
+    isSidebarOpen, 
+    activePage, 
+    selectedProject, 
+    onProjectSelect, 
+    setActivePage, 
+    selectedMemoryId,
 }) => {
   return (
-    <div
-      className={`w-full mt-[83px] h-full items-center 
-                        ${
-                          isSidebarOpen ? "pl-[336px]" : "max-w-[768px] mx-auto"
-                        }`}
-    >
-      {activePage === "ChatBot" && (
-        <ChatBot
-          isSidebarOpen={isSidebarOpen}
-          selectedMemoryId={selectedMemoryId}
-          searchParams={searchParams}
-        />
-      )}
-      {activePage === "ProjectManagement" && (
-        <ProjectManagement
-          setActivePage={setActivePage}
-          isSidebarOpen={isSidebarOpen}
-          selectedProject={selectedProject}
-          onProjectSelect={onProjectSelect}
-          searchParams={searchParams}
-        />
-      )}
-      {activePage === "AddPapers" && <AddPapers selectedProject="" />}
-      {activePage === "AddProject" && <AddProject />}
+    <div className={`w-full mt-[83px] h-full items-center 
+                        ${isSidebarOpen 
+                            ? 'pl-[336px]' 
+                            : 'max-w-[768px] mx-auto'}`}>
+        {activePage === 'ChatBot' && 
+                        <ChatBot 
+                        isSidebarOpen={isSidebarOpen} 
+                        selectedMemoryId={selectedMemoryId} 
+                        searchParams={searchParams}/>}
+        {activePage === 'ProjectManagement' && 
+                        <ProjectManagement 
+                          setActivePage={setActivePage}
+                          isSidebarOpen={isSidebarOpen} 
+                          selectedProject={selectedProject} 
+                          onProjectSelect={onProjectSelect}
+                          searchParams={searchParams}/>}
+        {activePage === 'AddPapers' && <AddPapers selectedProject=""/>}
+        {activePage === 'AddProject' && <AddProject />}
     </div>
   );
 };
