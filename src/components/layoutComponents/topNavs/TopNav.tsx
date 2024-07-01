@@ -41,7 +41,7 @@ const TopNav: React.FC<TopNavProps> = ({userLevel, userName, onToggleSidebar}) =
             </div>
 
             <div className="w-full h-[51px] p-4 justify-between items-center gap-4 inline-flex">
-                {userLevel !== 'nomal' && (
+                {userLevel !== '일반 사용자' && (
                     <Toggler iconNameOn="pencil"
                             iconNameOff="dots_horiz"
                             labelOn="학습 중 ..."

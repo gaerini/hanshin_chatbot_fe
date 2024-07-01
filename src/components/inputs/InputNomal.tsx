@@ -142,9 +142,16 @@ const InputNomal: React.FC<InputNomalProps> = ({
     }
   };
 
+  //쿠키에서 값을 가져오는 함수
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+  };
+
   //Api-post
   const sendRequest = async (query: string) => {
-    const token = localStorage.getItem("access_token");
+    const token = getCookie('access_token');
     
     const headers = new Headers();
     headers.append("Content-Type", "application/json");

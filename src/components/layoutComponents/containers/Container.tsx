@@ -28,7 +28,11 @@ const Container: React.FC<ContainerProps> = ({
                         ${isSidebarOpen 
                             ? 'pl-[336px]' 
                             : 'max-w-[768px] mx-auto'}`}>
-        {activePage === 'ChatBot' && <ChatBot isSidebarOpen={isSidebarOpen} selectedMemoryId={selectedMemoryId} searchParams={searchParams}/>}
+        {activePage === 'ChatBot' && 
+                        <ChatBot 
+                        isSidebarOpen={isSidebarOpen} 
+                        selectedMemoryId={selectedMemoryId} 
+                        searchParams={searchParams}/>}
         {activePage === 'ProjectManagement' && 
                         <ProjectManagement 
                           setActivePage={setActivePage}
