@@ -130,8 +130,7 @@ body {
       
     .inputStyle-disabled {
         @apply bg-neutral-100 text-neutral-300 fill-neutral-300
-              dark:bg-neutral-700 dark:text-neutral-500 dark:fill-neutral-500
-              border border-neutral-200 dark:border-neutral-800
+              dark:bg-neutral-700 dark:text-neutral-500 dark:fill-neutral-500 dark:border-neutral-800
               focus:outline-none
     }
   
