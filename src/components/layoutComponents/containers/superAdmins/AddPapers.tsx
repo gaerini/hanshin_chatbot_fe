@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Icon from "../../../icon/Icon";
 import InputFile from "@/components/inputs/InputFile";
 import LargeHeader from "@/components/headers/LargeHeader";
@@ -7,7 +7,13 @@ interface AddPapersProps {
   selectedProject: string;
 }
 
+type PdfUrlsType = {
+  [key: string]: string[];
+};
+
 const AddPapers: React.FC<AddPapersProps> = ({ selectedProject }) => {
+  const [pdfUrls, setPdfUrls] = useState<PdfUrlsType>({});
+
   return (
     <div className="w-full flex-grow flex-col overflow-y-auto h-full">
       <div className="w-full flex-grow flex-col overflow-y-auto">
@@ -21,6 +27,7 @@ const AddPapers: React.FC<AddPapersProps> = ({ selectedProject }) => {
             label="파일 업로드"
             caption="챗봇이 학습할 프로젝트 계약 서류를 업로드 해주세요"
             value=""
+            setPdfUrls={setPdfUrls}
           />
         </div>
       </div>
