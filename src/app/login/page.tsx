@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
         console.log('로그인 성공:', data);
         // 쿠키에 토큰 저장
         setCookie('access_token', data.access_token, 3);
-        setCookie('memory_id_list', JSON.stringify(data.memory_id_list), 3);
+        // setCookie('memory_id_list', JSON.stringify(data.memory_id_list), 3);
         setIsLoggedIn(true);
       } else {
         console.error('로그인 실패');

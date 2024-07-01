@@ -15,6 +15,7 @@ interface InputNomalProps {
   setLoading: (loading: boolean) => void;
   loading: boolean;
   typingComplete: boolean;
+  isLearning: boolean; // 추가된 부분
 }
 
 const InputNomal: React.FC<InputNomalProps> = ({
@@ -23,6 +24,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
   setLoading,
   loading,
   typingComplete,
+  isLearning, // 추가된 부분
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [memoryId, setMemoryId] = useState<string | null>(null);
@@ -40,6 +42,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
     setLoading(loading);
   };
 
+  console.log("Input normal isLearning", isLearning);
   //textarea 영역 높이 조절
   useEffect(() => {
     if (textareaRef.current) {
@@ -93,7 +96,7 @@ const InputNomal: React.FC<InputNomalProps> = ({
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
     }
-    setLoading(true); 
+    setLoading(true);
 
     try {
       const initialResult = await sendRequest(inputValue);
@@ -146,13 +149,13 @@ const InputNomal: React.FC<InputNomalProps> = ({
   const getCookie = (name: string) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift();
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
   };
 
   //Api-post
   const sendRequest = async (query: string) => {
-    const token = getCookie('access_token');
-    
+    const token = getCookie("access_token");
+
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("Authorization", `Bearer ${token}`);
@@ -191,6 +194,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
                     ${
                       !getApi
                         ? "inputStyle-disabled"
+                        : isLearning // 추가된 부분
+                        ? "border-blue-300 bg-blue-100 focus:outline-none placeholder:text-blue-400" // 추가된 부분
                         : "inputStyle-default"
                     }`}
           style={{
@@ -199,7 +204,9 @@ const InputNomal: React.FC<InputNomalProps> = ({
             overflow: inputValue ? "auto" : "hidden",
           }}
           placeholder={
-            selectedProjectForChat
+            isLearning // 추가된 부분
+              ? "답변을 어떻게 개선할까요?" // 추가된 부분
+              : selectedProjectForChat
               ? `${selectedProjectForChat} 현장에 대해 무엇이든 물어보세요`
               : "무엇이든 물어보세요"
           }
@@ -215,8 +222,10 @@ const InputNomal: React.FC<InputNomalProps> = ({
           className={`flex w-[60px] px-3 rounded-tr-2xl rounded-br-2xl border-r border-t border-b justify-center items-end
                     border-neutral-200 dark:border-neutral-800 grow-0
                     ${
-                      !getApi 
+                      !getApi
                         ? "bg-neutral-100 dark:bg-neutral-700"
+                        : isLearning
+                        ? "bg-blue-100 border-blue-300"
                         : "bg-neutral-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
                     }`}
           style={{
@@ -225,7 +234,8 @@ const InputNomal: React.FC<InputNomalProps> = ({
             height: textareaRef.current
               ? textareaRef.current.style.height
               : "auto",
-          }}>
+          }}
+        >
           <button
             className={`w-8 h-8 my-[0.7rem] justify-center items-center inline-flex btnStyle-s
                         ${

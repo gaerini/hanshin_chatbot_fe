@@ -18,6 +18,7 @@ interface ChatBotProps {
   isSidebarOpen: boolean;
   selectedMemoryId: string | null;
   searchParams: { [key: string]: string | undefined };
+  isLearning: boolean; // 추가된 부분
 }
 
 interface Message {
@@ -30,6 +31,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
   isSidebarOpen,
   selectedMemoryId,
   searchParams,
+  isLearning, // 추가된 부분
 }) => {
   const { selectedProjectForChat } = useActiveItemContext();
   const { getApi } = useGetApiContext();
@@ -37,6 +39,11 @@ const ChatBot: React.FC<ChatBotProps> = ({
   const [loading, setLoading] = useState(false);
   const [typingComplete, setTypingComplete] = useState(true);
   const [messagesFetched, setMessagesFetched] = useState(false);
+
+  const [lastUserMessageIndex, setLastUserMessageIndex] = useState<
+    number | null
+  >(null); // 추가된 부분
+  const [feedbackIndex, setFeedbackIndex] = useState<number | null>(null); // 피드백 인덱스 추가
 
   const router = useRouter();
   // const searchParams = useSearchParams();
@@ -47,6 +54,9 @@ const ChatBot: React.FC<ChatBotProps> = ({
       ...prevMessages,
       { type: "human", text: message },
     ]);
+    if (isLearning) {
+      setFeedbackIndex(messages.length); // 새로운 피드백 메시지 인덱스 설정
+    }
   };
   const addGptMessage = (message: string, sources: any[]) => {
     setMessages((prevMessages) => [
@@ -55,26 +65,44 @@ const ChatBot: React.FC<ChatBotProps> = ({
     ]);
   };
 
+  //쿠키에서 값을 가져오는 함수
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  };
+
   //sideBar에서 선택한 memoryId log 불러와서 bubble로 렌더링
   const fetchMessagesForMemoryId = async (memoryId: string) => {
     console.log("Fetching messages for memoryId:", memoryId);
     setMessagesFetched(false);
+    const token = getCookie("access_token");
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${token}`);
     try {
       // API 호출하여 해당 memoryId의 대화 내용 불러오기
       const response = await fetch(
-        `https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat-history/${memoryId}`
+        `https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat-history/${memoryId}`,
+        {
+          method: "GET",
+          headers: headers,
+        }
       );
       const data = await response.json();
       console.log("API response data:", data);
-      const formattedMessages = data.map((message: string) => {
-        const isHuman = message.startsWith("HumanMessage:");
-        return {
-          type: isHuman ? "human" : "ai",
-          text: message
-            .replace("HumanMessage: ", "")
-            .replace("AIMessage: ", ""),
-        };
-      });
+      const formattedMessages = data.conversation_list.map(
+        (message: string) => {
+          const isHuman = message.startsWith("HumanMessage:");
+          return {
+            type: isHuman ? "human" : "ai",
+            text: message
+              .replace("HumanMessage: ", "")
+              .replace("AIMessage: ", ""),
+          };
+        }
+      );
       setMessages(formattedMessages);
       setMessagesFetched(true);
     } catch (error) {
@@ -90,11 +118,25 @@ const ChatBot: React.FC<ChatBotProps> = ({
     }
   }, [selectedMemoryId]);
 
+  useEffect(() => {
+    // 학습 상태가 변경될 때마다 마지막 사용자 메시지 인덱스 업데이트
+    if (isLearning) {
+      const lastUserMessageIndex =
+        messages
+          .map((msg, idx) => (msg.type === "human" ? idx : -1))
+          .filter((idx) => idx !== -1)
+          .pop() ?? null;
+      setLastUserMessageIndex(lastUserMessageIndex);
+      console.log("마지막 메시지 :", lastUserMessageIndex);
+    }
+  }, [isLearning]);
+
   //신규 메세지에 포커스 -> 스크롤 아래로 내리기 함수
   const messagesEndRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -146,7 +188,14 @@ const ChatBot: React.FC<ChatBotProps> = ({
           <>
             {messages.map((message, index) =>
               message.type === "human" ? (
-                <UserBubble key={index} userText={message.text} />
+                <UserBubble
+                  key={index}
+                  userText={message.text}
+                  isLastHuman={
+                    (isLearning && index === lastUserMessageIndex) ||
+                    (isLearning && index === feedbackIndex)
+                  } // 추가된 부분
+                />
               ) : (
                 <GptBubble
                   key={index}
@@ -177,6 +226,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
           setLoading={setLoading}
           loading={loading}
           typingComplete={typingComplete}
+          isLearning={isLearning} // 추가된 부분
         />
       </div>
     </div>
