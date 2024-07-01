@@ -3,7 +3,7 @@ import DailyLogSelector from '../sideBars/DailyLogSelectors';
 import AdminMenu from '../sideBars/AdminMenu';
 import NomalHeader from '../../basicComponents/headers/NomalHeader';
 import UserProfileGroup from '../../basicComponents/profiles/UserProfileGroup';
-import { useActiveItemContext } from '@/app/components/utilityComponents/dropDown/ActiveItemContext';
+import { useActiveItemContext } from '@/components/utilityComponents/dropDown/ActiveItemContext';
 
 interface SideBarProps {
     isSuperAdmin : boolean;
@@ -65,7 +65,7 @@ const SideBar: React.FC<SideBarProps> = ({
                     <div className='w-full px-4 pt-2.5 pb-4 flex-col justify-start items-start gap-2 inline-flex'>
                         <AdminMenu iconName="dots" 
                                    label="프로젝트 관리" 
-                                   onClick={() => window.location.href = ''}/>
+                                   onClick={() => window.location.href = '/projectManagement'}/>
                         <AdminMenu iconName="chart_dark" 
                                    label="사용현황 조회" 
                                    onClick={() => window.location.href = ''}/>

@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 
 import TopNav from "./TopNav";
 import SideBar from "./SideBar";
-import { GetApiProvider } from "@/app/components/utilityComponents/dropDown/GetApiContext";
-import { ActiveItemProvider } from "@/app/components/utilityComponents/dropDown/ActiveItemContext";
+import { GetApiProvider } from "@/components/utilityComponents/dropDown/GetApiContext";
+import { ActiveItemProvider } from "@/components/utilityComponents/dropDown/ActiveItemContext";
 import { ChooseRecommendContextProvider } from "../loadingPages/recommend/ChooseRecommendContext";
 
 interface LayoutProps {

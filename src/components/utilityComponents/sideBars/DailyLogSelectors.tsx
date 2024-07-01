@@ -1,5 +1,5 @@
 import React  from 'react';
-import LogList from '@/app/components/basicComponents/lists/LogList';
+import LogList from '@/components/basicComponents/lists/LogList';
 
 interface DailyLogSelectorProps {
     memoryIds: Array<{ memory_id: string, project_name: string }>;

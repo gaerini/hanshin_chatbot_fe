@@ -4,7 +4,7 @@ import Icon from '../../basicComponents/icon/Icon';
 import UserProfileGroup from '../../basicComponents/profiles/UserProfileGroup';
 
 import Toggler from '../../basicComponents/Toggler';
-import { useActiveItemContext } from '@/app/components/utilityComponents/dropDown/ActiveItemContext';
+import { useActiveItemContext } from '@/components/utilityComponents/dropDown/ActiveItemContext';
 
 interface TopNavProps {
     userLevel : string;

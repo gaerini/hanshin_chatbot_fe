@@ -30,7 +30,7 @@ const ProjectManagement: React.FC<ProjectManagementProps> = ({ isSidebarOpen, on
                     : 'max-w-[768px] w-full'}`}>
                     <button className='w-full btnStyle-l justify-center items-center gap-2 flex
                                     border border-neutral-200 neutralBtnStyle-default hover:neutralBtnStyle-hover active:neutralBtnStyle-active'
-                            onClick={() => ("")}>
+                            onClick={() => window.location.href = '/addProject'}>
                         <Icon name='dotsPlus' width={24} height={24} />
                         새 프로젝트 생성하기
                     </button>

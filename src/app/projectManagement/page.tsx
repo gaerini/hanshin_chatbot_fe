@@ -18,7 +18,7 @@ const ProjectManagementPage: React.FC = () => {
         <Layout isSidebarOpen={isSidebarOpen} onToggleSidebar={handleSideBarToggle}>
             <ProjectManagement 
               isSidebarOpen={isSidebarOpen}
-              onProjectSelect={()=>""}
+              onProjectSelect={() => window.location.href = '/projectManagement/[projectName]'}
             />
         </Layout>
     </div>

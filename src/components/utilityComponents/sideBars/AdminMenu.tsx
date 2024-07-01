@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import Icon, {IconName} from '@/app/components/basicComponents/icon/Icon';
+import Icon, {IconName} from '@/components/basicComponents/icon/Icon';
 
 interface AdminMenuProps {
     iconName : IconName;

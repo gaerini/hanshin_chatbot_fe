@@ -19,11 +19,27 @@ const DropDownController: React.FC<DropDownControllerProps> = ({
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [projects, setProjects] = useState<string[]>([]);
 
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+  };
+
   useEffect(() => {
     const fetchProjects = async () => {
+      const token = getCookie('access_token');
+    
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append("Authorization", `Bearer ${token}`);
+
       try {
         const response = await fetch(
-          "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/projects" // projects 로 수정
+          "https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/projects",
+          {
+            method: "GET",
+            headers: headers,
+          } 
         );
         const data = await response.json();
         const projectNames = data.res.map(
