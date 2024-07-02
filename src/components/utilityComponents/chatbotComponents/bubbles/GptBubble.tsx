@@ -7,12 +7,14 @@ import remarkGfm from "remark-gfm";
 
 import PdfBubble from "./pdfBubbles/PdfBubble";
 import Icon from "../../../basicComponents/icon/Icon";
+import Badge from "@/components/basicComponents/Badge";
 
 interface GptBubbleProps {
   gptText: string;
   sources: { source: string; page: number }[];
   setTypingComplete: (value: boolean) => void;
   messagesFetched: boolean;
+  isLastAI: boolean;
 }
 
 const GptBubble: React.FC<GptBubbleProps> = ({
@@ -20,6 +22,7 @@ const GptBubble: React.FC<GptBubbleProps> = ({
   sources,
   setTypingComplete,
   messagesFetched,
+  isLastAI
 }) => {
 
   // {gptText}의 타이핑효과
@@ -64,6 +67,14 @@ const GptBubble: React.FC<GptBubbleProps> = ({
           <div className="text-neutral-400 text-paragraph-l font-bold">
             한신공영 AI 챗봇
           </div>
+          {isLastAI && (
+            <Badge
+              iconName="pencil"
+              badgeLabel="학습 중"
+              badgeStyle="blueBadgeStyle"
+              showIcon={false}
+            />
+          )}
         </div>
         <div className="w-full pl-10 pr-2.5 py-2.5 bg-white flex-col justify-start items-start gap-4 inline-flex text-paragraph-chatBot">
           <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>

@@ -5,6 +5,8 @@ import { useRouter, usePathname } from "next/navigation";
 import UserBubble from "@/components/utilityComponents/chatbotComponents/bubbles/UserBubble";
 import GptBubble from "@/components/utilityComponents/chatbotComponents/bubbles/GptBubble";
 import InputNomal from "@/components/utilityComponents/InputNomal";
+import Alert from "@/components/basicComponents/Alert";
+import Icon from "@/components/basicComponents/icon/Icon";
 
 import TypingIndicator from "@/components/utilityComponents/chatbotComponents/bubbles/TypingIndicator";
 import SystemUpdate from "@/components/utilityComponents/loadingPages/SystemUpdate";
@@ -18,6 +20,7 @@ interface ChatBotProps {
   isSidebarOpen: boolean;
   selectedMemoryId: string | null;
   searchParams: { [key: string]: string | undefined };
+  isLearning: boolean; 
 }
 
 interface Message {
@@ -30,6 +33,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
   isSidebarOpen,
   selectedMemoryId,
   searchParams,
+  isLearning,
 }) => {
   const { selectedProjectForChat } = useActiveItemContext();
   const { getApi } = useGetApiContext();
@@ -37,6 +41,9 @@ const ChatBot: React.FC<ChatBotProps> = ({
   const [loading, setLoading] = useState(false);
   const [typingComplete, setTypingComplete] = useState(true);
   const [messagesFetched, setMessagesFetched] = useState(false);
+  const [lastUserMessageIndex, setLastUserMessageIndex] = useState<
+    number | null
+  >(null); 
 
   const router = useRouter();
   // const searchParams = useSearchParams();
@@ -55,26 +62,46 @@ const ChatBot: React.FC<ChatBotProps> = ({
     ]);
   };
 
+  //쿠키에서 값을 가져오는 함수
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  };
+
   //sideBar에서 선택한 memoryId log 불러와서 bubble로 렌더링
   const fetchMessagesForMemoryId = async (memoryId: string) => {
     console.log("Fetching messages for memoryId:", memoryId);
     setMessagesFetched(false);
+    const token = getCookie("access_token");
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${token}`);
+
     try {
       // API 호출하여 해당 memoryId의 대화 내용 불러오기
       const response = await fetch(
-        `https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat-history/${memoryId}`
+        `https://port-0-hanshin-chatbot-be-1272llwsz1ihz.sel5.cloudtype.app/chat-history/${memoryId}`,
+        {
+          method: "GET",
+          headers: headers,
+        }
       );
       const data = await response.json();
       console.log("API response data:", data);
-      const formattedMessages = data.map((message: string) => {
-        const isHuman = message.startsWith("HumanMessage:");
-        return {
-          type: isHuman ? "human" : "ai",
-          text: message
-            .replace("HumanMessage: ", "")
-            .replace("AIMessage: ", ""),
-        };
-      });
+
+      const formattedMessages = data.conversation_list.map(
+        (message: string) => {
+          const isHuman = message.startsWith("HumanMessage:");
+          return {
+            type: isHuman ? "human" : "ai",
+            text: message
+              .replace("HumanMessage: ", "")
+              .replace("AIMessage: ", ""),
+          };
+        }
+      );
       setMessages(formattedMessages);
       setMessagesFetched(true);
     } catch (error) {
@@ -89,6 +116,19 @@ const ChatBot: React.FC<ChatBotProps> = ({
       fetchMessagesForMemoryId(selectedMemoryId);
     }
   }, [selectedMemoryId]);
+
+  useEffect(() => {
+    // 학습 상태가 변경될 때마다 마지막 사용자 메시지 인덱스 업데이트
+    if (isLearning) {
+      const lastUserMessageIndex =
+        messages
+          .map((msg, idx) => (msg.type === "human" ? idx : -1))
+          .filter((idx) => idx !== -1)
+          .pop() ?? null;
+      setLastUserMessageIndex(lastUserMessageIndex);
+      console.log("마지막 메시지 :", lastUserMessageIndex);
+    }
+  }, [isLearning]);
 
   //신규 메세지에 포커스 -> 스크롤 아래로 내리기 함수
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -144,19 +184,63 @@ const ChatBot: React.FC<ChatBotProps> = ({
           </div>
         ) : (
           <>
-            {messages.map((message, index) =>
-              message.type === "human" ? (
-                <UserBubble key={index} userText={message.text} />
-              ) : (
-                <GptBubble
-                  key={index}
-                  gptText={message.text}
-                  sources={message.sources || []}
-                  setTypingComplete={setTypingComplete}
-                  messagesFetched={messagesFetched}
-                />
-              )
-            )}
+             {messages.map((message, index) => (
+              <React.Fragment key={index}>
+                {isLearning && index === lastUserMessageIndex && (
+                  <div className="w-full p-4">
+    
+                    <Alert
+                      iconName="pencil"
+                      iconSize={16}
+                      alertLabel="아래 대화의 내용을 어떻게 개선하면 좋을지 알려주세요"
+                      alertStyle="alert-l blueBadgeStyle text-paragraph-l text-blue-original"
+                    />
+                  </div>
+                )}
+                {message.type === "human" ? (
+                  <UserBubble
+                    userText={message.text}
+                    isLastHuman={
+                      isLearning &&
+                      index >= lastUserMessageIndex! &&
+                      (index - lastUserMessageIndex!) % 2 === 0
+                    }
+                  />
+                ) : (
+                  <GptBubble
+                    gptText={message.text}
+                    sources={message.sources || []}
+                    setTypingComplete={setTypingComplete}
+                    messagesFetched={messagesFetched}
+                    isLastAI={
+                      isLearning &&
+                      index >= lastUserMessageIndex! &&
+                      (index - lastUserMessageIndex!) % 2 !== 0
+                    }
+                  />
+                )}
+              </React.Fragment>
+            ))}
+            {isLearning &&
+              messages.length > lastUserMessageIndex! + 2 &&
+              (messages.length - lastUserMessageIndex!) % 2 === 0 && (
+                <div className="w-full p-4">
+                  <Alert
+                      iconName="pencil"
+                      iconSize={16}
+                      showIcon={false}
+                      alertLabel={
+                        <div className="flex justify-center w-full">
+                          <div className="flex gap-x-1 justify-between items-center">
+                            <Icon name="check" width={16} height={16} />
+                            말씀해주신 내용을 성공적으로 학습했습니다.
+                          </div>
+                        </div>
+                      }
+                      alertStyle="alert-l blueBadgeStyle text-paragraph-l text-blue-original"
+                    />
+                </div>
+              )}
             {loading && <TypingIndicator />}{" "}
             {/* 로딩 중이면 typingIndicator 렌더링 */}
           </>
@@ -177,6 +261,7 @@ const ChatBot: React.FC<ChatBotProps> = ({
           setLoading={setLoading}
           loading={loading}
           typingComplete={typingComplete}
+          isLearning={isLearning}
         />
       </div>
     </div>

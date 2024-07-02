@@ -10,7 +10,11 @@ interface SideBarProps {
     userName: string;
     userLevel: string;
     handleLogout: () => void;
-    memoryIdList: Array<{ memory_id: string, last_chat_time: string, project_name: string }>;
+    memoryIdList: Array<{ 
+        first_query: string;
+        memory_id: string;
+        last_chat_time: string; 
+        project_name: string; }>;
     onSelectMemory: (memoryId: string) => void;
 }
 
@@ -44,14 +48,18 @@ const SideBar: React.FC<SideBarProps> = ({
         }
         groups[date].push(memory);
         return groups;
-    }, {} as { [date: string]: Array<{ memory_id: string, last_chat_time: string, project_name: string }> });
+    }, {} as { [date: string]: Array<{ first_query: string, memory_id: string, last_chat_time: string, project_name: string }> });
 
     return (
         <div className='w-[336px] h-screen mt-[83px] flex flex-col gap-2 
                         fixed left-0 top-0 bottom-0 z-10 overflow-y-auto'>
             <div className='block md:hidden w-full p-4 justify-start'>
                 <div className=''>
-                    <UserProfileGroup userName={userName} userLevel={userLevel} handleLogout={handleLogout} alignment='start' />
+                    <UserProfileGroup 
+                        userName={userName} 
+                        userLevel={userLevel} 
+                        handleLogout={handleLogout} 
+                        alignment='start' />
                 </div>
             </div>
             {isSuperAdmin && (

@@ -20,6 +20,7 @@ export { default as plus } from "./plus.svg";
 export { default as warning } from "./warning.svg";
 export { default as dotsPlus } from "./dotsPlus.svg";
 export { default as upload } from "./upload.svg";
+export { default as check } from "./check.svg";
 
 //dark
 export { default as chart_dark } from "./chart_dark.svg";

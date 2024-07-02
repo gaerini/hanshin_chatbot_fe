@@ -10,19 +10,33 @@ interface ChatBotPageProps {
 
 const ChatBotPage: React.FC<ChatBotPageProps> = ({searchParams}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLearning, setIsLearning] = useState(false);
+  const [selectedMemoryId, setSelectedMemoryId] = useState<string | null>(null);
 
   // sideBar toggle
   const handleSideBarToggle = () => {
     setIsSidebarOpen((prevState) => !prevState);
   };
 
+  //learning toggle
+  const handleToggleLearning = () => {
+    setIsLearning((prevState) => !prevState);
+    console.log("page에서 isLearning", isLearning);
+  };
+
+
   return (
     <div className='w-full h-full justify-center items-center inline-flex'>
-        <Layout isSidebarOpen={isSidebarOpen} onToggleSidebar={handleSideBarToggle}>
+        <Layout 
+          isSidebarOpen={isSidebarOpen} 
+          onToggleSidebar={handleSideBarToggle}
+          onToggleLearning={handleToggleLearning}
+          setSelectedMemoryId={setSelectedMemoryId}>
             <ChatBot 
               isSidebarOpen={isSidebarOpen}
-              selectedMemoryId =""
+              selectedMemoryId ={selectedMemoryId}
               searchParams={searchParams}
+              isLearning={isLearning}
             />
         </Layout>
     </div>

@@ -8,7 +8,7 @@ const TypingIndicator: React.FC = () => {
         <div className="w-[32px] h-[32px] rounded-full shadow-md border border-neutral-300 items-center justify-center inline-flex bg-neutral-white">
           <Icon name="hanshin" width={24} height={24} />
         </div>
-        <div className="text-neutral-400 text-paragraph-l font-bold">
+        <div className="px-4 text-neutral-400 text-paragraph-l font-bold">
           한신공영 AI 챗봇
         </div>
       </div>

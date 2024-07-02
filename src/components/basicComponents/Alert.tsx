@@ -4,15 +4,16 @@ import Icon, {IconName} from './icon/Icon';
 interface AlertProps {
     iconName : IconName;
     iconSize : number;
-    alertLabel : string;
+    alertLabel : JSX.Element | string;
     alertStyle : string;
+    showIcon?: boolean;
 }
 
-const Alert: React.FC<AlertProps> = ({ iconName, iconSize, alertLabel, alertStyle}) => {
+const Alert: React.FC<AlertProps> = ({ iconName, iconSize, alertLabel, alertStyle, showIcon = true}) => {
 
     return (
         <div className = {alertStyle}>
-                <Icon name = {iconName} width={iconSize} height={iconSize} />
+            {showIcon && <Icon name={iconName} width={iconSize} height={iconSize} />}
             {alertLabel}
         </div>
     );
